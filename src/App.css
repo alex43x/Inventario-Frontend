@@ -40,3 +40,19 @@
 .read-the-docs {
   color: #888;
 }
+
+.submenu {
+  display: inline-grid;
+  justify-content: center;
+  gap: 1em;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 5%;
+  background-color: #302e2e;
+}
+
+.submenu :hover{
+  background-color: #36374e;
+  color: rgb(93, 88, 88);
+  transition-duration: 0.5s;
+}
