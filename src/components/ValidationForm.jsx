@@ -1,10 +1,10 @@
-import {validate} from "./database/validationUser.js"
+
 import React from "react";
 
 const Valform =() => {
     return (
         <div id="App">
-            <h1>Validación de usuarios</h1>
+            <h1>Inicio de sesión</h1>
             <form>
                 <label>
                 Usuario:
@@ -16,12 +16,11 @@ const Valform =() => {
                 <input type="password" name="password" />
                 </label>
                 <br />
-                <button type="button" onClick={() => validate("users", 3772865, "s")}>
-                Validar
-                </button>
+                <button type="submit" >Ingresar</button>
+               
             </form>
         </div>
     );
 }
 
-export default Valform();
+export default Valform;

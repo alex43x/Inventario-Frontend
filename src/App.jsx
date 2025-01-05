@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Valform from "./components/ValidationForm";
+import './App.css';
 
 const App = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Consumir la API del backend
+    // Consume la API del backend
     axios.get('http://localhost:3000/users')
       .then((response) => {
         setUsers(response.data); // Guardar los usuarios en el estado
@@ -20,9 +22,12 @@ const App = () => {
       <h1>Lista de usuarios</h1>
       <ul>
         {users.map((user) => (
-          <li key={user.user_id}>{user.password}</li> // Ajusta las propiedades según tu base de datos
+          <li key={user.id_user}>{user.id_user}  {user.password}</li> // Muestra los datos
         ))}
       </ul>
+      <div>
+        <Valform />
+      </div>
     </div>
   );
 };
