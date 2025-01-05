@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import './app.css';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './components/authContext';
 
-const LoginForm = () => {
-  const [formData, setFormData] = useState({ id: '', password: '' }); // Estado inicial
-  const [error, setError] = useState(''); // Estado para mensajes de error
-  const [users, setUsers] = useState([]);
+function Login() {
+  const [id, setid] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
-  // Manejar cambios en los inputs
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value, // Actualiza dinámicamente el campo correspondiente
-    });
-  };
-
-  // Validar y enviar los datos al hacer clic en "Iniciar sesión"
-  const handleSubmit = async(event) => {
-    event.preventDefault(); // Previene la recarga de la página
-    const { id, password } = formData;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
       const response = await fetch('http://localhost:3000/login', {
@@ -27,52 +17,48 @@ const LoginForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, password }),
       });
-  
-    const data = await response.json();
-  
+
+      const data = await response.json();
+
       if (response.ok) {
-        alert('Inicio de sesión exitoso 🎉');
+        console.log('Inicio de sesión exitoso:', data);
+        login(data); // Llama a la función de login del contexto
+        navigate('/dashboard'); // Redirige al dashboard
       } else {
-        alert(data.message || 'Credenciales incorrectas');
+        console.error('Error:', data.message);
+        alert(data.message);
       }
     } catch (error) {
-      alert('Error al conectar con el servidor');
+      console.error('Error de red:', error);
     }
   };
 
   return (
     <div>
-      <h1>Inicio de Sesión</h1>
+      <h1>Log-In</h1>
+      <p>Ingresa tus datos para iniciar sesión</p>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="id">Usuario:</label>
-          <input
-            type="text"
-            id="id"
-            name="id"
-            value={formData.id} // Vincula el estado al input
-            onChange={handleChange} // Maneja los cambios
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password} // Vincula el estado al input
-            onChange={handleChange} // Maneja los cambios
-            required
-          />
-        </div>
+        <label htmlFor="id">Documento: </label>
+        <input
+          type="text"
+          value={id}
+          onChange={(e) => setid(e.target.value)}
+          required
+        />
+        <br />
+        <label htmlFor="password">Constraseña: </label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <br />
+        <br />
         <button type="submit">Iniciar sesión</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Muestra errores */}
       </form>
     </div>
   );
-};
+}
 
-export default LoginForm;
-
-
+export default Login;
