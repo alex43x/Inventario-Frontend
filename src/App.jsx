@@ -7,6 +7,7 @@ import Productos from './Routes/Products';
 
 import ProtectedRoute from './Routes/components/protectedRoute';
 import { AuthProvider } from './Routes/components/authContext';
+import AddProduct from './Routes/addProduct';
 
 function App() {
   return (
@@ -26,6 +27,12 @@ function App() {
             path="/Productos"
             element={
                 <Productos/>
+            }
+          />
+          <Route
+            path="/Productos/addProduct"
+            element={
+                <AddProduct/>
             }
           />
         </Routes>

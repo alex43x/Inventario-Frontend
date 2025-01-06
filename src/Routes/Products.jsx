@@ -1,7 +1,9 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import { Link, Outlet } from 'react-router-dom';
 
+import './styles/app.css';
 import Product from "./components/productContainer";
 
 const Productos=()=>{
@@ -27,6 +29,10 @@ const Productos=()=>{
                     <Product key={producto.id_prod} name={producto.nombre} description={producto.descrip} stock={producto.stock}/>
                 ))}
             </ul>
+            <Link to="addProduct">
+                <button>Añadir Producto</button>
+            </Link>
+            <Outlet/>
         </div>
     );
 }
