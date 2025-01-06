@@ -23,7 +23,7 @@ function Login() {
       if (response.ok) {
         console.log('Inicio de sesión exitoso:', data);
         login(data); // Llama a la función de login del contexto
-        navigate('/dashboard'); // Redirige al dashboard
+        navigate('/home'); // Redirige al dashboard
       } else {
         console.error('Error:', data.message);
         alert(data.message);

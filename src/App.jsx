@@ -1,9 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './Login';
-import Dashboard from './Dashboard';
-import ProtectedRoute from './components/protectedRoute';
-import { AuthProvider } from './components/authContext';
+
+import Login from './Routes/Login';
+import Dashboard from './Routes/Dashboard';
+import Productos from './Routes/Products';
+
+import ProtectedRoute from './Routes/components/protectedRoute';
+import { AuthProvider } from './Routes/components/authContext';
 
 function App() {
   return (
@@ -12,11 +15,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
-            path="/dashboard"
+            path="/home"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Dashboard/>
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Productos"
+            element={
+                <Productos/>
             }
           />
         </Routes>

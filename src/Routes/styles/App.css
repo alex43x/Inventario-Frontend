@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+* {
+  box-sizing: border-box; /* Hace que el padding forme parte del tamaño total */
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -44,6 +48,7 @@
 .submenu {
   display: inline-grid;
   justify-content: center;
+  width: 20em;
   gap: 1em;
   margin: 1em;
   padding: 1em;
@@ -53,6 +58,9 @@
 
 .submenu :hover{
   background-color: #36374e;
-  color: rgb(93, 88, 88);
+  color: rgb(226, 224, 224);
   transition-duration: 0.5s;
 }
+
+
+
