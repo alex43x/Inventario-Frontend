@@ -18,11 +18,18 @@ export default function AddProduct({ onProductAdded }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-      <textarea placeholder="Descripción" value={descrip} onChange={(e) => setDescrip(e.target.value)} />
-      <input type="number" placeholder="stock" value={stock} onChange={(e) => setStock(e.target.value)} />
-      <button type="submit">Agregar Producto</button>
-    </form>
+    <div>
+    <h1>Añadir productos</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+        <br />
+        <input placeholder="Descripción" value={descrip} onChange={(e) => setDescrip(e.target.value)} />
+        <br />
+        <input type="number" placeholder="stock" value={stock} onChange={(e) => setStock(e.target.value)} />
+        <br />
+        <br />
+        <button type="submit">Agregar Producto</button>
+      </form>
+    </div>
   );
 }
