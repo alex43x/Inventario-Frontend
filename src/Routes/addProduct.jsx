@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './styles/app.css';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function AddProduct({ onProductAdded }) {
   const [nombre, setNombre] = useState('');
@@ -19,7 +20,7 @@ export default function AddProduct({ onProductAdded }) {
 
   return (
     <div>
-    <h1>Añadir productos</h1>
+    <h1>Añadir producto</h1>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
         <br />
@@ -29,7 +30,12 @@ export default function AddProduct({ onProductAdded }) {
         <br />
         <br />
         <button type="submit">Agregar Producto</button>
+        <br />
       </form>
+      <br />
+      <a href="/Productos">
+          <button>Cancelar</button>
+      </a>
     </div>
   );
 }

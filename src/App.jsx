@@ -8,6 +8,7 @@ import Productos from './Routes/Products';
 import ProtectedRoute from './Routes/components/protectedRoute';
 import { AuthProvider } from './Routes/components/authContext';
 import AddProduct from './Routes/addProduct';
+import EditProduct from './Routes/editProduct';
 
 function App() {
   return (
@@ -33,6 +34,12 @@ function App() {
             path="/Productos/addProduct"
             element={
                 <AddProduct/>
+            }
+          />
+          <Route
+            path="/Productos/editProduct"
+            element={
+                <EditProduct/>
             }
           />
         </Routes>

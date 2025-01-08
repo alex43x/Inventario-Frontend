@@ -20,19 +20,24 @@ const Productos=()=>{
         });
     },[]);
 
+    const handleDelete = async (id) => {
+        await fetch(`http://localhost:3000/products/${id}`, { method: 'DELETE' });
+        setProductos(productos.filter((producto) => producto.id_prod !== id)); // Actualiza la lista de productos
+    };
+
     return(
         <div>
             <h1>Productos</h1>
             <p>Ver los productos disponibles</p>
-            <ul>
-                {productos.map((producto)=>(
-                    <Product key={producto.id_prod} name={producto.nombre} description={producto.descrip} stock={producto.stock}/>
-                ))}
-            </ul>
             <Link to="addProduct">
                 <button>Añadir Producto</button>
             </Link>
             <Outlet/>
+            <ul>
+                {productos.map((producto)=>(
+                    <Product key={producto.id_prod} name={producto.nombre} description={producto.descrip} stock={producto.stock} deleteProduct={handleDelete} producto={producto}/>
+                ))}
+            </ul>
         </div>
     );
 }
