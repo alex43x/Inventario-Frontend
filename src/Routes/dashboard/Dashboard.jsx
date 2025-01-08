@@ -1,8 +1,8 @@
 import React from 'react';
-import './styles/app.css';
-import { useAuth } from './components/authContext';
+import '../styles/app.css';
+import { useAuth } from '../components/authContext';
 import { useNavigate } from "react-router-dom";
-import Section from './components/sections';
+import Section from './sections';
 
 const Dashboard = () => {
   const { user } = useAuth(); // Obtiene el usuario actual

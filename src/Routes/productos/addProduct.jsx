@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './styles/app.css';
+import '../styles/app.css';
 import { Link, Outlet } from 'react-router-dom';
 
 export default function AddProduct({ onProductAdded }) {
@@ -34,7 +34,7 @@ export default function AddProduct({ onProductAdded }) {
       </form>
       <br />
       <a href="/Productos">
-          <button>Cancelar</button>
+          <button>Regresar</button>
       </a>
     </div>
   );

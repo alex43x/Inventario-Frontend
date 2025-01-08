@@ -3,8 +3,8 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 import { Link, Outlet } from 'react-router-dom';
 
-import './styles/app.css';
-import Product from "./components/productContainer";
+import '../styles/app.css';
+import Product from "./productContainer";
 
 const Productos=()=>{
     const[productos,setProductos]=useState([]);

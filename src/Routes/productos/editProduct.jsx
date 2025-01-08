@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import EditProductForm from './components/editProductForm';
+import EditProductForm from './editProductForm';
 
 const EditProductPage = () => {
   const location = useLocation();
