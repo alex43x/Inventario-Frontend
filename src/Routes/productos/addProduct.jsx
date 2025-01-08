@@ -1,32 +1,53 @@
+import axios from 'axios';
 import { useState } from 'react';
-import '../styles/app.css';
-import { Link, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export default function AddProduct({ onProductAdded }) {
+export default function AddProduct() {
   const [nombre, setNombre] = useState('');
   const [descrip, setDescrip] = useState('');
   const [stock, setStock] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3000/products', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({nombre, descrip, stock }),
-    });
-    const data = await response.json();
-    onProductAdded(data); // Actualiza la lista de productos en el estado
+    try {
+      const response = await axios.post('http://localhost:3000/products', {
+        nombre,
+        descrip,
+        stock,
+      });
+      console.log('Producto añadido:', response.data);
+      alert('Producto añadido con éxito');
+      navigate('/Productos'); // Redirige a la página principal
+    } catch (error) {
+      console.error('Error al añadir el producto:', error);
+      alert('Hubo un error al añadir el producto');
+    }
   };
 
   return (
     <div>
-    <h1>Añadir producto</h1>
+      <h1>Añadir producto</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+        />
         <br />
-        <input placeholder="Descripción" value={descrip} onChange={(e) => setDescrip(e.target.value)} />
+        <input
+          placeholder="Descripción"
+          value={descrip}
+          onChange={(e) => setDescrip(e.target.value)}
+        />
         <br />
-        <input type="number" placeholder="stock" value={stock} onChange={(e) => setStock(e.target.value)} />
+        <input
+          type="number"
+          placeholder="Stock"
+          value={stock}
+          onChange={(e) => setStock(e.target.value)}
+        />
         <br />
         <br />
         <button type="submit">Agregar Producto</button>
@@ -34,7 +55,7 @@ export default function AddProduct({ onProductAdded }) {
       </form>
       <br />
       <a href="/Productos">
-          <button>Regresar</button>
+        <button>Regresar</button>
       </a>
     </div>
   );
