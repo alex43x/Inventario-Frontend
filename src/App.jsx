@@ -19,9 +19,7 @@ function App() {
           <Route
             path="/home"
             element={
-              <ProtectedRoute>
                 <Dashboard/>
-              </ProtectedRoute>
             }
           />
           <Route
@@ -42,6 +40,7 @@ function App() {
                 <EditProduct/>
             }
           />
+          
         </Routes>
       </Router>
     </AuthProvider>
