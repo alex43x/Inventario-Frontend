@@ -9,6 +9,7 @@ import ProtectedRoute from './Routes/components/protectedRoute';
 import { AuthProvider } from './Routes/components/authContext';
 import AddProduct from './Routes/productos/addProduct';
 import EditProduct from './Routes/productos/editProduct';
+import SeeMore from './Routes/productos/seeMore';
 
 function App() {
   return (
@@ -40,7 +41,13 @@ function App() {
                 <EditProduct/>
             }
           />
-          
+          <Route
+            path="*"
+            element={
+              <h1>404 Not Found</h1>
+            }/>
+
+          <Route path="/Productos/seeMore" element={<SeeMore/>} />
         </Routes>
       </Router>
     </AuthProvider>

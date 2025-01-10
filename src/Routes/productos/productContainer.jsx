@@ -24,6 +24,10 @@ const Product = ({name="Error",description="Error",stock=0, deleteProduct, produ
             <Link to = {'editProduct'}>
               <button onClick={handleClick}>Editar</button>
             </Link>
+            <Link to='seeMore'>
+              <button>Ver más</button>
+            </Link>
+            
     </div>
   );
 }

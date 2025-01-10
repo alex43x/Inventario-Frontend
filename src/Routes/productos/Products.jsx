@@ -33,6 +33,10 @@ const Productos=()=>{
                 <button>Añadir Producto</button>
             </Link>
             <Outlet/>
+            <span>    </span>
+            <Link to="/home">
+                <button>Regresar</button>
+            </Link>
             <ul>
                 {productos.map((producto)=>(
                     <Product key={producto.id_prod} name={producto.nombre} description={producto.descrip} stock={producto.stock} deleteProduct={handleDelete} producto={producto}/>
