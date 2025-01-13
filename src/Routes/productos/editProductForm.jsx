@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import '../styles/app.css';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import "../styles/app.css";
 
 const EditProductForm = ({ productData, onSubmit }) => {
-    const location = useLocation();
-    const originalData = location.state?.originalData;
+  const location = useLocation();
+  const originalData = location.state?.originalData;
 
-    const [formData, setFormData] = useState({
-    nombre: originalData?.nombre || '',
-    descrip: originalData?.descrip || '',
-    stock: originalData?.stock || '',
+  const [formData, setFormData] = useState({
+    nombre: originalData?.nombre || "",
+    descrip: originalData?.descrip || "",
+    stock: originalData?.stock || "",
   });
 
   // Rellena el formulario con los datos iniciales del producto
   useEffect(() => {
     if (productData) {
       setFormData({
-        nombre: productData.nombre || '',
-        descrip: productData.descrip || '',
-        stock: productData.stock || '',
+        nombre: productData.nombre || "",
+        descrip: productData.descrip || "",
+        stock: productData.stock || "",
       });
     }
   }, [productData]);
@@ -65,11 +65,11 @@ const EditProductForm = ({ productData, onSubmit }) => {
       <label>
         Stock:
         <input
-            type="number"
-            name="stock"
-            value={formData.stock}
-            onChange={handleInputChange}
-            placeholder="Stock"
+          type="number"
+          name="stock"
+          value={formData.stock}
+          onChange={handleInputChange}
+          placeholder="Stock"
         />
       </label>
       <br />
