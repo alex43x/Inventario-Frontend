@@ -17,7 +17,7 @@ const SeeMore = () => {
   };
 
   const handleDelete = async () => {
-    alert('El producto no podrá ser recuperado');
+    alert("El producto no podrá ser recuperado");
     axios.delete(`http://localhost:3000/products/${originalData.id_prod}`);
     navigate(-1);
   };

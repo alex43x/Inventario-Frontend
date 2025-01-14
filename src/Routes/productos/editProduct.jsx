@@ -7,7 +7,11 @@ const EditProductPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { originalData } = location.state || {};
-  console.log("holaaa", originalData);
+  console.log("Datos Recibidos:", originalData);
+
+  const handleBack = () => {
+    navigate(-1);
+  }
   const handleEditSubmit = async (updatedData) => {
     try {
       // Realizar la solicitud PUT con axios
@@ -35,6 +39,7 @@ const EditProductPage = () => {
     <div>
       <h1>Editar Producto</h1>
       <EditProductForm productData={originalData} onSubmit={handleEditSubmit} />
+      <button onClick={handleBack}>Regresar</button>
     </div>
   );
 };

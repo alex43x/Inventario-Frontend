@@ -8,6 +8,7 @@ import Productos from "./Routes/productos/Products";
 import AddProduct from "./Routes/productos/addProduct";
 import EditProduct from "./Routes/productos/editProduct";
 import SeeMore from "./Routes/productos/seeMore";
+import AddBatch from "./Routes/inventory/addBatch";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/Productos/addProduct" element={<AddProduct />} />
         <Route path="/Productos/editProduct" element={<EditProduct />} />
         <Route path="/Productos/seeMore" element={<SeeMore />} />
+        <Route path="/Inventario/addBatch" element={<AddBatch />} />
       </Routes>
     </Router>
   );
