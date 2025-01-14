@@ -10,11 +10,12 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const form=e.target;
     try {
       const response = await axios.post("http://localhost:3000/products", {
-        nombre,
-        descrip,
-        stock,
+        nombre: nombre,
+        descrip: descrip,
+        stock: form.stock.value,
       });
       console.log("Producto añadido:", response.data);
       alert("Producto añadido con éxito");
@@ -44,10 +45,11 @@ export default function AddProduct() {
         />
         <br />
         <input
+          name="stock"
           type="number"
           placeholder="Stock"
-          value={stock}
-          onChange={(e) => setStock(e.target.value)}
+          value={0}
+          hidden
         />
         <br />
         <br />

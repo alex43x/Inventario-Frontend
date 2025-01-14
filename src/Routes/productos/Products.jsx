@@ -13,14 +13,13 @@ const Productos = () => {
     axios
       .get("http://localhost:3000/products")
       .then((response) => {
-        console.log(response.data);
+        console.log("Productos recibidos", response.data);
         setProductos(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-
   const handleDelete = async (id) => {
     await fetch(`http://localhost:3000/products/${id}`, { method: "DELETE" });
     setProductos(productos.filter((producto) => producto.id_prod !== id)); // Actualiza la lista de productos

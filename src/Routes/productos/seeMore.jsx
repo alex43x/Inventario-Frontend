@@ -1,6 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+
+import ViewBatches from "../inventory/viewBatches";
 
 import axios from "axios";
 
@@ -8,8 +10,9 @@ const SeeMore = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { originalData } = location.state || {};
+  const [batches, setBatches] = useState([]);
 
-  console.log("Datos recibidos: ", originalData);
+  console.log("Producto: ", originalData);
 
   const handleEdit = (event) => {
     event.preventDefault();
@@ -22,17 +25,38 @@ const SeeMore = () => {
     navigate(-1);
   };
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/inventory/${originalData.id_prod}`)
+      .then((response) => {
+        console.log("Lotes recibidos: ", response.data);
+        setBatches(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div>
-      <h1>{originalData.nombre}</h1>
-      <p>Código: {originalData.id_prod}</p>
-      <p>Descripción: {originalData.descrip}</p>
-      <p>Stock: {originalData.stock} disponible(s)</p>
+      <section>
+        <h1>{originalData.nombre}</h1>
+        <p>Código: {originalData.id_prod}</p>
+        <p>Descripción: {originalData.descrip}</p>
+        <p>Stock: {originalData.stock} disponible(s)</p>
+      </section>
+      <aside>
+        <h2>Lotes disponibles:</h2>
+        <ViewBatches batches={batches} />
+        <br />
+      </aside>
+      <section>
       <button onClick={handleEdit}>Editar</button>
       <span> </span>
-      <button onClick={handleDelete}>Eliminar</button>
-      <span> </span>
-      <button onClick={() => navigate(-1)}>Regresar</button>
+        <button onClick={handleDelete}>Eliminar</button>
+        <span> </span>
+        <button onClick={() => navigate(-1)}>Regresar</button>
+      </section>
     </div>
   );
 };

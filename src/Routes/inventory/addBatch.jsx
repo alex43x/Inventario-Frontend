@@ -69,7 +69,7 @@ const AddBatch = () => {
         </label>
         <br />
         <br />
-        <button type="submit">Añadir botín</button>
+        <button type="submit">Añadir Lote</button>
       </form>
       <br />
       <button onClick={handleBack}>Regresar</button>
