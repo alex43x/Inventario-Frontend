@@ -30,7 +30,7 @@ const AddBatch = () => {
       );
       console.log("Lote añadido:", response.data);
       alert("Lote añadido con éxito");
-      navigate(-1);
+      navigate('/Productos');
     } catch (error) {
       console.error("Error al añadir el lote:", error);
       alert("Hubo un error al añadir el lote");

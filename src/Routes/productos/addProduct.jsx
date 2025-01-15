@@ -32,10 +32,7 @@ export default function AddProduct() {
     e.preventDefault();
     const form = e.target;
     console.log(form)
-    if (Object.values(nombre).some((value) => value.trim() === "")) {
-      alert("Todos los campos son obligatorios");
-      return;
-    }
+    
     try {
       const response = await axios.post("http://localhost:3000/products", {
         nombre: nombre,
