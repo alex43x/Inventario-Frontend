@@ -9,21 +9,24 @@ import AddProduct from "./Routes/productos/addProduct";
 import EditProduct from "./Routes/productos/editProduct";
 import SeeMore from "./Routes/productos/seeMore";
 import AddBatch from "./Routes/inventory/addBatch";
+import { AuthProvider } from "./Routes/components/authContext";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="*" element={<h1>404 Not Found</h1>} />
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Dashboard />} />
-        <Route path="/Productos" element={<Productos />} />
-        <Route path="/Productos/addProduct" element={<AddProduct />} />
-        <Route path="/Productos/editProduct" element={<EditProduct />} />
-        <Route path="/Productos/seeMore" element={<SeeMore />} />
-        <Route path="/Inventario/addBatch" element={<AddBatch />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="*" element={<h1>404 Not Found</h1>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Dashboard />} />
+          <Route path="/Productos" element={<Productos />} />
+          <Route path="/Productos/addProduct" element={<AddProduct />} />
+          <Route path="/Productos/editProduct" element={<EditProduct />} />
+          <Route path="/Productos/seeMore" element={<SeeMore />} />
+          <Route path="/Inventario/addBatch" element={<AddBatch />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

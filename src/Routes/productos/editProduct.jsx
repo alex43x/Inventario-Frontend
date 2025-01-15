@@ -6,7 +6,7 @@ import EditProductForm from "./editProductForm";
 const EditProductPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { originalData } = location.state || {};
+  const{ originalData } = location.state || {};
   console.log("Datos Recibidos:", originalData);
 
   const handleBack = () => {
@@ -19,12 +19,11 @@ const EditProductPage = () => {
         `http://localhost:3000/products/${originalData.id_prod}`,
         updatedData
       );
-
       console.log("Producto actualizado:", response.data);
       alert("Producto editado con éxito");
-
       // Redirigir a la página de productos
-      navigate("/Productos");
+      console.log('updated',updatedData)
+      navigate(-1,{state:{originalData:updatedData}});
     } catch (error) {
       console.error("Error al editar el producto:", error);
       alert("Hubo un error al actualizar el producto");

@@ -20,10 +20,6 @@ const Productos = () => {
         console.log(error);
       });
   }, []);
-  const handleDelete = async (id) => {
-    await fetch(`http://localhost:3000/products/${id}`, { method: "DELETE" });
-    setProductos(productos.filter((producto) => producto.id_prod !== id)); // Actualiza la lista de productos
-  };
 
   return (
     <div>
@@ -44,7 +40,6 @@ const Productos = () => {
             name={producto.nombre}
             description={producto.descrip}
             stock={producto.stock}
-            deleteProduct={handleDelete}
             producto={producto}
           />
         ))}

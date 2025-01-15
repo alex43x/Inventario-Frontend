@@ -22,26 +22,30 @@ const AddBatch = () => {
       precio: form.precio.value,
       fecha: form.fecha.value,
     };
-    console.log(data.fecha)
+
     try {
-      const response = await axios.post("http://localhost:3000/inventory", data);
+      const response = await axios.post(
+        "http://localhost:3000/inventory",
+        data
+      );
       console.log("Lote añadido:", response.data);
       alert("Lote añadido con éxito");
-      
+      navigate(-1);
     } catch (error) {
       console.error("Error al añadir el lote:", error);
       alert("Hubo un error al añadir el lote");
-    };
-
-    try{
-        const update =await axios.post(`http://localhost:3000/products/${data.prod}`, data );
-        alert('Stock del Producto actualizado')
-    } catch(error) {
-        console.error('Error al actualizar el stock')
-        alert("No se pudo cambiar el stock")
     }
-    navigate(-1);
-}
+
+    try {
+      const update = await axios.post(
+        `http://localhost:3000/products/${data.prod}`,
+        data
+      );
+      console.log("Stock del Producto actualizado");
+    } catch (error) {
+      console.error("Error al actualizar el stock");
+    }
+  };
 
   return (
     <div>
@@ -50,22 +54,27 @@ const AddBatch = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Código del producto:
-          <input type="text" name="prod" value={originalData.id_prod} readOnly />
+          <input
+            type="text"
+            name="prod"
+            value={originalData.id_prod}
+            readOnly
+          />
         </label>
         <br />
         <label>
           Cantidad comprada:
-          <input type="number" name="cant" placeholder="Cantidad" />
+          <input type="number" name="cant" placeholder="Cantidad" required />
         </label>
         <br />
         <label>
           Precio de compra (Unitario):
-          <input type="number" name="precio" placeholder="Prec. Unitario" />
+          <input type="number" name="precio" placeholder="Prec. Unitario"  required/>
         </label>
         <br />
         <label>
           Fecha de compra:
-          <input type="date" name="fecha" placeholder="Fecha" />
+          <input type="date" name="fecha" placeholder="Fecha" required/>
         </label>
         <br />
         <br />
