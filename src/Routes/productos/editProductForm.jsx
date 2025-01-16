@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../styles/app.css";
+
 import axios from "axios";
 
 const EditProductForm = ({ productData, onSubmit }) => {

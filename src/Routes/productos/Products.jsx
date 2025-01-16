@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, Outlet } from "react-router-dom";
 
-import "../styles/app.css";
+
 import Product from "./productContainer";
 
 const Productos = () => {
@@ -104,6 +104,9 @@ const Productos = () => {
           />
         ))}
       </ul>
+      <div className="bg-blue-500 text-white p-4 rounded">
+        ¡Hola, Tailwind CSS con Vite!
+      </div>
     </div>
   );
 };

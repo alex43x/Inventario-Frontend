@@ -17,7 +17,7 @@ const Product = ({
   };
 
   return (
-    <div className="submenu">
+    <div >
       <h2>{name}</h2>
       <p>{description}</p>
       <p>Disponible: {stock}</p>

@@ -11,6 +11,7 @@ import SeeMore from "./Routes/productos/seeMore";
 import AddBatch from "./Routes/inventory/addBatch";
 import { AuthProvider } from "./Routes/components/authContext";
 
+
 function App() {
   return (
     <AuthProvider>

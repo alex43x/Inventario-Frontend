@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/app.css';
 import { useNavigate } from "react-router-dom";
 import Section from './sections';
 
