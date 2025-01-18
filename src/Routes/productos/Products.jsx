@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, Outlet } from "react-router-dom";
 
-
 import Product from "./productContainer";
 
 const Productos = () => {
@@ -59,53 +58,64 @@ const Productos = () => {
 
   return (
     <div>
-      <h1>Productos</h1>
-      <p>Ver los productos disponibles</p>
-      <section>
-        <h3>Buscar</h3>
-        <label>Por nombre:</label>
-        <input
-          type="text"
-          placeholder="Buscar por nombre"
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-        />
-        <br />
-        <label>Por categoría:</label>
-        <select
-          value={searchCategory}
-          onChange={(e) => setSearchCategory(e.target.value)}
-        >
-          <option value="">Todas las categorías</option>
-          {categorias.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.nombre}
-            </option>
-          ))}
-        </select>
+      <section className="text-green-800 text-center m-10">
+        <h1 className="text-8xl font-bold">Productos</h1>
+        <p className="text-lg m-8">Ver los productos disponibles</p>
       </section>
-      <br />
-      <Link to="addProduct">
-        <button>Añadir Producto</button>
-      </Link>
-      <Outlet />
-      <span> </span>
-      <Link to="/">
-        <button>Regresar</button>
-      </Link>
-      <ul>
-        {filteredProducts.map((producto) => (
-          <Product
-            key={producto.id_prod}
-            name={producto.nombre}
-            description={producto.descrip}
-            stock={producto.stock}
-            producto={producto}
-          />
-        ))}
-      </ul>
-      <div className="bg-blue-500 text-white p-4 rounded">
-        ¡Hola, Tailwind CSS con Vite!
+      <div className="flex flex-wrap">
+        <aside className="text-green-800 text-left m-3 p-3 w-1/5 inline-block  ">
+          <div className="border-2 border-green-600 rounded-lg p-5" >
+            <h3 className="text-2xl font-bold ">Buscar</h3>
+            <label>Por nombre:</label>
+            <br />
+            <input
+              className=""
+              type="text"
+              placeholder="Buscar por nombre"
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
+            />
+            <br />
+            <label>Por categoría:</label>
+            <select
+              value={searchCategory}
+              onChange={(e) => setSearchCategory(e.target.value)}
+            >
+              <option value="">Todas las categorías</option>
+              {categorias.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
+          <section className=" mt-4 rounded-lg flex flex-wrap text-gray-300">
+            <Link to="addProduct">
+              <button className=" mx-auto self-center text-center   p-4 m-auto mb-4 mr-4 rounded backdrop-blur bg-green-700 hover:bg-green-600 ">
+                Añadir Producto
+              </button>
+            </Link>
+            <Outlet />
+            <Link to="/">
+              <button className=" block mx-auto self-center text-center p-4 rounded backdrop-blur bg-green-700 hover:bg-green-600 ">
+                Regresar
+              </button>
+            </Link>
+          </section>
+        </aside>
+        <section className="text-green-800 text-center p-3 flex-1  ">
+          <ul className="flex justify-center flex-wrap ">
+            {filteredProducts.map((producto) => (
+              <Product
+                key={producto.id_prod}
+                name={producto.nombre}
+                description={producto.descrip}
+                stock={producto.stock}
+                producto={producto}
+              />
+            ))}
+          </ul>
+        </section>
       </div>
     </div>
   );

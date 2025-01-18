@@ -34,12 +34,18 @@ function Login() {
   };
 
   return (
-    <div className="bg-gray-300">
-      <h1>Log-In</h1>
-      <p>Ingresa tus datos para iniciar sesión</p>
-      <form onSubmit={handleSubmit}>
+    <div className='mt-32'>
+      <section className="text-green-800 text-center m-5">
+        <h1 className="text-6xl font-bold ">Log-In</h1>
+        <p className="text-lg m-8">Ingresa tus datos para iniciar sesión</p>
+      </section>
+      <form
+        className="bg-green-800 rounded-lg p-5 w-72 mx-auto  content-center text-gray-200 grid shadow-2xl shadow-gray-800"
+        onSubmit={handleSubmit}
+      >
         <label htmlFor="id">Documento: </label>
         <input
+          className='rounded-md text-gray-900 pl-2'
           type="text"
           value={id}
           onChange={(e) => setid(e.target.value)}
@@ -48,6 +54,7 @@ function Login() {
         <br />
         <label htmlFor="password">Constraseña: </label>
         <input
+          className="rounded-md text-gray-900 pl-2"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -55,7 +62,12 @@ function Login() {
         />
         <br />
         <br />
-        <button className= " text-white p-4 rounded backdrop-blur bg-white/30" type="submit">Iniciar sesión</button>
+        <button
+          className=" mx-auto self-center text-center text-white p-4 rounded backdrop-blur bg-green-700 transition duration-200 hover:bg-green-600"
+          type="submit"
+        >
+          Iniciar sesión
+        </button>
       </form>
     </div>
   );

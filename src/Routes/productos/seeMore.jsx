@@ -70,26 +70,25 @@ const SeeMore = () => {
   return (
     <div>
       {producto.map((producto) => (
-        <section>
-          <h1>{producto.nombre}</h1>
-          <p>Código: {producto.id_prod}</p>
-          <p>Descripción: {producto.descrip}</p>
-          <p>Stock: {producto.stock} disponible(s)</p>
+        <section className="text-green-800 text-left m-5 p-5">
+          <h1 className="text-7xl font-bold ">{producto.nombre}</h1>
+          <p className="text-xl mt-5 font-medium">Código: <span className="text-lg mt-2 font-normal">{producto.id_prod}</span></p>
+          <p className="text-xl mt-2 font-medium">Descripción: <span className="text-lg mt-2 font-normal">{producto.descrip}</span></p>
+          <p className="text-xl mt-2 font-medium">Stock: <span className="text-lg mt-2 font-normal">{producto.stock} disponible(s)</span> </p>
         </section>
       ))}
-      <aside>
-        <h2>Lotes disponibles:</h2>
+      <aside className="text-green-800 text-left m-5 p-5">
+        <h2 className="text-3xl mb-2 font-bold">Lotes disponibles:</h2>
         <ViewBatches batches={batches} />
-        <br />
       </aside>
-      <section>
-        <button onClick={handleEdit}>Editar</button>
+      <section className="flex flex-wrap justify-center text-gray-300">
+        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900 " onClick={handleEdit}>Editar</button>
         <span> </span>
-        <button onClick={newBatch}>Añadir Lote</button>
+        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900" onClick={newBatch}>Añadir Lote</button>
         <span> </span>
-        <button onClick={handleDelete}>Eliminar</button>
+        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900" onClick={handleDelete}>Eliminar</button>
         <span> </span>
-        <button onClick={() => navigate(-1)}>Regresar</button>
+        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900" onClick={() => navigate(-1)}>Regresar</button>
       </section>
     </div>
   );

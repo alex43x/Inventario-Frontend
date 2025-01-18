@@ -30,7 +30,7 @@ const AddBatch = () => {
       );
       console.log("Lote añadido:", response.data);
       alert("Lote añadido con éxito");
-      navigate('/Productos');
+      navigate("/Productos");
     } catch (error) {
       console.error("Error al añadir el lote:", error);
       alert("Hubo un error al añadir el lote");
@@ -49,39 +49,72 @@ const AddBatch = () => {
 
   return (
     <div>
-      <h1>Nuevo Lote</h1>
-      <h2>Producto: {originalData.nombre}</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Código del producto:
-          <input
-            type="text"
-            name="prod"
-            value={originalData.id_prod}
-            readOnly
-          />
-        </label>
-        <br />
-        <label>
-          Cantidad comprada:
-          <input type="number" name="cant" placeholder="Cantidad" required />
-        </label>
-        <br />
-        <label>
-          Precio de compra (Unitario):
-          <input type="number" name="precio" placeholder="Prec. Unitario"  required/>
-        </label>
-        <br />
-        <label>
-          Fecha de compra:
-          <input type="date" name="fecha" placeholder="Fecha" required/>
-        </label>
-        <br />
-        <br />
-        <button type="submit">Añadir Lote</button>
-      </form>
+      <h1 className="text-7xl font-bold text-green-800 m-10 p-5 text-center">
+        Nuevo Lote
+      </h1>
+      <h2 className="text-2xl font-bold text-green-800 m-2 p-5 text-center">
+        Producto:{" "}
+        <span className="text-2xl font-normal">{originalData.nombre}</span>
+      </h2>
+      <div className="flex justify-center">
+        <form
+          className=" w-3/12 max-w-2xl min-w-64 text-green-800 text-left  border-2 border-green-700 rounded-lg p-3 flex flex-col items-center"
+          onSubmit={handleSubmit}
+        >
+          <div className='w-full'>
+            <label className="block mt-2">Código del producto:</label>
+            <input
+              className="w-full rounded-md pl-2"
+              type="text"
+              name="prod"
+              value={originalData.id_prod}
+              readOnly
+            />
+            <br />
+            <label>Cantidad comprada:</label>
+            <br />
+            <input
+              className="w-full rounded-md pl-2 "
+              type="number"
+              name="cant"
+              placeholder="Cantidad"
+              required
+            />
+            <br />
+            <label>Precio de compra (Unitario):</label>
+            <br />
+            <input
+              className="w-full rounded-md pl-2"
+              type="number"
+              name="precio"
+              placeholder="Prec. Unitario"
+              required
+            />
+
+            <br />
+            <label>Fecha de compra:</label>
+            <br />
+            <input
+              className="w-full rounded-md pl-2"
+              type="date"
+              name="fecha"
+              placeholder="Fecha"
+              required
+            />
+          </div>
+          <br />
+          <button
+            className="text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
+            type="submit"
+          >
+            Añadir Lote
+          </button>
+        </form>
+      </div>
       <br />
-      <button onClick={handleBack}>Regresar</button>
+      <div className="flex justify-center items-center h-full">
+        <button className="text-gray-300 m-4 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900" onClick={handleBack}>Regresar</button>
+      </div>
     </div>
   );
 };
