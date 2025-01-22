@@ -69,7 +69,7 @@ const Productos = () => {
             <label>Por nombre:</label>
             <br />
             <input
-              className=""
+              className="w-full"
               type="text"
               placeholder="Buscar por nombre"
               value={searchName}
@@ -78,6 +78,7 @@ const Productos = () => {
             <br />
             <label>Por categoría:</label>
             <select
+              className="w-full"
               value={searchCategory}
               onChange={(e) => setSearchCategory(e.target.value)}
             >
@@ -96,7 +97,7 @@ const Productos = () => {
               </button>
             </Link>
             <Outlet />
-            <Link to="/">
+            <Link to="/home">
               <button className=" block mx-auto self-center text-center p-4 rounded backdrop-blur bg-green-700 hover:bg-green-600 ">
                 Regresar
               </button>

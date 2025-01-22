@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/authContext";
 
 function Login() {
-  const [id, setid] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({ id: "", password: "" });
+
   const navigate = useNavigate();
+
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -15,15 +16,16 @@ function Login() {
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, password }),
+        body: JSON.stringify({ id: credentials.id, password: credentials.password}),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         console.log("Inicio de sesión exitoso:", data);
-        login(data); // Llama a la función de login del contexto
-        navigate("/home"); // Redirige al dashboard
+        console.log(data.token)
+        login({ id: credentials.id }, data.token); // Llama a la función de login del contexto
+        navigate("/Home"); // Redirige al dashboard
       } else {
         console.error("Error:", data.message);
         alert(data.message);
@@ -34,7 +36,7 @@ function Login() {
   };
 
   return (
-    <div className='mt-32'>
+    <div className="mt-32">
       <section className="text-green-800 text-center m-5">
         <h1 className="text-6xl font-bold ">Log-In</h1>
         <p className="text-lg m-8">Ingresa tus datos para iniciar sesión</p>
@@ -45,10 +47,10 @@ function Login() {
       >
         <label htmlFor="id">Documento: </label>
         <input
-          className='rounded-md text-gray-900 pl-2'
+          className="rounded-md text-gray-900 pl-2"
           type="text"
-          value={id}
-          onChange={(e) => setid(e.target.value)}
+          value={credentials.id}
+          onChange={(e) => setCredentials({ ...credentials, id: e.target.value })}
           required
         />
         <br />
@@ -56,8 +58,8 @@ function Login() {
         <input
           className="rounded-md text-gray-900 pl-2"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={credentials.password}
+          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
           required
         />
         <br />

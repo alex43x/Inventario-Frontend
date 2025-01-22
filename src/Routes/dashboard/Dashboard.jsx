@@ -14,8 +14,8 @@ const Dashboard = () => {
       </section>
       <section className="flex justify-center flex-wrap ">
         <Section title="Productos" text="Ver los productos disponibles" />
-        <Section title="Clientes" text="Ver deudas de clientes" />
         <Section title="Ventas" text="Registrar ventas realizadas" />
+        <Section title="Clientes" text="Ver deudas de clientes" />
         <Section title="Caja" text="Consultar" />
       </section>
     </div>
