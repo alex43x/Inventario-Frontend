@@ -2,10 +2,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
 const decodeJWT = (token) => {
-  console.log('Antes de decod',token)
   try {
     const decoded = jwtDecode(token);
-    console.log('decoded', decoded)
     // Verificar si el token ha expirado
     if (decoded.exp * 1000 < Date.now()) {
       console.error("El token ha expirado");
@@ -25,7 +23,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    console.log('antes de mandar', token);
     if (token) {
       // Aquí deberías validar el token con el backend (opcional)
       const userData = decodeJWT(token); // Decodifica el token (usa una librería como jwt-decode)
@@ -38,9 +35,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData, token) => {
-    console.log('En fc login',token)
     localStorage.setItem("authToken", token); // Persiste en el almacenamiento local
-    console.log("Se guardó",localStorage.getItem("authToken"))
     setUser(userData); // Guarda los datos del usuario en el estado
   };
 

@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Login from "./Routes/login/Login";
 import Dashboard from "./Routes/dashboard/Dashboard";
-import Productos from "./Routes/productos/Products";
+import Productos from "./Routes/products/Products";
 import Ventas from "./Routes/sales/sales";
 
-import AddProduct from "./Routes/productos/addProduct";
-import EditProduct from "./Routes/productos/editProduct";
-import SeeMore from "./Routes/productos/seeMore";
+import AddProduct from "./Routes/products/addProduct";
+import EditProduct from "./Routes/products/editProduct";
+import SeeMore from "./Routes/products/seeMore";
 import AddBatch from "./Routes/inventory/addBatch";
 import NewSale from "./Routes/sales/newSale";
 

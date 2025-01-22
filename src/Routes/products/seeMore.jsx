@@ -17,7 +17,6 @@ const SeeMore = () => {
     axios
       .get(`http://localhost:3000/products/${originalData.id_prod}`)
       .then((response) => {
-        console.log("Productos recibidos", response.data);
         setProducto(response.data);
       })
       .catch((error) => {
@@ -25,6 +24,7 @@ const SeeMore = () => {
       });
   }, []);
   console.log("Producto: ", producto);
+
   useEffect(() => {
     axios
       .get(`http://localhost:3000/inventory/${originalData.id_prod}`)
@@ -67,6 +67,7 @@ const SeeMore = () => {
   const newBatch = () => {
     navigate("/Inventario/addBatch", { state: { originalData: producto[0] } });
   };
+  
   return (
     <div>
       {producto.map((producto) => (

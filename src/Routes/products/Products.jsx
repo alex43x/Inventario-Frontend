@@ -17,7 +17,7 @@ const Productos = () => {
     axios
       .get("http://localhost:3000/products")
       .then((response) => {
-        console.log("Productos recibidos", response.data);
+        console.log("Productos recibidos:", response.data);
         setProductos(response.data);
         setFilteredProducts(response.data);
       })

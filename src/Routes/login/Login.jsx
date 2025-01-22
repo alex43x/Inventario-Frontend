@@ -22,8 +22,6 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Inicio de sesión exitoso:", data);
-        console.log(data.token)
         login({ id: credentials.id }, data.token); // Llama a la función de login del contexto
         navigate("/Home"); // Redirige al dashboard
       } else {

@@ -9,7 +9,6 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken"); // Obtiene el token del localStorage
-    console.log('en protected:', token)
     if (user || token) {
       setIsAuthenticated(true); // Si hay usuario o token, está autenticado
     } else {
