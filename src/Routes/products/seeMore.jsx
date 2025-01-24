@@ -45,7 +45,9 @@ const SeeMore = () => {
   };
 
   const handleDelete = async () => {
-    alert("El producto no podrá ser recuperado. Solo puedes eliminar un producto si no tiene lotes activos.");
+    alert(
+      "El producto no podrá ser recuperado. Solo puedes eliminar un producto si no tiene lotes activos."
+    );
     const confirmDelete = window.confirm(
       "Estas seguro de que deseas eliminar el producto?"
     );
@@ -57,7 +59,7 @@ const SeeMore = () => {
         })
         .catch((error) => {
           console.error(error);
-          alert('Error: El producto tiene lotes activos')
+          alert("Error: El producto tiene lotes activos");
         });
     } else {
       alert("Eliminación cancelada");
@@ -67,15 +69,26 @@ const SeeMore = () => {
   const newBatch = () => {
     navigate("/Inventario/addBatch", { state: { originalData: producto[0] } });
   };
-  
+
   return (
     <div>
       {producto.map((producto) => (
         <section className="text-green-800 text-left m-5 p-5">
           <h1 className="text-7xl font-bold ">{producto.nombre}</h1>
-          <p className="text-xl mt-5 font-medium">Código: <span className="text-lg mt-2 font-normal">{producto.id_prod}</span></p>
-          <p className="text-xl mt-2 font-medium">Descripción: <span className="text-lg mt-2 font-normal">{producto.descrip}</span></p>
-          <p className="text-xl mt-2 font-medium">Stock: <span className="text-lg mt-2 font-normal">{producto.stock} disponible(s)</span> </p>
+          <p className="text-xl mt-5 font-medium">
+            Código:{" "}
+            <span className="text-lg mt-2 font-normal">{producto.id_prod}</span>
+          </p>
+          <p className="text-xl mt-2 font-medium">
+            Descripción:{" "}
+            <span className="text-lg mt-2 font-normal">{producto.descrip}</span>
+          </p>
+          <p className="text-xl mt-2 font-medium">
+            Stock:{" "}
+            <span className="text-lg mt-2 font-normal">
+              {producto.stock} disponible(s)
+            </span>{" "}
+          </p>
         </section>
       ))}
       <aside className="text-green-800 text-left m-5 p-5">
@@ -83,13 +96,33 @@ const SeeMore = () => {
         <ViewBatches batches={batches} />
       </aside>
       <section className="flex flex-wrap justify-center text-gray-300">
-        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900 " onClick={handleEdit}>Editar</button>
+        <button
+          className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900 "
+          onClick={handleEdit}
+        >
+          Editar
+        </button>
         <span> </span>
-        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900" onClick={newBatch}>Añadir Lote</button>
+        <button
+          className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
+          onClick={newBatch}
+        >
+          Añadir Lote
+        </button>
         <span> </span>
-        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900" onClick={handleDelete}>Eliminar</button>
+        <button
+          className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
+          onClick={handleDelete}
+        >
+          Eliminar
+        </button>
         <span> </span>
-        <button className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900" onClick={() => navigate(-1)}>Regresar</button>
+        <button
+          className=" m-2 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
+          onClick={() => navigate(-1)}
+        >
+          Regresar
+        </button>
       </section>
     </div>
   );

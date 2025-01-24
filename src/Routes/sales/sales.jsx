@@ -4,8 +4,6 @@ import Section from "../dashboard/sections";
 import { Link } from "react-router-dom";
 
 const Ventas = () => {
-  const navigate = useNavigate();
-
   return (
     <div>
       <section className="text-green-800 text-center mt-20">
@@ -15,9 +13,17 @@ const Ventas = () => {
       </section>
       <section className="flex justify-center flex-wrap ">
         <Link to="NuevaVenta">
-          <Section title="Nueva Venta" text="Registrar nuevas ventas" />
+          <div className="bg-green-800 rounded-lg p-5 w-72 text-gray-200 m-2 shadow-2xl shadow-gray-700 transition duration-200 hover:bg-green-900">
+            <h1 className=" text-4xl font-bold">Nueva Venta</h1>
+            <p className=" mt-5">Registrar nueva venta</p>
+          </div>
         </Link>
-        <Section title="Ver" text="Ver ventas anteriores" />
+        <Link to="NuevaVenta">
+          <div className="bg-green-800 rounded-lg p-5 w-72 text-gray-200 m-2 shadow-2xl shadow-gray-700 transition duration-200 hover:bg-green-900">
+            <h1 className="text-4xl font-bold">Ver Más</h1>
+            <p className=" mt-5">Ver ventas anteriores</p>
+          </div>
+        </Link>
       </section>
     </div>
   );

@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ViewBatches from "../inventory/viewBatches";
 
-const ProductSearch = () => {
+const ProductSearch = ({getData}) => {
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState("");
+  
   const [batches, setBatches] = useState([]);
 
   // Función para manejar la búsqueda con debounce
   const handleSearch = async (searchTerm) => {
     if (!searchTerm.trim()) {
-      setProducts([]); // Si el input está vacío, limpiar resultados
+      setProducts([]); // Si el input está vacío, limpia los resultados
       return;
     }
     try {
@@ -38,6 +39,8 @@ const ProductSearch = () => {
 
   const handleOptionClick = (product) => {
     setSelectedProduct(product.nombre);
+    console.log(product);
+    getData(product);
     setQuery(""); // Opcional: limpiar el input si seleccionas un producto
     setProducts([]); // Ocultar las opciones después de seleccionar
     try{
@@ -46,7 +49,6 @@ const ProductSearch = () => {
           console.log("Lotes recibidos: ", response.data);
           setBatches(response.data);
         })
-
     }catch(error){
         console.error(error)
     }
@@ -74,7 +76,7 @@ const ProductSearch = () => {
           </div>
         ))}
       </div>
-      <p>{selectedProduct}</p>
+      <p>{selectedProduct} - Lotes Disponibles</p>
       {selectedProduct && (
   
         <ViewBatches batches={batches}/>
