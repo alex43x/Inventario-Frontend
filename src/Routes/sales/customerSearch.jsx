@@ -50,23 +50,26 @@ export default function CustomerSearch({ customers, onSelectCustomer }) {
   }, []);
 
   return (
-    <div className="relative">
-      <label className="inline-flex m-2">Cliente </label>
-      <input
-        type="text"
-        placeholder="Escribe el nombre del cliente"
-        className="rounded-md pl-2 mr-1 w-3/12"
-        value={searchTerm}
-        onChange={handleInputChange}
-        required
-      />
-      <button
-        type="button"
-        onClick={handleClear} // Llama a la nueva función para limpiar
-        className="text-gray-300 self-center text-center px-4 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
-      >
-        x
-      </button>
+    <div className="relative mt-2">
+      <div className="flex items-center w-full">
+        <label className="ml-2">Cliente: </label>
+        <input
+          type="text"
+          placeholder="Nombre del cliente"
+          className="rounded-md pl-2 mx-2 flex-grow"
+          value={searchTerm}
+          onChange={handleInputChange}
+          required
+        />
+        <button
+          type="button"
+          onClick={handleClear} 
+          className="text-gray-300 px-2 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
+        >
+          x
+        </button>
+      </div>
+      {/* Lista desplegable */}
       {filteredCustomers.length > 0 && (
         <ul className="absolute bg-white border rounded-md shadow-md w-full max-h-40 overflow-y-auto z-10">
           {filteredCustomers.map((customer, index) => (

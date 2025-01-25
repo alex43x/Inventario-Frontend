@@ -92,7 +92,7 @@ const SeeMore = () => {
           <p className="text-xl mt-2 font-medium">
             Precio:{" "}
             <span className="text-lg mt-2 font-normal">
-              {producto.precio} ₲
+             ₲ {producto.precio} 
             </span>{" "}
           </p>
         </section>

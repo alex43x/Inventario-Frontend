@@ -43,7 +43,7 @@ const ProductTable = ({
               <td>
                 {product.nombre}
                 <button
-                  className="text-red-500 px-3"
+                  className="text-red-700 px-2 bg-red-200 rounded-md ml-2"
                   onClick={() => onRemoveProduct(product.id_prod)}
                 >
                   x
@@ -69,7 +69,7 @@ const ProductTable = ({
                   className="w-7/12 rounded-md pl-2 bg-gray-300"
                   type="number"
                   min="1"
-                  value={product.precio}
+                  value=  {product.precio}
                   onChange={(e) =>
                     onUpdatePrice(
                       product.id_prod,
@@ -100,9 +100,9 @@ const ProductTable = ({
             <th></th>
             <th></th>
             <th></th>
-            <th>{totalIVA.toFixed()}</th>
-            <th>{totalGravada.toFixed()}</th>
-            <th>{totalFinal.toFixed()}</th>
+            <th>₲ {totalIVA.toFixed()}</th>
+            <th>₲ {totalGravada.toFixed()}</th>
+            <th>₲ {totalFinal.toFixed()}</th>
           </tr>
         </tfoot>
       </table>

@@ -24,7 +24,7 @@ const ViewBatches = ({ batches }) => {
             >
               <td className="pl-2">{batch.id_lote}</td>
               <td>{batch.cant}</td>
-              <td>{batch.precio_compra}</td>
+              <td>₲ {batch.precio_compra} </td>
               <td>{new Date(batch.fecha_compra).toLocaleDateString()}</td>
             </tr>
           ))}
