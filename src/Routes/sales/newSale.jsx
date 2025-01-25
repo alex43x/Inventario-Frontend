@@ -4,12 +4,12 @@ import { jwtDecode } from "jwt-decode";
 
 import ProductSearch from "./productSearch";
 import CustomerSearch from "./customerSearch";
+import PaySale from "./paySale";
 
 export default function NewSale() {
   const [customers, setCustomers] = useState([]);
   const [date, setDate] = useState("");
-  const[idSale, setidSale]=useState("")
-  const [seller, setSeller] = useState("");
+  const [idSale, setidSale] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
 
@@ -56,8 +56,6 @@ export default function NewSale() {
       prev.map((product) => {
         if (product.id_prod === id) {
           const precio = newprice; // La base gravada es el precio negociado
-          console.log(selectedProducts);
-
           return {
             ...product,
             precio,
@@ -103,13 +101,20 @@ export default function NewSale() {
     0
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!selectedCustomer) {
       alert("Por favor, selecciona un cliente válido.");
       return;
     }
+
+    if (!selectedProducts || selectedProducts.length === 0) {
+      alert("Por favor, selecciona al menos un producto.");
+      return;
+    }
+
+    // Datos para la cabecera de la venta
     const saleData = {
       fecha: date,
       subtotal: totalGravada.toFixed(),
@@ -118,47 +123,51 @@ export default function NewSale() {
       cliente: selectedCustomer.id,
       vendedor: userId,
     };
-    console.log(saleData);
 
-    axios
-      .post("http://localhost:3000/sales", saleData)
-      .then((response) => {
-        console.log(response);
-        alert("Venta registrada");
-        setidSale(response.data.id);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    
+    try {
+      // Crea la cabecera de la venta y espera la respuesta
+      const saleResponse = await axios.post(
+        "http://localhost:3000/sales",
+        saleData
+      );
+      const newSaleId = saleResponse.data.id; // Obtén el ID de la venta creada
+      setidSale(newSaleId);
 
-    selectedProducts.forEach(async (product) => {
-      const productData = {
-        venta: idSale, // Referencia a la venta recién creada
-        producto: product.id_prod,
-        cantidad: product.quantity,
-        iva: (
-          (product.precio * product.quantity * product.iva) /
-          (100 + product.iva)
-        ).toFixed(),
-        subtotal: (
-          (product.precio * product.quantity * 100) /
-          (100 + product.iva)
-        ).toFixed(),
-        total: product.precio * product.quantity,
-      };
-      console.log(productData)
+      // Envía los productos asociados a la venta
+      for (const product of selectedProducts) {
+        const productData = {
+          venta: newSaleId, // Usa el ID de la venta recién creada
+          producto: product.id_prod,
+          cantidad: product.quantity,
+          iva: (
+            (product.precio * product.quantity * product.iva) /
+            (100 + product.iva)
+          ).toFixed(),
+          subtotal: (
+            (product.precio * product.quantity * 100) /
+            (100 + product.iva)
+          ).toFixed(),
+          total: product.precio * product.quantity,
+        };
 
-       axios
-        .post("http://localhost:3000/sales-products", productData)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error en subventa");
-        });
-    });
+        try {
+          await axios.post("http://localhost:3000/sales-products", productData);
+          console.log(`Producto ${product.id_prod} registrado en la venta.`);
+        } catch (error) {
+          console.error(
+            `Error al registrar el producto ${product.id_prod}:`,
+            error
+          );
+          alert(`Error al registrar el producto ${product.nombre}`);
+        }
+      }
+
+      alert("Venta registrada exitosamente.");
+      setSelectedProducts([]); // Limpia los productos seleccionados
+    } catch (error) {
+      console.error("Error al registrar la venta:", error);
+      alert("Error al registrar la venta.");
+    }
   };
 
   return (
@@ -316,6 +325,7 @@ export default function NewSale() {
                   </tfoot>
                 </table>
               </div>
+              <PaySale totalAmount={totalFinal}>/</PaySale>
             </div>
           </div>
           <button

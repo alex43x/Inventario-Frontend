@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function AddProduct() {
   const [nombre, setNombre] = useState("");
   const [descrip, setDescrip] = useState("");
+  const [precio, setPrecio] = useState(0)
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -40,6 +41,7 @@ export default function AddProduct() {
         stock: form.stock.value,
         iva: selectedOption,
         categoria: selectedCategory,
+        precio: precio,
       });
       console.log("Producto añadido:", response.data);
       alert("Producto añadido con éxito");
@@ -82,6 +84,16 @@ export default function AddProduct() {
               placeholder="Descripción"
               value={descrip}
               onChange={(e) => setDescrip(e.target.value)}
+              required
+            />
+            <br />
+            <label>Precio: </label>
+            <input
+              className="w-full rounded-md pl-2"
+              type="number"
+              value={precio}
+              min={0}
+              onChange={(e) => setPrecio(e.target.value)}
               required
             />
             <br />

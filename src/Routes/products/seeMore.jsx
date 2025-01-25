@@ -89,6 +89,12 @@ const SeeMore = () => {
               {producto.stock} disponible(s)
             </span>{" "}
           </p>
+          <p className="text-xl mt-2 font-medium">
+            Precio:{" "}
+            <span className="text-lg mt-2 font-normal">
+              {producto.precio} ₲
+            </span>{" "}
+          </p>
         </section>
       ))}
       <aside className="text-green-800 text-left m-5 p-5">

@@ -6,7 +6,7 @@ import axios from "axios";
 const EditProductForm = ({ productData, onSubmit }) => {
   const location = useLocation();
   const originalData = location.state?.originalData;
-  console.log('a', originalData)
+  console.log("a", originalData);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -22,8 +22,6 @@ const EditProductForm = ({ productData, onSubmit }) => {
       });
   }, []);
 
-
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -32,6 +30,7 @@ const EditProductForm = ({ productData, onSubmit }) => {
     stock: originalData?.stock || "",
     iva: originalData?.iva || "",
     categoria: originalData?.categoria || "",
+    precio: originalData?.precio || "",
   });
 
   // Rellena el formulario con los datos iniciales del producto
@@ -43,6 +42,7 @@ const EditProductForm = ({ productData, onSubmit }) => {
         stock: originalData.stock || 0,
         iva: originalData.iva,
         categoria: originalData.categoria || "",
+        precio: originalData.precio
       });
     }
   }, [productData]);
@@ -73,7 +73,7 @@ const EditProductForm = ({ productData, onSubmit }) => {
             Nombre del producto:
             <br />
             <input
-            className="w-full rounded-md pl-2"
+              className="w-full rounded-md pl-2"
               type="text"
               name="nombre"
               value={formData.nombre}
@@ -85,10 +85,23 @@ const EditProductForm = ({ productData, onSubmit }) => {
             Descripción:
             <br />
             <input
-            className="w-full rounded-md pl-2"
+              className="w-full rounded-md pl-2"
               type="text"
               name="descrip"
               value={formData.descrip}
+              onChange={handleInputChange}
+              placeholder="Descripción"
+            />
+          </label>
+          <label>
+            Precio
+            <br />
+            <input
+              className="w-full rounded-md pl-2"
+              type="number"
+              name="precio"
+              min={0}
+              value={formData.precio}
               onChange={handleInputChange}
               placeholder="Descripción"
             />
@@ -98,7 +111,7 @@ const EditProductForm = ({ productData, onSubmit }) => {
             Stock:
             <br />
             <input
-            className="w-full rounded-md pl-2"
+              className="w-full rounded-md pl-2"
               type="number"
               name="stock"
               value={formData.stock}
@@ -112,7 +125,7 @@ const EditProductForm = ({ productData, onSubmit }) => {
             IVA:
             <br />
             <input
-            className="w-full rounded-md pl-2"
+              className="w-full rounded-md pl-2"
               type="number"
               name="IVA"
               value={formData.iva}
@@ -124,7 +137,7 @@ const EditProductForm = ({ productData, onSubmit }) => {
           <br />
           <label>Categoría</label>
           <select
-          className="w-full rounded-md pl-2"
+            className="w-full rounded-md pl-2"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             required
@@ -140,7 +153,12 @@ const EditProductForm = ({ productData, onSubmit }) => {
           </select>
           <br />
         </div>
-        <button className="text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900 m-5" type="submit">Guardar cambios</button>
+        <button
+          className="text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900 m-5"
+          type="submit"
+        >
+          Guardar cambios
+        </button>
       </form>
     </div>
   );
