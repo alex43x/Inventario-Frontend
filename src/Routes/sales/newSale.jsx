@@ -11,8 +11,13 @@ export default function NewSale() {
   const [customers, setCustomers] = useState([]);
   const [date, setDate] = useState("");
   const [idSale, setidSale] = useState("");
+  const [payment, setPayment] = useState(true);
+  const [actpay, setActpay]=useState(0)
+
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
+
+  let estado="cerrado"
 
   useEffect(() => {
     axios
@@ -102,6 +107,13 @@ export default function NewSale() {
     0
   );
 
+  if (payment) {
+    console.log("True");
+  } else {
+    console.log("false");
+    estado="pendiente"
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -123,6 +135,7 @@ export default function NewSale() {
       total: totalFinal.toFixed(),
       cliente: selectedCustomer.id,
       vendedor: userId,
+      contado: payment
     };
 
     try {
@@ -163,8 +176,36 @@ export default function NewSale() {
         }
       }
 
+      const payData = {
+        venta: newSaleId,
+        pago: actpay,
+        fecha: date,
+        contado: payment,
+        cliente: selectedCustomer.id,
+        estado: estado,
+      };
+
+      console.log(payData)
+      try{
+         await axios.post('http://localhost:3000/payments', payData)
+         console.log('Pago registrado')
+      }catch(error){
+        alert('Error al registrar el pago.')
+        console.error(error)
+      }
+
+      try{
+        const saldo=totalFinal.toFixed()-actpay
+        console.log(saldo)
+        await axios.put(`http://localhost:3000/customers-sale/${selectedCustomer.id}`,{saldo})
+      }catch(error){
+        alert('Error al registrar el saldo del cliente')
+        console.error(error)
+      }
+
       alert("Venta registrada exitosamente.");
       setSelectedProducts([]); // Limpia los productos seleccionados
+      //window.location.reload();
     } catch (error) {
       console.error("Error al registrar la venta:", error);
       alert("Error al registrar la venta.");
@@ -222,7 +263,7 @@ export default function NewSale() {
                   onUpdatePrice={handleUpdatePrice}
                   onRemoveProduct={handleRemoveProduct}
                 />
-                <PaySale totalAmount={totalFinal} />
+                <PaySale totalAmount={totalFinal} onPay={setPayment} payed={setActpay} />
               </div>
             </div>
           </div>

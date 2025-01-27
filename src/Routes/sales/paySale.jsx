@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const PaySale = ({ totalAmount }) => {
+const PaySale = ({ totalAmount, onPay, payed }) => {
   const [actpay, setActpay] = useState(totalAmount);
   const [payMode, setPayMode] = useState("");
   const [quote, setQuote] = useState(false);
@@ -22,6 +22,9 @@ const PaySale = ({ totalAmount }) => {
       setActpay(numericValue);
       setPayMode(numericValue === totalAmount ? "Al contado" : "A cuota");
       setQuote(numericValue === totalAmount ? false : true);
+      onPay(numericValue === totalAmount ? true : false);
+      payed(numericValue)
+      console.log(numericValue)
     } else {
       alert(`El valor no puede superar el total: ${totalAmount}`);
     }
@@ -44,7 +47,7 @@ const PaySale = ({ totalAmount }) => {
         </label>
       </div>
       <div className="md:w-1/3 p-2 ml-6">
-        <p className="">Saldo restante: {totalAmount-actpay}</p>
+        <p className="">Saldo restante: {totalAmount - actpay}</p>
         <p className="">Modo de Pago: {payMode}</p>
       </div>
       {quote && (

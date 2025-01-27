@@ -11,6 +11,7 @@ import EditProduct from "./Routes/products/editProduct";
 import SeeMore from "./Routes/products/seeMore";
 import AddBatch from "./Routes/inventory/addBatch";
 import NewSale from "./Routes/sales/newSale";
+import MoreSales from "./Routes/sales/seeMoreSales";
 
 import Layout from "./Routes/components/layout";
 import ProtectedRoute from "./Routes/components/protectedRoute";
@@ -42,6 +43,7 @@ function App() {
             <Route path="Inventario/addBatch" element={<AddBatch />} />
             <Route path="Ventas" element={<Ventas />} />
             <Route path="Ventas/NuevaVenta" element={<NewSale />} />
+            <Route path="Ventas/VerMas" element={<MoreSales />} />
           </Route>
 
           {/* Ruta 404 */}

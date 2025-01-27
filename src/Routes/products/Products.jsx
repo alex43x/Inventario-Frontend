@@ -90,7 +90,7 @@ const Productos = () => {
               ))}
             </select>
           </div>
-          <section className=" mt-4 rounded-lg flex flex-wrap text-gray-300">
+          <section className=" mt-4 rounded-lg flex flex-wrap text-gray-100">
             <Link to="addProduct">
               <button className=" mx-auto self-center text-center   p-4 m-auto mb-4 mr-4 rounded backdrop-blur bg-green-700 hover:bg-green-600 ">
                 Añadir Producto

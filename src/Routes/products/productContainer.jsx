@@ -17,7 +17,7 @@ const Product = ({
   };
 
   return (
-    <div className="bg-green-800 shadow-2xl shadow-gray-700 rounded-md p-4 w-72 text-gray-300 m-4 text-left transition duration-150 hover:bg-green-900">
+    <div className="bg-green-800 shadow-2xl shadow-gray-700 rounded-md p-4 w-72 text-gray-200 m-4 text-left transition duration-150 hover:bg-green-900">
       <h2 className=" text-2xl font-bold">{name}</h2>
       <p className="mt-5 font-semibold">{description}</p>
       <p className="font-semibold">Disponible: {stock}</p>

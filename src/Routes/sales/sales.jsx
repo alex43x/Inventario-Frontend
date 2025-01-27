@@ -18,7 +18,7 @@ const Ventas = () => {
             <p className=" mt-5">Registrar nueva venta</p>
           </div>
         </Link>
-        <Link to="NuevaVenta">
+        <Link to="VerMas">
           <div className="bg-green-800 rounded-lg p-5 w-72 text-gray-200 m-2 shadow-2xl shadow-gray-700 transition duration-200 hover:bg-green-900">
             <h1 className="text-4xl font-bold">Ver Más</h1>
             <p className=" mt-5">Ver ventas anteriores</p>
