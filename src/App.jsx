@@ -16,6 +16,10 @@ import MoreSales from "./Routes/sales/seeMoreSales";
 import Layout from "./Routes/components/layout";
 import ProtectedRoute from "./Routes/components/protectedRoute";
 import { AuthProvider } from "./Routes/components/authContext";
+import Clientes from "./Routes/customers/customers";
+import SeeMoreCustomers from "./Routes/customers/seeMore";
+import AddCustomer from "./Routes/customers/addCustomer";
+import EditCustomer from "./Routes/customers/editCustomer";
 
 function App() {
   return (
@@ -44,6 +48,10 @@ function App() {
             <Route path="Ventas" element={<Ventas />} />
             <Route path="Ventas/NuevaVenta" element={<NewSale />} />
             <Route path="Ventas/VerMas" element={<MoreSales />} />
+            <Route path="Clientes" element={<Clientes />} />
+            <Route path="Clientes/seeMore" element={<SeeMoreCustomers/>} />
+            <Route path="Clientes/addcustomer" element={<AddCustomer/>} />
+            <Route path="Clientes/editcustomer" element={<EditCustomer/>} />
           </Route>
 
           {/* Ruta 404 */}

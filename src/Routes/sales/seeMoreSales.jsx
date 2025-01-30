@@ -87,7 +87,7 @@ export default function MoreSales() {
                     +₲ {sale.total.toLocaleString("es-ES")}
                   </p>
                   <button
-                    className="bg-green-700 ml-2 w-8 h-8 rounded text-white"
+                    className=" ml-2 w-8 h-8 rounded-lg border-2 border-green-700 font-bold text-green-700"
                     onClick={() => toggleHidden(sale.id)}
                   >
                     {hiddenStates[sale.id] ? "-" : "+"}

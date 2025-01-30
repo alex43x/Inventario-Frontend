@@ -205,7 +205,7 @@ export default function NewSale() {
 
       alert("Venta registrada exitosamente.");
       setSelectedProducts([]); // Limpia los productos seleccionados
-      //window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error("Error al registrar la venta:", error);
       alert("Error al registrar la venta.");
