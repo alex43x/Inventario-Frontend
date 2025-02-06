@@ -79,7 +79,7 @@ const ProductSearch = ({getData}) => {
       <p>{selectedProduct} - Lotes Disponibles</p>
       {selectedProduct && (
   
-        <ViewBatches batches={batches}/>
+        <ViewBatches batches={batches} hidden={false}/>
       )}
     </div>
   );

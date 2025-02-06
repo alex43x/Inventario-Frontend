@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import ProductSearch from "./productSearch";
@@ -9,15 +9,36 @@ import ProductTable from "./productTable";
 
 export default function NewSale() {
   const [customers, setCustomers] = useState([]);
-  const [date, setDate] = useState("");
-  const [idSale, setidSale] = useState("");
-  const [payment, setPayment] = useState(true);
-  const [actpay, setActpay]=useState(0)
+  const [date, setDate] = useState(() => {
+    const fecha = new Date();
+    const offset = fecha.getTimezoneOffset(); // Diferencia de zona horaria en minutos
+    fecha.setMinutes(fecha.getMinutes() - offset); // Ajustar a la hora local
+    return fecha.toISOString().slice(0, 16);
+  });
+  const [idSale, setIdSale] = useState("");
+  const [payment, setPayment] = useState(false);
+  const [actpay, setActpay] = useState(0);
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  let estado="cerrado"
+  const token = localStorage.getItem("authToken");
+
+  const userId = useMemo(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      return decodedToken.id;
+    }
+    return null;
+  }, [token]);
+
+  const userName = useMemo(() => {
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      return decodedToken.username;
+    }
+    return null;
+  }, [token]);
 
   useEffect(() => {
     axios
@@ -26,28 +47,23 @@ export default function NewSale() {
         setCustomers(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Error al obtener clientes:", error);
       });
   }, []);
 
   // Callback para agregar un producto a la tabla
-  const handleAddProduct = (product) => {
-    const existingProduct = selectedProducts.find(
-      (p) => p.id_prod === product.id_prod
-    );
+  const handleAddProduct = useCallback((product) => {
+    setSelectedProducts((prev) => {
+      const existingProduct = prev.find((p) => p.id_prod === product.id_prod);
+      if (existingProduct) {
+        alert("El producto ya está agregado.");
+        return prev;
+      }
+      return [...prev, { ...product, quantity: 1 }]; // Inicializa con cantidad 1
+    });
+  }, []);
 
-    if (existingProduct) {
-      alert("El producto ya está agregado.");
-      return;
-    }
-
-    setSelectedProducts((prev) => [
-      ...prev,
-      { ...product, quantity: 1 }, // Inicializa con cantidad 1
-    ]);
-  };
-
-  const handleUpdateQuantity = (productName, quantity) => {
+  const handleUpdateQuantity = useCallback((productName, quantity) => {
     setSelectedProducts((prev) =>
       prev.map((product) =>
         product.nombre === productName
@@ -55,67 +71,50 @@ export default function NewSale() {
           : product
       )
     );
-  };
+  }, []);
 
-  const handleUpdatePrice = (id, newprice) => {
+  const handleUpdatePrice = useCallback((id, newprice) => {
     setSelectedProducts((prev) =>
-      prev.map((product) => {
-        if (product.id_prod === id) {
-          const precio = newprice; // La base gravada es el precio negociado
-          return {
-            ...product,
-            precio,
-          };
-        }
-        return product;
-      })
+      prev.map((product) =>
+        product.id_prod === id
+          ? { ...product, precio: newprice } // Actualiza el precio
+          : product
+      )
     );
-  };
+  }, []);
 
-  const handleRemoveProduct = (id_prod) => {
+  const handleRemoveProduct = useCallback((id_prod) => {
     setSelectedProducts((prev) =>
       prev.filter((product) => product.id_prod !== id_prod)
     );
-  };
-
-  const token = localStorage.getItem("authToken");
-
-  let userId = null;
-  let userName = null;
-
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    userId = decodedToken.id;
-    userName = decodedToken.username;
-  }
+  }, []);
 
   // Calcular los totales globales
-  const totalGravada = selectedProducts.reduce(
-    (sum, producto) =>
-      sum + (producto.precio * producto.quantity * 100) / (100 + producto.iva),
-    0
-  );
-  const totalIVA = selectedProducts.reduce(
-    (sum, producto) =>
-      sum +
-      (producto.precio * producto.quantity * producto.iva) /
-        (100 + producto.iva),
-    0
-  );
-  const totalFinal = selectedProducts.reduce(
-    (sum, producto) => sum + producto.precio * producto.quantity,
-    0
-  );
-
-  if (payment) {
-    console.log("True");
-  } else {
-    console.log("false");
-    estado="pendiente"
-  }
+  const { totalGravada, totalIVA, totalFinal } = useMemo(() => {
+    const gravada = selectedProducts.reduce(
+      (sum, producto) =>
+        sum +
+        (producto.precio * producto.quantity * 100) / (100 + producto.iva),
+      0
+    );
+    const iva = selectedProducts.reduce(
+      (sum, producto) =>
+        sum +
+        (producto.precio * producto.quantity * producto.iva) /
+          (100 + producto.iva),
+      0
+    );
+    const final = selectedProducts.reduce(
+      (sum, producto) => sum + producto.precio * producto.quantity,
+      0
+    );
+    return { totalGravada: gravada, totalIVA: iva, totalFinal: final };
+  }, [selectedProducts]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const estado = payment ? "cerrado" : "pendiente";
 
     if (!selectedCustomer) {
       alert("Por favor, selecciona un cliente válido.");
@@ -135,7 +134,8 @@ export default function NewSale() {
       total: totalFinal.toFixed(),
       cliente: selectedCustomer.id,
       vendedor: userId,
-      contado: payment
+      contado: payment,
+      estado: estado,
     };
 
     try {
@@ -145,10 +145,10 @@ export default function NewSale() {
         saleData
       );
       const newSaleId = saleResponse.data.id; // Obtén el ID de la venta creada
-      setidSale(newSaleId);
+      setIdSale(newSaleId);
 
       // Envía los productos asociados a la venta
-      for (const product of selectedProducts) {
+      const productPromises = selectedProducts.map((product) => {
         const productData = {
           venta: newSaleId, // Usa el ID de la venta recién creada
           producto: product.id_prod,
@@ -163,18 +163,10 @@ export default function NewSale() {
           ).toFixed(),
           total: product.precio * product.quantity,
         };
+        return axios.post("http://localhost:3000/sales-products", productData);
+      });
 
-        try {
-          await axios.post("http://localhost:3000/sales-products", productData);
-          console.log(`Producto ${product.id_prod} registrado en la venta.`);
-        } catch (error) {
-          console.error(
-            `Error al registrar el producto ${product.id_prod}:`,
-            error
-          );
-          alert(`Error al registrar el producto ${product.nombre}`);
-        }
-      }
+      await Promise.all(productPromises);
 
       const payData = {
         venta: newSaleId,
@@ -185,27 +177,19 @@ export default function NewSale() {
         estado: estado,
       };
 
-      console.log(payData)
-      try{
-         await axios.post('http://localhost:3000/payments', payData)
-         console.log('Pago registrado')
-      }catch(error){
-        alert('Error al registrar el pago.')
-        console.error(error)
-      }
+      await axios.post("http://localhost:3000/payments", payData);
 
-      try{
-        const saldo=totalFinal.toFixed()-actpay
-        console.log(saldo)
-        await axios.put(`http://localhost:3000/customers-sale/${selectedCustomer.id}`,{saldo})
-      }catch(error){
-        alert('Error al registrar el saldo del cliente')
-        console.error(error)
-      }
+      const saldo = totalFinal.toFixed() - actpay;
+      await axios.put(
+        `http://localhost:3000/customers-sale/${selectedCustomer.id}`,
+        { saldo }
+      );
 
       alert("Venta registrada exitosamente.");
       setSelectedProducts([]); // Limpia los productos seleccionados
-      window.location.reload();
+      setSelectedCustomer(null); // Limpia el cliente seleccionado
+      setDate(""); // Limpia la fecha
+      setActpay(0); // Limpia el pago actual
     } catch (error) {
       console.error("Error al registrar la venta:", error);
       alert("Error al registrar la venta.");
@@ -223,7 +207,7 @@ export default function NewSale() {
 
       <div className="flex justify-center">
         <form
-          className=" text-green-800 text-left  border-2 border-green-700 rounded-lg p-3 flex flex-col items- w-10/12"
+          className="text-green-800 text-left border-2 border-green-700 rounded-lg p-3 flex flex-col items-center w-10/12"
           onSubmit={handleSubmit}
         >
           <div className="inline-flex flex-wrap border-b-2 border-green-700">
@@ -231,20 +215,16 @@ export default function NewSale() {
               customers={customers}
               onSelectCustomer={setSelectedCustomer}
             />
-            <div className="mt-2 ">
+            <div className="mt-2">
               <label className="ml-2 mt-2">Vendedor: </label>
-              <input
-                className=" rounded-md pl-2"
-                value={userName}
-                onChange={(e) => setSeller(e.target.value)}
-                readOnly
-              />
+              <input className="rounded-md pl-2" value={userName} readOnly />
             </div>
             <div className="my-2">
-              <label className="ml-2 ">Fecha: </label>
+              <label className="ml-2">Fecha: </label>
               <input
-                type="date"
-                className=" rounded-md pl-2 "
+                value={date}
+                type="datetime-local"
+                className="rounded-md pl-2"
                 onChange={(e) => setDate(e.target.value)}
                 required
               />
@@ -263,11 +243,14 @@ export default function NewSale() {
                   onUpdatePrice={handleUpdatePrice}
                   onRemoveProduct={handleRemoveProduct}
                 />
-                <PaySale totalAmount={totalFinal} onPay={setPayment} payed={setActpay} />
+                <PaySale
+                  totalAmount={totalFinal}
+                  onPay={setPayment}
+                  payed={setActpay}
+                />
               </div>
             </div>
           </div>
-
           <button
             className="mt-5 text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
             type="submit"

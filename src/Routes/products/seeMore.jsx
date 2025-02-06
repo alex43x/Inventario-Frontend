@@ -66,6 +66,50 @@ const SeeMore = () => {
     }
   };
 
+  const deleteBatch = async (lote, stock, producto) => {
+    try {
+      await axios.put("http://localhost:3000/inventory-cancel", {
+        lote,
+        stock,
+        producto,
+      });
+
+      alert("Lote anulado...");
+
+      setBatches((prevBatches) =>
+        prevBatches.filter((item) => item.id_lote !== lote)
+      ); 
+      setProducto(prevProducto => prevProducto.map(p =>
+        p.id_prod === producto ? { ...p, stock: p.stock - stock } : p
+      ));
+      console.log("Batches actualizados: ", batches);
+    } catch (error) {
+      console.error(error);
+      alert("Error en la anulación");
+    }
+  };
+
+  useEffect(() => {
+    if (!originalData?.id_prod) return;
+
+    axios
+      .get(`http://localhost:3000/products/${originalData.id_prod}`)
+      .then((response) => setProducto(response.data))
+      .catch((error) => console.log(error));
+  }, [originalData?.id_prod]);
+
+  useEffect(() => {
+    if (!originalData?.id_prod) return;
+
+    axios
+      .get(`http://localhost:3000/inventory/${originalData.id_prod}`)
+      .then((response) => {
+        console.log("Lotes recibidos: ", response.data);
+        setBatches(response.data);
+      })
+      .catch((error) => console.log(error));
+  }, [originalData?.id_prod]);
+
   const newBatch = () => {
     navigate("/Inventario/addBatch", { state: { originalData: producto[0] } });
   };
@@ -92,14 +136,14 @@ const SeeMore = () => {
           <p className="text-xl mt-2 font-medium">
             Precio:{" "}
             <span className="text-lg mt-2 font-normal">
-             ₲ {producto.precio} 
+              ₲ {producto.precio}
             </span>{" "}
           </p>
         </section>
       ))}
       <aside className="text-green-800 text-left m-5 p-5">
         <h2 className="text-3xl mb-2 font-bold">Lotes disponibles:</h2>
-        <ViewBatches batches={batches} />
+        <ViewBatches batches={batches} onRemove={deleteBatch} hidden={true}/>
       </aside>
       <section className="flex flex-wrap justify-center text-gray-300">
         <button

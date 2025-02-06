@@ -1,6 +1,6 @@
 import React from "react";
 
-const ViewBatches = ({ batches }) => {
+const ViewBatches = ({ batches, onRemove, hidden }) => {
   return (
     <div className="overflow-hidden rounded-md border border-gray-300 w-11/12">
       <table
@@ -25,7 +25,19 @@ const ViewBatches = ({ batches }) => {
               <td className="pl-2">{batch.id_lote}</td>
               <td>{batch.cant}</td>
               <td>₲ {batch.precio_compra} </td>
-              <td>{new Date(batch.fecha_compra).toLocaleDateString()}</td>
+              <td>
+                {new Date(batch.fecha_compra).toLocaleDateString()}
+                {hidden && (
+                  <button
+                    className="ml-10"
+                    onClick={() =>
+                      onRemove(batch.id_lote, batch.cant, batch.id_prod)
+                    }
+                  >
+                    Anular lote...
+                  </button>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

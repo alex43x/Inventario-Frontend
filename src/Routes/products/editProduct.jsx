@@ -18,7 +18,7 @@ const EditProductPage = () => {
     try {
       // Realizar la solicitud PUT con axios
       const response = await axios.put(
-        `http://localhost:3000/products/${originalData.id_prod}`,
+        `http://localhost:3000/products-edit/${originalData.id_prod}`,
         updatedData
       );
       console.log("Producto actualizado:", response.data);
