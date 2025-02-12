@@ -13,14 +13,16 @@ const Layout = () => {
   return (
     <div>
       <header>
-        <nav className="mt-5 flex">
-          <a className="text-lg ml-6 text-green-800 hover:text-green-600" href="/Home">Dashboard</a>
-          <a className="text-lg ml-8 text-green-800 hover:text-green-600" href="/Productos">Productos</a>
-          <a className="text-lg ml-8 text-green-800 hover:text-green-600" href="/Ventas">Ventas</a>
-          <a className="text-lg ml-8 text-green-800 hover:text-green-600" href="/Clientes">Clientes</a>
-          <button className="text-lg text-green-800 hover:text-green-600 ml-auto mr-5" onClick={handleLogout}>
-            Cerrar Sesión
-          </button>
+        <nav className="lg:mt-5 lg:ml-10 flex flex-wrap">
+          <a className="text-lg lg:ml-6 text-sky-950 hover:text-sky-800" href="/Home">Dashboard</a>
+          <a className="text-lg ml-8 text-sky-950 hover:text-sky-800" href="/Productos">Productos</a>
+          <a className="text-lg ml-8 text-sky-950 hover:text-sky-800" href="/Ventas">Ventas</a>
+          <a className="text-lg ml-8 text-sky-950 hover:text-sky-800" href="/Clientes">Clientes</a>
+          <div className="flex-1 lg:mx-5 ">
+            <button className="text-lg text-sky-950 hover:text-sky-800 ml-auto mr-5 " onClick={handleLogout}>
+              Cerrar Sesión
+            </button>
+          </div>
         </nav>
       </header>
       <main>

@@ -2,6 +2,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import flecha from "../../assets/flecha-izquierda.png";
+import anadir from "../../assets/anadir.png";
+
 export default function AddCustomer() {
   const [id, setId] = useState(0);
   const [nombre, setNombre] = useState("");
@@ -24,10 +27,6 @@ export default function AddCustomer() {
       });
   }, []);
 
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value); // Actualiza el estado con el valor seleccionado
-  };
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -39,7 +38,8 @@ export default function AddCustomer() {
       const response = await axios.post("http://localhost:3000/customers", {
         id: id,
         nombre: nombre,
-        saldo: saldo});
+        saldo: saldo,
+      });
       console.log("Producto añadido:", response.data);
       alert("Producto añadido con éxito");
       const originalData = response.data;
@@ -52,64 +52,68 @@ export default function AddCustomer() {
 
   return (
     <div>
-      <h1 className="text-7xl font-bold text-green-800 m-12 p-5 text-center">
-        Añadir Cliente
+      <h1 className="md:text-7xl text-4xl font-bold text-blue-950 text-center mt-10">
+        Registrar Cliente
       </h1>
-      <h3 className="text-3xl font-bold text-green-800 m-2 p-5 text-center">
-        Datos del cliente
-      </h3>
 
-      <div className="flex justify-center">
+      <div className="flex flex-wrap justify-center w-3/5 mx-auto mt-10 ">
         <form
-          className=" text-green-800 text-left  border-2 border-green-700 rounded-lg p-4 flex flex-col items-center"
+          className=" border-2 border-sky-950 rounded-lg p-4 md:w-6/12 w-full mx-auto  content-center grid shadow-2xl shadow-gray-500"
           onSubmit={handleSubmit}
         >
+          <h3 className="text-2xl font-medium text-blue-950 mb-2 text-left">
+            Datos del cliente
+          </h3>
           <div className="">
-            <label className="block mt-2">C.I.: </label>
+            <label className="font-medium text-sky-950 my-2">C.I.: </label>
             <input
-              className="w-full rounded-md pl-2"
+              className="rounded-md text-sky-950 pl-2 border-2 mb-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
               type="number"
               placeholder="Cédula de Identidad"
               value={id}
               onChange={(e) => setId(e.target.value)}
               required
             />
-            <br />
-            <label>Nombre </label>
+
+            <label className="font-medium text-sky-950 my-2">Nombre </label>
             <input
-              className="w-full rounded-md pl-2"
+              className="rounded-md text-sky-950 pl-2 border-2 mb-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
               placeholder="Nombre del cliente"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               required
             />
-            <br />
-            <label>Saldo </label>
+
+            <label className="font-medium text-sky-950 my-2">Saldo </label>
             <input
-              className="w-full rounded-md pl-2 mb-2"
+              className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
               type="number"
               value={saldo}
               min={0}
               onChange={(e) => setSaldo(e.target.value)}
               required
+              readOnly
             />
-            <br />
           </div>
-          <button
-            className="text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
-            type="submit"
-          >
-            Agregar Cliente
-          </button>
-          <br />
+          <div className="flex justify-evenly flex-wrap items-center h-full my-3 ml-1 gap-2">
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              type="submit"
+            >
+              <p className="flex-1">Agregar Cliente</p>
+              <img className="w-6 h-6 ml-1 " src={anadir} alt="" />
+            </button>
+            <a href="/Clientes">
+              <button
+                className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+                type="button"
+              >
+                <p className="flex-1">Regresar</p>
+                <img className="w-6 h-6 ml-1 " src={flecha} alt="" />
+              </button>
+            </a>
+          </div>
         </form>
-      </div>
-      <div className="flex justify-center items-center h-full">
-        <a href="/Productos">
-          <button className="text-gray-300 m-4 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900">
-            Regresar
-          </button>
-        </a>
       </div>
     </div>
   );

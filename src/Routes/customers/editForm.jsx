@@ -10,8 +10,6 @@ const EditCustomerForm = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -32,7 +30,7 @@ const EditCustomerForm = () => {
         stock: originalData.stock || 0,
         iva: originalData.iva,
         categoria: originalData.categoria || "",
-        precio: originalData.precio
+        precio: originalData.precio,
       });
     }
   }, [customerData]);
@@ -55,12 +53,15 @@ const EditCustomerForm = () => {
   return (
     <div className="flex justify-center">
       <form
-        className=" w-3/12 max-w-2xl min-w-64 text-green-800 text-left  border-2 border-green-700 rounded-lg p-3 flex flex-col items-center"
+        className="border-2 border-sky-950 rounded-lg p-4 md:w-4/12 w-11/12 mx-auto font-medium content-center grid shadow-2xl shadow-gray-500"
         onSubmit={handleSubmit}
       >
+        <h3 className="text-2xl font-bold text-blue-950  text-left">
+          Datos del Cliente:{" "}
+        </h3>
         <div>
           <label className="block mt-2">
-            Nombre del customer:
+            Nombre:
             <br />
             <input
               className="w-full rounded-md pl-2"

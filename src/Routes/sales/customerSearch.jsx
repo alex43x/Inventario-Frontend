@@ -56,7 +56,7 @@ export default function CustomerSearch({ customers, onSelectCustomer }) {
         <input
           type="text"
           placeholder="Nombre del cliente"
-          className="rounded-md pl-2 mx-2 flex-grow"
+          className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 mx-2"
           value={searchTerm}
           onChange={handleInputChange}
           required
@@ -64,7 +64,7 @@ export default function CustomerSearch({ customers, onSelectCustomer }) {
         <button
           type="button"
           onClick={handleClear} 
-          className="text-gray-300 px-2 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
+          className="text-gray-300 px-2 rounded backdrop-blur bg-sky-900 transition hover:bg-blue-900 mr-4"
         >
           x
         </button>

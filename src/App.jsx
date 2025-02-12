@@ -20,6 +20,7 @@ import Clientes from "./Routes/customers/customers";
 import SeeMoreCustomers from "./Routes/customers/seeMore";
 import AddCustomer from "./Routes/customers/addCustomer";
 import EditCustomer from "./Routes/customers/editCustomer";
+import Reportes from "./Routes/reports/Reports";
 
 function App() {
   return (
@@ -45,13 +46,14 @@ function App() {
             <Route path="Productos/editProduct" element={<EditProduct />} />
             <Route path="Productos/seeMore" element={<SeeMore />} />
             <Route path="Inventario/addBatch" element={<AddBatch />} />
-            <Route path="Ventas" element={<Ventas />} />
-            <Route path="Ventas/NuevaVenta" element={<NewSale />} />
+
+            <Route path="Ventas" element={<NewSale />} />
             <Route path="Ventas/VerMas" element={<MoreSales />} />
             <Route path="Clientes" element={<Clientes />} />
             <Route path="Clientes/seeMore" element={<SeeMoreCustomers/>} />
             <Route path="Clientes/addcustomer" element={<AddCustomer/>} />
             <Route path="Clientes/editcustomer" element={<EditCustomer/>} />
+            <Route path="Reportes" element={<Reportes/>} />
           </Route>
 
           {/* Ruta 404 */}

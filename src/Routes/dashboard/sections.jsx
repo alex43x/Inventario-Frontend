@@ -2,13 +2,13 @@ import React from "react";
 
 const Section = ({
   title = "Untitled",
-  text = "texto texto texto texto texto texto texto texto",
+  text = "texto texto texto texto texto",
 }) => {
   return (
-    <div className="bg-green-800 rounded-lg p-5 w-72 text-gray-200 m-2 shadow-2xl shadow-gray-700 transition duration-200 hover:bg-green-900">
+    <div className="bg-sky-950 rounded-lg p-6  text-gray-200  shadow-2xl shadow-gray-500 transition duration-800 hover:bg-sky-900">
       <a href={title}>
         <h1 className=" text-4xl font-bold">{title}</h1>
-        <p className=" mt-5">{text}</p>
+        <p className=" mt-5  font-medium">{text}</p>
       </a>
     </div>
   );

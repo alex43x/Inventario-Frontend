@@ -7,13 +7,19 @@ import CustomerSearch from "./customerSearch";
 import PaySale from "./paySale";
 import ProductTable from "./productTable";
 
+import registro from "../../assets/registro.png";
+import flechaizquierda from "../../assets/flecha-izquierda.png";
+import flechaderecha from "../../assets/flecha-derecha.png";
+import carrito from "../../assets/carrito.png";
+
 export default function NewSale() {
   const [customers, setCustomers] = useState([]);
   const [date, setDate] = useState(() => {
-    const fecha = new Date();
-    const offset = fecha.getTimezoneOffset(); // Diferencia de zona horaria en minutos
-    fecha.setMinutes(fecha.getMinutes() - offset); // Ajustar a la hora local
-    return fecha.toISOString().slice(0, 16);
+    const fecha= new Date(new Date().getTime() - 3 * 60 * 60 * 1000)
+    .toISOString()
+    .replace("T", " ")
+    .split(".")[0]
+    return fecha
   });
   const [idSale, setIdSale] = useState("");
   const [payment, setPayment] = useState(false);
@@ -67,11 +73,15 @@ export default function NewSale() {
     setSelectedProducts((prev) =>
       prev.map((product) =>
         product.nombre === productName
-          ? { ...product, quantity: Math.min(quantity, product.stock) } // Limita al stock disponible
+          ? { 
+              ...product, 
+              quantity: quantity === null ? null : Math.min(quantity, product.stock) 
+            }
           : product
       )
     );
   }, []);
+  
 
   const handleUpdatePrice = useCallback((id, newprice) => {
     setSelectedProducts((prev) =>
@@ -125,6 +135,22 @@ export default function NewSale() {
       alert("Por favor, selecciona al menos un producto.");
       return;
     }
+    const validarProductos = (selectedProducts) => {
+      return selectedProducts.every(
+        (product) =>
+          product.precio !== null &&
+          product.precio > 0 &&
+          product.quantity !== null &&
+          product.quantity > 0
+      );
+    };
+
+    if (!validarProductos(selectedProducts)) {
+      alert("Todos los productos deben tener un precio y una cantidad válidos (mayores a 0).");
+      return;
+    }
+
+    // Lógica para enviar el formulario
 
     // Datos para la cabecera de la venta
     const saleData = {
@@ -177,7 +203,10 @@ export default function NewSale() {
         estado: estado,
       };
 
-      await axios.post("http://localhost:3000/payments", payData);
+      if(actpay != 0 && actpay !=null){
+
+        await axios.post("http://localhost:3000/payments", payData);
+      }
 
       const saldo = totalFinal.toFixed() - actpay;
       await axios.put(
@@ -190,6 +219,7 @@ export default function NewSale() {
       setSelectedCustomer(null); // Limpia el cliente seleccionado
       setDate(""); // Limpia la fecha
       setActpay(0); // Limpia el pago actual
+      window.location.reload();
     } catch (error) {
       console.error("Error al registrar la venta:", error);
       alert("Error al registrar la venta.");
@@ -198,45 +228,54 @@ export default function NewSale() {
 
   return (
     <div>
-      <h1 className="text-7xl font-bold text-green-800 m-12 pt-5 text-center">
+      <h1 className="text-7xl font-bold text-blue-950 my-10 md:ml-32  left">
         Nueva Venta
       </h1>
-      <h3 className="text-3xl font-bold text-green-800 m-2 pb-5 text-center">
-        Datos de la venta
-      </h3>
 
       <div className="flex justify-center">
         <form
-          className="text-green-800 text-left border-2 border-green-700 rounded-lg p-3 flex flex-col items-center w-10/12"
+          className="text-blue-950 text-left font-medium border-2 border-blue-950 rounded-lg p-3 flex flex-col  w-10/12"
           onSubmit={handleSubmit}
         >
-          <div className="inline-flex flex-wrap border-b-2 border-green-700">
+          <h3 className="text-3xl font-bold text-blue-950 mx-2 pb-1 text-left">
+            Datos
+          </h3>
+          <div className="inline-flex flex-wrap border-b-2 border-blue-950">
             <CustomerSearch
               customers={customers}
               onSelectCustomer={setSelectedCustomer}
             />
             <div className="mt-2">
               <label className="ml-2 mt-2">Vendedor: </label>
-              <input className="rounded-md pl-2" value={userName} readOnly />
+              <input
+                className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 "
+                value={userName}
+                readOnly
+              />
             </div>
-            <div className="my-2">
+            <div className="my-2 ml-4">
               <label className="ml-2">Fecha: </label>
               <input
                 value={date}
                 type="datetime-local"
-                className="rounded-md pl-2"
+                className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 "
                 onChange={(e) => setDate(e.target.value)}
                 required
               />
             </div>
           </div>
-          <div className="flex flex-wrap">
-            <div className="flex-1 w-full md:w-4/12 p-3">
+          <div className="flex flex-wrap ">
+            <div className="flex-1 w-full md:w-4/12 p-3  border-r-2 border-blue-950">
               <ProductSearch getData={handleAddProduct} />
             </div>
             <div className="w-full md:w-8/12 p-3">
-              <h1 className="text-xl mb-4">Productos:</h1>
-              <div className="overflow-hidden rounded-md border border-gray-300 w-full">
+              <div className="  flex items-center space-x-2">
+                <h1 className="text-left text-2xl font-medium text-blue-950 mb-2">
+                  Productos seleccionados
+                </h1>
+                <img className="w-6 h-6" src={carrito} alt="" />
+              </div>
+              <div className="overflow-hidden  w-full">
                 <ProductTable
                   products={selectedProducts}
                   onUpdateQuantity={handleUpdateQuantity}
@@ -251,21 +290,25 @@ export default function NewSale() {
               </div>
             </div>
           </div>
-          <button
-            className="mt-5 text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
-            type="submit"
-          >
-            Finalizar
-          </button>
-          <br />
+          <div className="flex justify-center items-center h-full gap-4">
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              type="submit"
+            >
+              <p className="flex-1">Confirmar venta</p>
+              <img className="w-6 h-6 ml-1 " src={registro} alt="" />
+            </button>
+            <a href="/Home">
+              <button
+                className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+                type="button"
+              >
+                <p className="flex-1">Regresar</p>
+                <img className="w-6 h-6 ml-1 " src={flechaizquierda} alt="" />
+              </button>
+            </a>
+          </div>
         </form>
-      </div>
-      <div className="flex justify-center items-center h-full">
-        <a href="/Ventas">
-          <button className="text-gray-300 m-4 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900">
-            Regresar
-          </button>
-        </a>
       </div>
     </div>
   );

@@ -49,21 +49,10 @@ const EditProductPage = () => {
 
   return (
     <div>
-      <h1 className="text-7xl font-bold text-green-800 m-10 p-5 text-center">
+      <h1 className="md:text-7xl text-4xl font-bold text-blue-950 text-center my-10 ">
         Editar Producto
       </h1>
-      <h3 className="text-2xl font-bold text-green-800 m-2 p-5 text-center">
-        Datos del Producto:{" "}
-      </h3>
-      <EditProductForm productData={producto} onSubmit={handleEditSubmit} />
-      <div className="flex justify-center items-center h-full">
-        <button
-          className="text-gray-300 m-4 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
-          onClick={handleBack}
-        >
-          Regresar
-        </button>
-      </div>
+      <EditProductForm productData={producto} onSubmit={handleEditSubmit} onBack={handleBack}/>
     </div>
   );
 };

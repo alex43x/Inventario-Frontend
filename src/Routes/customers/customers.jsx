@@ -1,122 +1,126 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link, Outlet } from "react-router-dom";
 
 import Customer from "./customerContainer";
 
+import anadir from "../../assets/anadir.png";
+import casa from "../../assets/casa.png";
+import flechaderecha from "../../assets/flecha-derecha.png";
 const Clientes = () => {
   const [clientes, setclientes] = useState([]);
-  const [filteredcustomers, setFilteredcustomers] = useState([]);
   const [categorias, setCategorias] = useState([]);
-
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [searchName, setSearchName] = useState(""); // Buscador por nombre
-  const [searchCategory, setSearchCategory] = useState(""); // Buscador por categoría
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/customers")
-      .then((response) => {
-        console.log("clientes recibidos:", response.data);
-        setclientes(response.data);
-        setFilteredcustomers(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/categories")
-      .then((response) => {
-        console.log("Categorías:", response.data);
-        setCategorias(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // Obtener productos con paginación y búsqueda
+  const fetchCustomers = useCallback(
+    async (reset = false, newPage = 1) => {
+      try {
+        const response = await axios.get("http://localhost:3000/customers", {
+          params: {
+            search: searchName, // Envía el término de búsqueda
+            page: newPage, // Envía la página actual
+            limit: 20, // Límite de productos por página
+          },
+        });
 
-  // Filtrar clientes dinámicamente
-  useEffect(() => {
-    const filtered = clientes.filter((cliente) => {
-      const matchesName = cliente.nombre
-        .toLowerCase()
-        .includes(searchName.toLowerCase());
-      const matchesCategory = searchCategory
-        ? cliente.categoria === parseInt(searchCategory)
-        : true;
-      return matchesName && matchesCategory;
-    });
-    setFilteredcustomers(filtered);
-  }, [searchName, searchCategory, clientes]);
+        if (response.data.length === 0) {
+          setHasMore(false); // No hay más productos
+        } else {
+          setHasMore(true); // Aún hay más productos
+        }
 
-  const getCategoryName = (categoryId) => {
-    const category = categorias.find((cat) => cat.id === categoryId);
-    return category ? category.nombre : "Sin categoría";
+        // Si es un reset, reemplaza la lista de productos; si no, agrega a la lista existente
+        setclientes((prev) =>
+          reset ? response.data : [...prev, ...response.data]
+        );
+      } catch (error) {
+        console.error("Error al obtener productos:", error);
+      }
+    },
+    [searchName]
+  ); // Dependencias: searchName y
+
+  // Actualiza la lista al cambiar el término de búsqueda o la categoría
+  useEffect(() => {
+    setPage(1); // Resetear a la primera página cuando cambia la búsqueda
+    fetchCustomers(true, 1); // Llama a fetchProducts con reset=true
+  }, [searchName, fetchCustomers]);
+
+  // Cargar más productos cuando la página cambia
+  useEffect(() => {
+    if (page > 1) fetchCustomers(false, page); // Llama a fetchClientes sin reset
+  }, [page, fetchCustomers]);
+
+  // Función para cargar más Clientes
+  const loadMore = () => {
+    if (hasMore) setPage((prev) => prev + 1);
   };
 
   return (
-    <div>
-      <section className="text-green-800 text-center m-10">
-        <h1 className="text-8xl font-bold">Clientes</h1>
-        <p className="text-lg m-8">Ver todos los clientes</p>
-      </section>
-      <div className="flex flex-wrap">
-        <aside className="text-green-800 text-left m-3 p-3 w-1/5 inline-block  ">
-          <div className="border-2 border-green-600 rounded-lg p-5" >
-            <h3 className="text-2xl font-bold ">Buscar</h3>
-            <label>Por nombre:</label>
-            <br />
+    <div className="mx-16 mt-10">
+      <div className="flex flex-wrap flex-1 gap-6">
+        <section className="text-blue-950 text-left">
+          <h1 className="lg:text-7xl text-4xl font-bold ">Clientes</h1>
+          <p className="text-xl font-medium my-8"></p>
+        </section>
+        <div className=" rounded-lg lg:p-5 md:ml-36 ml-auto flex-1 min-w-48">
+          <section className=" text-blue-950 m-auto ">
+            <h3 className="text-lg font-medium mr-4">Buscar</h3>
             <input
-              className="w-full"
+              className=" w-11/12 rounded-lg border-2 p-1 border-blue-950 text-sky-900 hover:bg-blue-50 focus:bg-blue-100 transition"
               type="text"
-              placeholder="Buscar por nombre"
+              placeholder="Nombre del Cliente"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
             />
-            <br />
-            <label>Por categoría:</label>
-            <select
-              className="w-full"
-              value={searchCategory}
-              onChange={(e) => setSearchCategory(e.target.value)}
-            >
-              <option value="">Todas las categorías</option>
-              {categorias.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.nombre}
-                </option>
-              ))}
-            </select>
-          </div>
-          <section className=" mt-4 rounded-lg flex flex-wrap text-gray-100">
-            <Link to="addcustomer">
-              <button className=" mx-auto self-center text-center   p-4 m-auto mb-4 mr-4 rounded backdrop-blur bg-green-700 hover:bg-green-600 ">
-                Añadir cliente
-              </button>
-            </Link>
-            <Outlet />
-            <Link to="/home">
-              <button className=" block mx-auto self-center text-center p-4 rounded backdrop-blur bg-green-700 hover:bg-green-600 ">
-                Regresar
-              </button>
-            </Link>
           </section>
-        </aside>
-        <section className="text-green-800 text-center p-3 flex-1  ">
-          <ul className="flex justify-center flex-wrap ">
-            {filteredcustomers.map((cliente) => (
-              <Customer
-                key={cliente.id}
-                name={cliente.nombre}
-                saldo={cliente.saldo}
-                cliente={cliente}
-              />
-            ))}
-          </ul>
+        </div>
+        <section className=" ml-auto lg:mr-24 rounded-lg flex flex-wrap p-1 my-auto gap-4">
+          <div>
+            <Link to="addCustomer">
+              <button className="mx-auto self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-blue-900 trasition duration-500">
+                <p className="flex-1">Añadir Cliente</p>
+                <img className="w-6 h-6 ml-3 " src={anadir} />
+              </button>
+            </Link>
+          </div>
+          <div>
+            <Link to="/home">
+              <button className="mx-auto self-center p-4 rounded-lg flex text-gray-100 bg-blue-950 hover:bg-blue-900 transition duration-500">
+                <p className="flex-1">Ir al inicio</p>
+                <img className="w-6 h-6 ml-3 " src={casa} />
+              </button>
+            </Link>
+          </div>
         </section>
       </div>
+      <section className="text-green-800 text-center p-3 flex-1  ">
+        <ul className="flex justify-center flex-wrap ">
+          {clientes.map((cliente) => (
+            <Customer
+              key={cliente.id}
+              name={cliente.nombre}
+              saldo={cliente.saldo}
+              cliente={cliente}
+            />
+          ))}
+        </ul>
+        {hasMore && (
+          <button
+            onClick={loadMore}
+            className={`bg-blue-950 text-white p-2 rounded ${
+              !hasMore && "opacity-50 cursor-not-allowed"
+            }`}
+            disabled={!hasMore}
+          >
+            Cargar más clientes
+          </button>
+        )}
+      </section>
     </div>
   );
 };

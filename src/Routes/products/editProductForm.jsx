@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import flecha from "../../assets/flecha-izquierda.png";
+import registro from "../../assets/registro.png";
 
-const EditProductForm = ({ productData, onSubmit }) => {
+const EditProductForm = ({ productData, onSubmit, onBack }) => {
   const location = useLocation();
   const originalData = location.state?.originalData;
   console.log("a", originalData);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(originalData.categoria);
 
   useEffect(() => {
     axios
@@ -31,6 +33,7 @@ const EditProductForm = ({ productData, onSubmit }) => {
     iva: originalData?.iva || "",
     categoria: originalData?.categoria || "",
     precio: originalData?.precio || "",
+    alerta: originalData?.alerta || "",
   });
 
   // Rellena el formulario con los datos iniciales del producto
@@ -42,7 +45,8 @@ const EditProductForm = ({ productData, onSubmit }) => {
         stock: originalData.stock || 0,
         iva: originalData.iva,
         categoria: originalData.categoria || "",
-        precio: originalData.precio
+        precio: originalData.precio,
+        alerta: originalData.alerta,
       });
     }
   }, [productData]);
@@ -65,100 +69,117 @@ const EditProductForm = ({ productData, onSubmit }) => {
   return (
     <div className="flex justify-center">
       <form
-        className=" w-3/12 max-w-2xl min-w-64 text-green-800 text-left  border-2 border-green-700 rounded-lg p-3 flex flex-col items-center"
+        className="border-2 border-sky-950 rounded-lg p-4 md:w-4/12 w-11/12 mx-auto font-medium content-center grid shadow-2xl shadow-gray-500"
         onSubmit={handleSubmit}
       >
-        <div>
-          <label className="block mt-2">
-            Nombre del producto:
-            <br />
-            <input
-              className="w-full rounded-md pl-2"
-              type="text"
-              name="nombre"
-              value={formData.nombre}
-              onChange={handleInputChange}
-              placeholder="Nombre del producto"
-            />
-          </label>
-          <label>
-            Descripción:
-            <br />
-            <input
-              className="w-full rounded-md pl-2"
-              type="text"
-              name="descrip"
-              value={formData.descrip}
-              onChange={handleInputChange}
-              placeholder="Descripción"
-            />
-          </label>
-          <label>
-            Precio
-            <br />
-            <input
-              className="w-full rounded-md pl-2"
-              type="number"
-              name="precio"
-              min={0}
-              value={formData.precio}
-              onChange={handleInputChange}
-              placeholder="Descripción"
-            />
-          </label>
-          <br />
-          <label>
-            Stock:
-            <br />
-            <input
-              className="w-full rounded-md pl-2"
-              type="number"
-              name="stock"
-              value={formData.stock}
-              onChange={handleInputChange}
-              placeholder="Stock"
-              readOnly
-            />
-          </label>
-          <br />
-          <label>
-            IVA:
-            <br />
-            <input
-              className="w-full rounded-md pl-2"
-              type="number"
-              name="IVA"
-              value={formData.iva}
-              onChange={handleInputChange}
-              placeholder="IVA"
-              readOnly
-            />
-          </label>
-          <br />
-          <label>Categoría</label>
-          <select
-            className="w-full rounded-md pl-2"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+        <h3 className="text-2xl font-bold text-blue-950  text-left">
+          Datos del Producto:{" "}
+        </h3>
+
+        <label className="block mt-2 ">
+          Nombre del producto:
+          <input
+            className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="text"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleInputChange}
+            placeholder="Nombre del producto"
+          />
+        </label>
+        <label className=" mt-2">
+          Descripción:
+          <input
+            className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="text"
+            name="descrip"
+            value={formData.descrip}
+            onChange={handleInputChange}
+            placeholder="Descripción"
+          />
+        </label>
+        <label className=" mt-2">
+          Precio
+          <input
+            className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="number"
+            name="precio"
+            min={0}
+            value={formData.precio}
+            onChange={handleInputChange}
+            placeholder="Precio"
+          />
+        </label>
+        <label className="mt-2">
+          Stock:
+          <input
+            className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="number"
+            name="stock"
+            value={formData.stock}
+            onChange={handleInputChange}
+            placeholder="Stock"
+            readOnly
+          />
+        </label>
+        <label className="mt-2">
+          Alerta de Stock
+          <input
+            className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="number"
+            name="alerta"
+            value={formData.alerta}
+            onChange={handleInputChange}
+            placeholder="Alerta Stock"
             required
-          >
-            <option value="" disabled>
-              -- Selecciona una categoría --
-            </option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.nombre}
-              </option>
-            ))}
-          </select>
-          <br />
-        </div>
-        <button
-          className="text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900 m-5"
-          type="submit"
+          />
+        </label>
+        <label className="mt-2">
+          IVA:
+          <input
+            className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="number"
+            name="IVA"
+            value={formData.iva}
+            onChange={handleInputChange}
+            placeholder="IVA"
+            readOnly
+          />
+        </label>
+
+        <label className="mt-2">Categoría</label>
+        <select
+          className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          required
         >
-          Guardar cambios
-        </button>
+          <option value="" disabled>
+            -- Selecciona una categoría --
+          </option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.nombre}
+            </option>
+          ))}
+        </select>
+        <div className="flex justify-evenly flex-wrap items-center h-full my-4">
+          <button
+            className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+            type="submit"
+          >
+            <p className="flex-1">Guardar cambios</p>
+            <img className="w-6 h-6 " src={registro} alt="" />
+          </button>
+          <button
+            className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+            onClick={onBack}
+            type="button"
+          >
+            <p className="flex-1">Regresar</p>
+            <img className="w-6 h-6  " src={flecha} alt="" />
+          </button>
+        </div>
       </form>
     </div>
   );

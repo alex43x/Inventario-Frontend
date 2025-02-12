@@ -8,12 +8,12 @@ const ViewBatches = ({ batches, onRemove, hidden }) => {
         border="1"
         style={{ borderCollapse: "collapse" }}
       >
-        <thead className="bg-green-700">
+        <thead className="bg-blue-950">
           <tr className="text-gray-300">
             <th className="pl-2">N° Lote</th>
-            <th>Cantidad disponible</th>
+            <th>Disponible</th>
             <th>Precio de Compra</th>
-            <th>Fecha de Compra</th>
+            <th>Fecha Compra</th>
           </tr>
         </thead>
         <tbody>
@@ -25,11 +25,11 @@ const ViewBatches = ({ batches, onRemove, hidden }) => {
               <td className="pl-2">{batch.id_lote}</td>
               <td>{batch.cant}</td>
               <td>₲ {batch.precio_compra} </td>
-              <td>
+              <td className="flex">
                 {new Date(batch.fecha_compra).toLocaleDateString()}
                 {hidden && (
                   <button
-                    className="ml-10"
+                    className="ml-auto"
                     onClick={() =>
                       onRemove(batch.id_lote, batch.cant, batch.id_prod)
                     }

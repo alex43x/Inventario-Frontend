@@ -2,11 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import flecha from "../../assets/flecha-izquierda.png";
+import anadir from "../../assets/anadir.png";
+
 export default function AddProduct() {
   const [nombre, setNombre] = useState("");
   const [descrip, setDescrip] = useState("");
-  const [precio, setPrecio] = useState(0)
+  const [precio, setPrecio] = useState(0);
   const [categories, setCategories] = useState([]);
+  const [alerta, setAlerta] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const [selectedOption, setSelectedOption] = useState(""); // Estado para guardar la opción seleccionada
@@ -39,6 +43,7 @@ export default function AddProduct() {
         nombre: nombre,
         descrip: descrip,
         stock: form.stock.value,
+        alerta: alerta,
         iva: selectedOption,
         categoria: selectedCategory,
         precio: precio,
@@ -55,50 +60,49 @@ export default function AddProduct() {
 
   return (
     <div>
-      <h1 className="text-7xl font-bold text-green-800 m-12 p-5 text-center">
-        Añadir producto
+      <h1 className="md:text-7xl text-4xl font-bold text-blue-950 text-center mt-10">
+        Registrar producto
       </h1>
-      <h3 className="text-3xl font-bold text-green-800 m-2 p-5 text-center">
-        Datos del producto
-      </h3>
-
-      <div className="flex justify-center">
+      <div className="flex flex-wrap justify-center w-3/5 mx-auto mt-10 ">
         <form
-          className=" text-green-800 text-left  border-2 border-green-700 rounded-lg p-3 flex flex-col items-center"
+          className="border-2 border-sky-950 rounded-lg p-4 md:w-6/12 w-full mx-auto  content-center grid shadow-2xl shadow-gray-500"
           onSubmit={handleSubmit}
         >
-          <div className="">
-            <label className="block mt-2">Nombre: </label>
-            <input
-              className="w-full rounded-md pl-2"
-              type="text"
-              placeholder="Nombre"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              required
-            />
-            <br />
-            <label>Descripción: </label>
-            <input
-              className="w-full rounded-md pl-2"
-              placeholder="Descripción"
-              value={descrip}
-              onChange={(e) => setDescrip(e.target.value)}
-              required
-            />
-            <br />
-            <label>Precio: </label>
-            <input
-              className="w-full rounded-md pl-2"
-              type="number"
-              value={precio}
-              min={0}
-              onChange={(e) => setPrecio(e.target.value)}
-              required
-            />
-            <br />
-            <label>Iva: </label>
-            <br />
+          <h3 className="text-2xl font-medium text-blue-950 mb-2  text-left">
+            Datos del producto
+          </h3>
+          <label className="font-medium text-sky-950  mb-1">Nombre: </label>
+          <input
+            className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="text"
+            placeholder="Nombre"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            required
+          />
+          <label className="font-medium text-sky-950 mt-2 mb-1">
+            Descripción:{" "}
+          </label>
+          <input
+            className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            placeholder="Descripción"
+            value={descrip}
+            onChange={(e) => setDescrip(e.target.value)}
+            required
+          />
+          <label className="font-medium text-sky-950 mt-2 mb-1">
+            Precio de venta:{" "}
+          </label>
+          <input
+            className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
+            type="number"
+            value={precio}
+            min={0}
+            onChange={(e) => setPrecio(e.target.value)}
+            required
+          />
+          <label className="font-medium text-sky-950 mt-2 mb-1">Iva: </label>
+          <div className="flex gap-2">
             <input
               name="iva"
               type="radio"
@@ -124,48 +128,59 @@ export default function AddProduct() {
               required
             />
             <label> 10% </label>
-            <br />
-            <label>Categoría: </label>
-            <select
-              className="w-full rounded-md pl-2 "
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              required
-            >
-              <option value="" disabled>
-                -- Selecciona una categoría --
-              </option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.nombre}
-                </option>
-              ))}
-            </select>
-            <br />
-            <input
-              name="stock"
-              type="number"
-              placeholder="Stock"
-              value={0}
-              hidden
-            />
-            <br />
           </div>
-          <button
-            className="text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900"
-            type="submit"
+          <label className="font-medium text-sky-950 mt-1 mb-1">
+            Categoría:{" "}
+          </label>
+          <select
+            className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100  w-full"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            required
           >
-            Agregar Producto
-          </button>
+            <option value="" disabled>
+              -- Selecciona una categoría --
+            </option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.nombre}
+              </option>
+            ))}
+          </select>
+          <label className="font-medium text-sky-950 mt-2 mb-1">
+            Alerta de Stock:{" "}
+          </label>
+          <input
+            className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100  w-full"
+            name="alerta"
+            type="number"
+            placeholder="Cantidad para alertar pocas unidades"
+            onChange={(e) => setAlerta(e.target.value)}
+          />
+          <input
+            name="stock"
+            type="number"
+            placeholder="Stock"
+            value={0}
+            hidden
+          />
           <br />
+          <div className="flex justify-evenly flex-wrap items-center h-full mt-auto ml-1 gap-2">
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              type="submit"
+            >
+              <p className="flex-1">Agregar producto</p>
+              <img className="w-6 h-6 ml-1 " src={anadir} alt="" />
+            </button>
+            <a href="/Productos">
+              <button className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500" type="button">
+                <p className="flex-1">Regresar</p>
+                <img className="w-6 h-6 ml-1 " src={flecha} alt="" />
+              </button>
+            </a>
+          </div>
         </form>
-      </div>
-      <div className="flex justify-center items-center h-full">
-        <a href="/Productos">
-          <button className="text-gray-300 m-4 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900">
-            Regresar
-          </button>
-        </a>
       </div>
     </div>
   );

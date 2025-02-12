@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import flecha from "../../assets/flecha-izquierda.png";
+import registro from "../../assets/registro.png";
+
 const EditCustomer = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { originalData } = location.state || {}; // Datos recibidos desde la navegación anterior
+  const { originalData } = location.state || {};
+  console.log("Datos Recibidos:", originalData);
 
   // Estado inicial basado en los datos originales
   const [formData, setFormData] = useState({
@@ -23,6 +27,10 @@ const EditCustomer = () => {
     }));
   };
 
+  const onBack=()=>{
+    navigate(-1);
+  }
+
   // Manejar el envío del formulario
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +38,7 @@ const EditCustomer = () => {
       // Realizar la solicitud PUT para actualizar los datos del cliente
       const response = await axios.put(
         `http://localhost:3000/customers/${formData.id}`,
-        {nombre: formData.nombre, saldo: formData.saldo} 
+        { nombre: formData.nombre, saldo: formData.saldo }
       );
       console.log("Customer actualizado:", response.data);
       alert("Cliente editado con éxito");
@@ -42,41 +50,36 @@ const EditCustomer = () => {
     }
   };
 
-  // Si no hay datos originales, muestra un mensaje
-  if (!originalData) {
-    return <p>No se encontraron datos del customer.</p>;
-  }
-
   return (
     <div>
-      <h1 className="text-7xl font-bold text-green-800 m-10 p-5 text-center">
+      <h1 className="md:text-7xl text-4xl font-bold text-blue-950 text-center my-10 ">
         Editar Cliente
       </h1>
-      <h3 className="text-2xl font-bold text-green-800 m-2 p-5 text-center">
-        Datos del Customer
-      </h3>
       <div className="flex justify-center">
         <form
-          className="w-3/12 max-w-2xl min-w-64 text-green-800 text-left border-2 border-green-700 rounded-lg p-3 flex flex-col items-center"
+          className="border-2 border-sky-950 rounded-lg p-4 md:w-4/12 w-11/12 mx-auto font-medium content-center grid shadow-2xl shadow-gray-500"
           onSubmit={handleEditSubmit}
         >
-          <label className="block mt-2">
+          <h3 className="text-2xl font-bold text-blue-950  text-left">
+            Datos del Cliente
+          </h3>
+          <label className="block my-2 text-blue-950 font-medium">
             C.I.:
             <br />
             <input
               type="number"
-              className="w-full rounded-md pl-2"
+              className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
               name="id"
               value={formData.id}
               readOnly
             />
           </label>
-          <label className="block mt-2">
+          <label className="block my-2 text-blue-950 font-medium">
             Nombre:
             <br />
             <input
               type="text"
-              className="w-full rounded-md pl-2"
+              className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
               name="nombre"
               value={formData.nombre}
               onChange={handleChange}
@@ -84,32 +87,35 @@ const EditCustomer = () => {
               required
             />
           </label>
-          <label className="block mt-2">
+          <label className="block my-2 text-blue-950 font-medium">
             Saldo:
             <br />
             <input
               type="number"
-              className="w-full rounded-md pl-2"
+              className="rounded-md text-sky-950 px-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
               name="saldo"
               value={formData.saldo}
               readOnly
             />
           </label>
-          <button
-            className="text-gray-300 self-center text-center px-4 h-8 rounded backdrop-blur bg-green-800 transition hover:bg-green-900 m-5"
-            type="submit"
-          >
-            Guardar cambios
-          </button>
+          <div className="flex justify-evenly flex-wrap items-center h-full my-4">
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              type="submit"
+            >
+              <p className="flex-1">Guardar cambios</p>
+              <img className="w-6 h-6 " src={registro} alt="" />
+            </button>
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              onClick={onBack}
+              type="button"
+            >
+              <p className="flex-1">Regresar</p>
+              <img className="w-6 h-6  " src={flecha} alt="" />
+            </button>
+          </div>
         </form>
-      </div>
-      <div className="flex justify-center items-center h-full">
-        <button
-          className="text-gray-300 m-4 self-center text-center px-4 h-8 rounded backdrop-blur bg-red-600 transition hover:bg-red-800"
-          onClick={() => navigate(-1)}
-        >
-          Regresar
-        </button>
       </div>
     </div>
   );
