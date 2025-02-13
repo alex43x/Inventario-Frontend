@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 import ProductSearch from "./productSearch";
@@ -15,11 +16,11 @@ import carrito from "../../assets/carrito.png";
 export default function NewSale() {
   const [customers, setCustomers] = useState([]);
   const [date, setDate] = useState(() => {
-    const fecha= new Date(new Date().getTime() - 3 * 60 * 60 * 1000)
-    .toISOString()
-    .replace("T", " ")
-    .split(".")[0]
-    return fecha
+    const fecha = new Date(new Date().getTime() - 3 * 60 * 60 * 1000)
+      .toISOString()
+      .replace("T", " ")
+      .split(".")[0];
+    return fecha;
   });
   const [idSale, setIdSale] = useState("");
   const [payment, setPayment] = useState(false);
@@ -27,7 +28,7 @@ export default function NewSale() {
 
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
-
+  const navigate=useNavigate();
   const token = localStorage.getItem("authToken");
 
   const userId = useMemo(() => {
@@ -73,15 +74,15 @@ export default function NewSale() {
     setSelectedProducts((prev) =>
       prev.map((product) =>
         product.nombre === productName
-          ? { 
-              ...product, 
-              quantity: quantity === null ? null : Math.min(quantity, product.stock) 
+          ? {
+              ...product,
+              quantity:
+                quantity === null ? null : Math.min(quantity, product.stock),
             }
           : product
       )
     );
   }, []);
-  
 
   const handleUpdatePrice = useCallback((id, newprice) => {
     setSelectedProducts((prev) =>
@@ -146,7 +147,9 @@ export default function NewSale() {
     };
 
     if (!validarProductos(selectedProducts)) {
-      alert("Todos los productos deben tener un precio y una cantidad válidos (mayores a 0).");
+      alert(
+        "Todos los productos deben tener un precio y una cantidad válidos (mayores a 0)."
+      );
       return;
     }
 
@@ -203,8 +206,7 @@ export default function NewSale() {
         estado: estado,
       };
 
-      if(actpay != 0 && actpay !=null){
-
+      if (actpay != 0 && actpay != null) {
         await axios.post("http://localhost:3000/payments", payData);
       }
 
@@ -298,15 +300,14 @@ export default function NewSale() {
               <p className="flex-1">Confirmar venta</p>
               <img className="w-6 h-6 ml-1 " src={registro} alt="" />
             </button>
-            <a href="/Home">
-              <button
-                className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
-                type="button"
-              >
-                <p className="flex-1">Regresar</p>
-                <img className="w-6 h-6 ml-1 " src={flechaizquierda} alt="" />
-              </button>
-            </a>
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              type="button"
+              onClick={() => navigate("/Home")}
+            >
+              <p className="flex-1">Regresar</p>
+              <img className="w-6 h-6 ml-1 " src={flechaizquierda} alt="" />
+            </button>
           </div>
         </form>
       </div>

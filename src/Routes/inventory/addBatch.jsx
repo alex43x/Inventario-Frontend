@@ -14,6 +14,11 @@ const AddBatch = () => {
     fecha.setMinutes(fecha.getMinutes() - offset); // Ajustar a la hora local
     return fecha.toISOString().slice(0, 16);
   });
+  const [cantidad, setCantidad] = useState("");
+  const [precioCompra, setPrecioCompra] = useState("");
+
+  const handleCantidadChange = (e) => setCantidad(e.target.value);
+  const handlePrecioChange = (e) => setPrecioCompra(e.target.value);
   const { originalData } = location.state || {};
   console.log("Datos Recibidos:", originalData);
 
@@ -85,6 +90,7 @@ const AddBatch = () => {
             name="cant"
             placeholder="Cantidad"
             required
+            onChange={handleCantidadChange}
           />
 
           <label className="mt-2">Precio de compra (Unitario):</label>
@@ -95,6 +101,7 @@ const AddBatch = () => {
             name="precio"
             placeholder="Prec. Unitario"
             required
+            onChange={handlePrecioChange}
           />
 
           <label className="mt-2">Fecha y Hora de compra:</label>

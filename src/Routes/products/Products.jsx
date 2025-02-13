@@ -95,7 +95,9 @@ const Productos = () => {
   useEffect(() => {
     const getAlerts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/products-alerts"); // Cambia la URL por la de tu backend
+        const response = await axios.get(
+          "http://localhost:3000/products-alerts"
+        ); // Cambia la URL por la de tu backend
         setAlertas(response.data); // Guarda los datos en el estado
         // Indica que la carga ha terminado
       } catch (error) {
@@ -162,8 +164,8 @@ const Productos = () => {
         </div>
       </div>
       <div className="flex flex-wrap ml-16 mt-10 gap-5">
-        <section className="text-sky-950 text-center pb-3  lg:w-7/12 w-11/12 lg:border-r-2 border-blue-950">
-          <ul className="flex justify-left flex-wrap">
+        <section className="text-sky-950 text-center pb-3 lg:w-7/12 w-11/12 lg:border-r-2 border-blue-950">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-1">
             {productos.map((producto) => (
               <Product
                 key={producto.id_prod}
@@ -173,7 +175,7 @@ const Productos = () => {
                 producto={producto}
               />
             ))}
-          </ul>
+          </div>
           {hasMore && (
             <button
               onClick={loadMore}
@@ -186,6 +188,7 @@ const Productos = () => {
             </button>
           )}
         </section>
+
         <aside className="text-sky-950 text-left mr-16 px-3 lg:w-4/12  w-full">
           <div className=" ">
             <div className=" ml-1 flex items-center space-x-2">
@@ -196,7 +199,11 @@ const Productos = () => {
             </div>
 
             <section className="w-full">
-              <Movements datos={alertas} col2='Cant. Disponible' col3="Alerta"/>
+              <Movements
+                datos={alertas}
+                col2="Cant. Disponible"
+                col3="Alerta"
+              />
             </section>
           </div>
           <div className=" ">

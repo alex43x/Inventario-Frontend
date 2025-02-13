@@ -85,7 +85,7 @@ const Dashboard = () => {
             <p className="text-lg font-medium">{fecha}</p>
           </div>
         </section>
-        <section className="flex flex-wrap justify-start w-full mt-12 gap-6">
+        <section className="flex flex-wrap justify-start w-full mt-12 gap-3">
           <Section title="Productos" text="Ver los productos disponibles" />
           <Section title="Ventas" text="Registrar ventas realizadas" />
           <Section title="Clientes" text="Ver deudas de clientes" />

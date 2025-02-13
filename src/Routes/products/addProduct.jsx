@@ -173,12 +173,15 @@ export default function AddProduct() {
               <p className="flex-1">Agregar producto</p>
               <img className="w-6 h-6 ml-1 " src={anadir} alt="" />
             </button>
-            <a href="/Productos">
-              <button className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500" type="button">
-                <p className="flex-1">Regresar</p>
-                <img className="w-6 h-6 ml-1 " src={flecha} alt="" />
-              </button>
-            </a>
+
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              type="button"
+              onClick={() => navigate("/Productos")}
+            >
+              <p className="flex-1">Regresar</p>
+              <img className="w-6 h-6 ml-1 " src={flecha} alt="" />
+            </button>
           </div>
         </form>
       </div>

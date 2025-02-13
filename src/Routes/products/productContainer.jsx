@@ -17,7 +17,7 @@ const Product = ({
   };
 
   return (
-    <div className="bg-blue-950 shadow-2xl shadow-gray-500 rounded-lg p-4 md:w-64 sm:w-11/12 w-full text-gray-200 mb-4 mr-4 text-left transition duration-500 hover:bg-blue-900 flex flex-col ">
+    <div className="bg-blue-950 shadow-2xl shadow-gray-500 rounded-lg p-4 min-w-44 sm:w-11/12 w-11/12 text-gray-200 mb-4 mr-2 text-left transition duration-500 hover:bg-blue-900 flex flex-col ">
       <h2 className="text-2xl font-bold break-words">{name}</h2>
       <div className="mt-auto">
         <p className="mt-5 ">{description}</p>

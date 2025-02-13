@@ -159,14 +159,14 @@ const Reportes = () => {
             <div className="w-96 h-96">
               <PolarArea data={data} />
             </div>
-            <a href="/Ventas/vermas">
-              <button
-                className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
-                type="button"
-              >
-                <p className="flex-1">Ver todas las Ventas</p>
-              </button>
-            </a>
+            <button
+              className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
+              type="button"
+              onClick={() => navigate("/Ventas/vermas")}
+            >
+              <p className="flex-1">Ver todas las ventas</p>
+              <img className="w-6 h-6 ml-1 " src={flechaderecha} alt="" />
+            </button>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes,Navigate } from "react-router-dom";
 
 import Login from "./Routes/login/Login";
 import Dashboard from "./Routes/dashboard/Dashboard";
@@ -40,6 +40,7 @@ function App() {
             }
           >
             {/* Rutas hijas dentro del layout */}
+            <Route path="/" element={<Navigate to="home" />} />
             <Route path="home" index element={<Dashboard />}  />
             <Route path="Productos" element={<Productos />} />
             <Route path="Productos/addProduct" element={<AddProduct />} />
