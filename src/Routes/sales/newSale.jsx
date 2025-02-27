@@ -7,6 +7,7 @@ import ProductSearch from "./productSearch";
 import CustomerSearch from "./customerSearch";
 import PaySale from "./paySale";
 import ProductTable from "./productTable";
+import Swal from "sweetalert2";
 
 import registro from "../../assets/registro.png";
 import flechaizquierda from "../../assets/flecha-izquierda.png";
@@ -63,7 +64,26 @@ export default function NewSale() {
     setSelectedProducts((prev) => {
       const existingProduct = prev.find((p) => p.id_prod === product.id_prod);
       if (existingProduct) {
-        alert("El producto ya está agregado.");
+        Swal.fire({
+                title: "El producto ya está agregado",
+                showClass: {
+                  popup: `
+                            animate__animated
+                            animate__fadeIn
+                          `,
+                },
+                confirmButtonText: "Continuar",
+                timer: 1500,
+                allowOutsideClick: false,
+                customClass: {
+                  popup:
+                    "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                  title: "text-4xl font-bold text-sky-950",
+                  text: "text-sky-900 font-medium",
+                  confirmButton:
+                    "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+                },
+              });
         return prev;
       }
       return [...prev, { ...product, quantity: 1 }]; // Inicializa con cantidad 1
@@ -128,12 +148,51 @@ export default function NewSale() {
     const estado = payment ? "cerrado" : "pendiente";
 
     if (!selectedCustomer) {
-      alert("Por favor, selecciona un cliente válido.");
+      Swal.fire({
+              title: "Selecciona un cliente válido",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              confirmButtonText: "Continuar",
+              timer: 1500,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
       return;
     }
 
     if (!selectedProducts || selectedProducts.length === 0) {
-      alert("Por favor, selecciona al menos un producto.");
+      Swal.fire({
+              title: "Debes seleccionar al menos 1 producto",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              text: "Hubo un error al añadir el producto",
+              confirmButtonText: "Continuar",
+              timer: 1500,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
       return;
     }
     const validarProductos = (selectedProducts) => {
@@ -147,9 +206,27 @@ export default function NewSale() {
     };
 
     if (!validarProductos(selectedProducts)) {
-      alert(
-        "Todos los productos deben tener un precio y una cantidad válidos (mayores a 0)."
-      );
+      Swal.fire({
+              title: "Datos inválidos",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              text: "Todos los productos deben tener una cantidad y precio válidos (mayor a 0)",
+              confirmButtonText: "Continuar",
+              timer: 1400,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
       return;
     }
 
@@ -216,7 +293,27 @@ export default function NewSale() {
         { saldo }
       );
 
-      alert("Venta registrada exitosamente.");
+      Swal.fire({
+              title: "Venta registrada",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              text: "La venta ha sido exitosa",
+              confirmButtonText: "Continuar",
+              timer: 2000,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
       setSelectedProducts([]); // Limpia los productos seleccionados
       setSelectedCustomer(null); // Limpia el cliente seleccionado
       setDate(""); // Limpia la fecha
@@ -224,7 +321,27 @@ export default function NewSale() {
       window.location.reload();
     } catch (error) {
       console.error("Error al registrar la venta:", error);
-      alert("Error al registrar la venta.");
+      Swal.fire({
+              title: "Datos inválidos",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              text: "Hubo un error al registrar la venta",
+              confirmButtonText: "Continuar",
+              timer: 2000,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
     }
   };
 

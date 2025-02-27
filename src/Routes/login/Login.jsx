@@ -34,14 +34,15 @@ function Login() {
             popup: `
               animate__animated
               animate__fadeIn
-            `
+            `,
           },
           text: "Bienvenido de nuevo!",
           confirmButtonText: "Continuar",
           timer: 1000,
           allowOutsideClick: false,
           customClass: {
-            popup: "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+            popup:
+              "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
             title: "text-4xl font-bold text-sky-950",
             text: "text-sky-900 font-medium",
             confirmButton:
@@ -52,7 +53,27 @@ function Login() {
         });
       } else {
         console.error("Error:", data.message);
-        alert(data.message);
+        Swal.fire({
+          title: "Datos incorrectos",
+          showClass: {
+            popup: `
+              animate__animated
+              animate__fadeIn
+            `,
+          },
+          text: "Usuario o contraseña incorrectos",
+          confirmButtonText: "Continuar",
+          timer: 1000,
+          allowOutsideClick: false,
+          customClass: {
+            popup:
+              "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+            title: "text-4xl font-bold text-sky-950",
+            text: "text-sky-900 font-medium",
+            confirmButton:
+              "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+          },
+        });
       }
     } catch (error) {
       console.error("Error de red:", error);
@@ -101,14 +122,13 @@ function Login() {
             required
           />
           <button
-            className=" mx-auto self-center text-center font-medium text-sky-50   rounded-lg border-2 border-sky-900 backdrop-blur  transition duration-200 focus:bg-sky-800 mt-6 w-full h-10 bg-sky-900" 
+            className=" mx-auto self-center text-center font-medium text-sky-50   rounded-lg border-2 border-sky-900 backdrop-blur  transition duration-200 focus:bg-sky-800 mt-6 w-full h-10 bg-sky-900"
             type="submit"
           >
             Iniciar sesión
           </button>
         </form>
       </section>
-      
     </div>
   );
 }

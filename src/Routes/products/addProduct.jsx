@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import flecha from "../../assets/flecha-izquierda.png";
 import anadir from "../../assets/anadir.png";
+import React from "react";
+import Swal from "sweetalert2";
 
 export default function AddProduct() {
   const [nombre, setNombre] = useState("");
@@ -14,6 +16,13 @@ export default function AddProduct() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const [selectedOption, setSelectedOption] = useState(""); // Estado para guardar la opción seleccionada
+
+  const [mensaje, setMensaje] = useState("");
+
+  const mostrarMensaje = (texto) => {
+    setMensaje(texto);
+    setTimeout(() => setMensaje(""), 3000); // Desaparece después de 3 segundos
+  };
 
   useEffect(() => {
     axios
@@ -49,12 +58,53 @@ export default function AddProduct() {
         precio: precio,
       });
       console.log("Producto añadido:", response.data);
-      alert("Producto añadido con éxito");
       const originalData = response.data;
+      Swal.fire({
+        title: "Producto añadido!",
+        showClass: {
+          popup: `
+              animate__animated
+              animate__fadeIn
+            `,
+        },
+        confirmButtonText: "Continuar",
+        timer: 1000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
       navigate("/Inventario/addBatch", { state: { originalData } }); // Redirige al formulario de lote
     } catch (error) {
       console.error("Error al añadir el producto:", error);
-      alert("Hubo un error al añadir el producto");
+      mostrarMensaje("Producto añadido con éxito");
+
+      Swal.fire({
+        title: "Datos inválidos",
+        showClass: {
+          popup: `
+                    animate__animated
+                    animate__fadeIn
+                  `,
+        },
+        text: "Hubo un error al añadir el producto",
+        confirmButtonText: "Continuar",
+        timer: 1000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
     }
   };
 

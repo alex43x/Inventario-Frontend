@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import alerta from '../../assets/alerta.png'
-
+import Swal from "sweetalert2";
 const PaySale = ({ totalAmount, onPay, payed }) => {
   const [actpay, setActpay] = useState(totalAmount);
   const [payMode, setPayMode] = useState("");
@@ -27,7 +27,27 @@ const PaySale = ({ totalAmount, onPay, payed }) => {
       payed(numericValue);
       console.log(numericValue);
     } else {
-      alert(`El valor no puede superar el total: ${totalAmount}`);
+      Swal.fire({
+              title: "Datos inválidos",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              text: "El valor no puede superar el total de la compra",
+              confirmButtonText: "Continuar",
+              timer: 1000,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
     }
   };
 

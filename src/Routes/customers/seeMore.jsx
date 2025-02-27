@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
 import ViewPay from "./viewPay";
+import Swal from "sweetalert2";
 
 import flechaderecha from "../../assets/flecha-derecha.png";
 import flechaizquierda from "../../assets/flecha-izquierda.png";
@@ -67,7 +68,26 @@ const SeeMoreCustomers = () => {
     if (Number(value) <= originalData.saldo) {
       setPay(Number(value));
     } else {
-      alert("El pago no puede ser mayor al saldo del cliente");
+      Swal.fire({
+        title: "Error",
+        showClass: {
+          popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+        },
+        text: "El pago no puede ser superior a la deuda del cliente.",
+        confirmButtonText: "Continuar",
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
       e.target.value = null;
       setPay(null);
     }
@@ -76,7 +96,27 @@ const SeeMoreCustomers = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (pay <= 0) {
-      alert("El pago debe ser de un valor válido (Mayor a 0)");
+      Swal.fire({
+        title: "Datos inválidos",
+        showClass: {
+          popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+        },
+        text: "El valor del pago debe ser mayor a 0",
+        confirmButtonText: "Continuar",
+        timer: 1000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
     } else {
       const payData = {
         pago: pay,
@@ -94,11 +134,49 @@ const SeeMoreCustomers = () => {
         );
 
         originalData.saldo -= pay;
-        alert("Pago exitoso");
+        Swal.fire({
+          title: "Pago exitoso",
+          showClass: {
+            popup: `
+                            animate__animated
+                            animate__fadeIn
+                          `,
+          },
+          confirmButtonText: "Continuar",
+          timer: 1000,
+          allowOutsideClick: false,
+          customClass: {
+            popup:
+              "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+            title: "text-4xl font-bold text-sky-950",
+            text: "text-sky-900 font-medium",
+            confirmButton:
+              "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+          },
+        });
         window.location.reload();
       } catch (error) {
         console.error(error);
-        alert("Error al registrar el pago");
+        Swal.fire({
+          title: "Error al registrar el pago",
+          showClass: {
+            popup: `
+                            animate__animated
+                            animate__fadeIn
+                          `,
+          },
+          confirmButtonText: "Continuar",
+          timer: 3000,
+          allowOutsideClick: false,
+          customClass: {
+            popup:
+              "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+            title: "text-4xl font-bold text-sky-950",
+            text: "text-sky-900 font-medium",
+            confirmButton:
+              "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+          },
+        });
       }
     }
   };

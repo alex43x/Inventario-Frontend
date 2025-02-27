@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import flecha from "../../assets/flecha-izquierda.png";
 import registro from "../../assets/registro.png";
+import Swal from "sweetalert2";
 
 const AddBatch = () => {
   const location = useLocation();
@@ -40,11 +41,50 @@ const AddBatch = () => {
       const response = await axios
         .post("http://localhost:3000/inventory", data)
         .then((response) => {
-          alert("Lote añadido con éxito");
+          Swal.fire({
+            title: "Lote registrado",
+            showClass: {
+              popup: `
+              animate__animated
+              animate__fadeIn
+            `,
+            },
+            confirmButtonText: "Continuar",
+            timer: 1000,
+            allowOutsideClick: false,
+            customClass: {
+              popup:
+                "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+              title: "text-4xl font-bold text-sky-950",
+              text: "text-sky-900 font-medium",
+              confirmButton:
+                "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+            },
+          });
         });
     } catch (error) {
       console.error("Error al añadir el lote:", error);
-      alert("Hubo un error al añadir el lote");
+      Swal.fire({
+        title: "Datos incorrectos",
+        showClass: {
+          popup: `
+                    animate__animated
+                    animate__fadeIn
+                  `,
+        },
+        text: "Hubo un error al registrar el lote",
+        confirmButtonText: "Continuar",
+        timer: 1000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
     }
 
     try {
@@ -88,6 +128,7 @@ const AddBatch = () => {
             className="w-full rounded-md pl-2 "
             type="number"
             name="cant"
+            min={1}
             placeholder="Cantidad"
             required
             onChange={handleCantidadChange}
@@ -99,6 +140,7 @@ const AddBatch = () => {
             className="w-full rounded-md pl-2"
             type="number"
             name="precio"
+            min={0}
             placeholder="Prec. Unitario"
             required
             onChange={handlePrecioChange}

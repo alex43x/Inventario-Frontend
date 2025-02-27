@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ViewSales from "./viewSales";
+import Swal from "sweetalert2";
 
 export default function MoreSales() {
   const [sales, setSales] = useState([]);
@@ -8,7 +9,7 @@ export default function MoreSales() {
   const [hiddenStates, setHiddenStates] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
-  const limit = 10; // Número de ventas por página
+  const limit = 10;
 
   const fetchSales = async (search = "", pageNum = 1) => {
     try {
@@ -25,7 +26,7 @@ export default function MoreSales() {
   const getSubsales = async (id) => {
     try {
       const response = await axios.get(
-      `http://localhost:3000/sub-sales-by/${id}`
+        `http://localhost:3000/sub-sales-by/${id}`
       );
       return response.data;
     } catch (error) {
@@ -40,14 +41,63 @@ export default function MoreSales() {
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    setPage(1); // Reiniciar a la primera página cuando se busca
+    setPage(1);
   };
 
   const toggleHidden = (id) => {
-    setHiddenStates((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setHiddenStates((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const cancelSale = async (id) => {
+    if (!window.confirm("¿Seguro que deseas anular esta venta?")) return;
+    console.log(id);
+    try {
+      await axios.post(`http://localhost:3000/sales-cancel`, { saleId: id });
+      Swal.fire({
+        title: "La venta ha sido anulada",
+        showClass: {
+          popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+        },
+        confirmButtonText: "Continuar",
+        timer: 2000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
+      fetchSales(searchQuery, page);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error al anular la venta:", error);
+      Swal.fire({
+        title: "La venta no pudo ser anulada",
+        showClass: {
+          popup: `
+                                animate__animated
+                                animate__fadeIn
+                              `,
+        },
+        confirmButtonText: "Continuar",
+        timer: 2000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
+    }
   };
 
   return (
@@ -56,7 +106,6 @@ export default function MoreSales() {
         Ventas Registradas
       </h1>
       <div className="flex flex-wrap">
-        {/* Sidebar para búsqueda */}
         <aside className="p-4 rounded border-2 border-blue-950 mx-4 my-6 text-blue-950 h-36">
           <h2 className="text-xl font-medium mb-4">Buscar Ventas</h2>
           <input
@@ -68,7 +117,6 @@ export default function MoreSales() {
           />
         </aside>
 
-        {/* Contenido principal */}
         <div className="flex-1 w-8/12 mt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-blue-950 mr-6">
             {filteredSales.map((sale) => (
@@ -80,6 +128,7 @@ export default function MoreSales() {
                   <h1 className="text-lg mr-4">
                     <strong>Cliente:</strong> {sale.cliente}
                   </h1>
+                   <strong >-----{sale.estado.charAt(0).toUpperCase()+sale.estado.slice(1).toLowerCase()}-----</strong>
                   <p className="ml-auto font-semibold text-lg p-1">
                     +₲ {sale.total.toLocaleString("es-ES")}
                   </p>
@@ -101,17 +150,25 @@ export default function MoreSales() {
                   <p>
                     <strong>Código:</strong> {sale.id}
                   </p>
+                  {!(sale.estado ===
+                    "anulado") &&(
+                      <button
+                        className="mt-2 bg-blue-950 text-white py-1 px-4 rounded"
+                        onClick={() => cancelSale(sale.id)}
+                      >
+                        Anular Venta
+                      </button>
+                    )}
                 </div>
                 {hiddenStates[sale.id] && (
                   <div className="mt-2">
-                    <ViewSales id={sale.id} getsubsales={getSubsales}/>
+                    <ViewSales id={sale.id} getsubsales={getSubsales} />
                   </div>
                 )}
               </div>
             ))}
           </div>
 
-          {/* Paginación */}
           <div className="flex justify-center mt-6">
             <button
               className="px-4 py-2 mx-2 rounded border-2 border-blue-950 text-blue-950 disabled:opacity-50"

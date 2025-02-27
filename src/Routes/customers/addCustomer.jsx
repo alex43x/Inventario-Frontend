@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import flecha from "../../assets/flecha-izquierda.png";
 import anadir from "../../assets/anadir.png";
+import React from "react";
+import Swal from "sweetalert2";
 
 export default function AddCustomer() {
   const [id, setId] = useState(0);
@@ -40,13 +42,53 @@ export default function AddCustomer() {
         nombre: nombre,
         saldo: saldo,
       });
-      console.log("Producto añadido:", response.data);
-      alert("Producto añadido con éxito");
+      console.log("Cliente añadido:", response.data);
+      Swal.fire({
+        title: "Cliente añadido",
+        showClass: {
+          popup: `
+                    animate__animated
+                    animate__fadeIn
+                  `,
+        },
+        text: "El cliente a sido añadido con éxito",
+        confirmButtonText: "Continuar",
+        timer: 1000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
       const originalData = response.data;
       navigate(-1);
     } catch (error) {
-      console.error("Error al añadir el producto:", error);
-      alert("Hubo un error al añadir el producto");
+      console.error("Error al añadir el Cliente:", error);
+      Swal.fire({
+              title: "Datos inválidos",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              text: "El cliente ya existe o los datos enviados son inválidos",
+              confirmButtonText: "Continuar",
+              timer: 3000,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
     }
   };
 

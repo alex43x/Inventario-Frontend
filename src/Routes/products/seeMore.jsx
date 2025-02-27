@@ -1,18 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import ViewBatches from "../inventory/viewBatches";
-
 import axios from "axios";
 import Movements from "../dashboard/movements";
+import Swal from "sweetalert2";
 
 import anadir from "../../assets/anadir.png";
-import casa from "../../assets/casa.png";
 import flechaderecha from "../../assets/flecha-derecha.png";
 import flechaizquierda from "../../assets/flecha-izquierda.png";
 import registro from "../../assets/registro.png";
 import eliminar from "../../assets/eliminar.png";
+
 
 const SeeMore = () => {
   const location = useLocation();
@@ -64,27 +63,73 @@ const SeeMore = () => {
     });
   };
 
-  const handleDelete = async () => {
-    alert(
-      "El producto no podrá ser recuperado. Solo puedes eliminar un producto si no tiene lotes activos."
-    );
-    const confirmDelete = window.confirm(
-      "Estas seguro de que deseas eliminar el producto?"
-    );
-    if (confirmDelete) {
-      axios
-        .delete(`http://localhost:3000/products/${originalData.id_prod}`)
-        .then(() => {
-          navigate("/Productos");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error: El producto tiene lotes activos");
-        });
-    } else {
-      alert("Eliminación cancelada");
-    }
-  };
+
+
+const handleDelete = async (originalData, navigate) => {
+  // Confirmación inicial con SweetAlert
+  const result = await Swal.fire({
+    title: "Eliminar Producto",
+    text: "No podrás recuperar el producto. Sólo puedes eliminar un producto si no tiene lotes registrados.",
+
+    showCancelButton: true,
+    confirmButtonText: "Sí, eliminar",
+    cancelButtonText: "Cancelar",
+    allowOutsideClick: false,
+    customClass: {
+      popup: "bg-sky-50 rounded-lg shadow-xl border-2 border-sky-800",
+      title: "text-4xl font-bold text-sky-950",
+      text: "text-sky-900 font-medium",
+      confirmButton: "bg-blue-950  text-white font-bold py-2 px-4 rounded",
+      cancelButton: "bg-blue-950 transition text-white font-bold py-2 px-4 rounded",
+    },
+  });
+
+  // Si el usuario cancela, detener ejecución
+  if (!result.isConfirmed) {
+    await Swal.fire({
+      title: "Eliminación cancelada",
+      icon: "info",
+      timer: 1500,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      customClass: {
+        popup: "bg-sky-50 rounded-lg shadow-xl border-2 border-sky-800",
+        title: "text-4xl font-bold text-sky-950",
+      },
+    });
+    return;
+  }
+
+  // Intentar eliminar el producto
+  try {
+    console.log(producto)
+    await axios.delete(`http://localhost:3000/products/${producto[0].id_prod}`);
+    await Swal.fire({
+      title: "Producto eliminado",
+      text: "El producto fue eliminado con éxito.",
+      confirmButtonText: "Continuar",
+      allowOutsideClick: false,
+      customClass: {
+        popup: "bg-sky-50 rounded-lg shadow-xl border-2 border-sky-800",
+        title: "text-4xl font-bold text-sky-950",
+        confirmButton: "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    await Swal.fire({
+      title: "Error",
+      text: "No se puede eliminar el producto porque tiene lotes registrados.",
+      confirmButtonText: "Continuar",
+      allowOutsideClick: false,
+      customClass: {
+        popup: "bg-sky-50 rounded-lg shadow-xl border-2 border-sky-800",
+        title: "text-4xl font-bold text-sky-950",
+        confirmButton: "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+      },
+    });
+  }
+};
 
   const deleteBatch = async (lote, stock, producto) => {
     try {
@@ -94,7 +139,26 @@ const SeeMore = () => {
         producto,
       });
 
-      alert("Lote anulado...");
+      Swal.fire({
+        title: "Lote anulado",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeIn
+          `,
+        },
+        confirmButtonText: "Continuar",
+        timer: 2000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
 
       setBatches((prevBatches) =>
         prevBatches.filter((item) => item.id_lote !== lote)
@@ -107,7 +171,27 @@ const SeeMore = () => {
       console.log("Batches actualizados: ", batches);
     } catch (error) {
       console.error(error);
-      alert("Error en la anulación");
+      Swal.fire({
+        title: "Error",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeIn
+          `,
+        },
+        text: "No se puede anular el lote",
+        confirmButtonText: "Continuar",
+        timer: 1000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
     }
   };
 

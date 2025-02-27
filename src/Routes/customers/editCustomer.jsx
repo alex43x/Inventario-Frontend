@@ -5,6 +5,8 @@ import axios from "axios";
 import flecha from "../../assets/flecha-izquierda.png";
 import registro from "../../assets/registro.png";
 
+import Swal from "sweetalert2";
+
 const EditCustomer = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,12 +43,51 @@ const EditCustomer = () => {
         { nombre: formData.nombre, saldo: formData.saldo }
       );
       console.log("Customer actualizado:", response.data);
-      alert("Cliente editado con éxito");
+      Swal.fire({
+        title: "Cliente actualizado",
+        showClass: {
+          popup: `
+                    animate__animated
+                    animate__fadeIn
+                  `,
+        },
+        confirmButtonText: "Continuar",
+        timer: 1000,
+        allowOutsideClick: false,
+        customClass: {
+          popup:
+            "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+          text: "text-sky-900 font-medium",
+          confirmButton:
+            "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+        },
+      });
       // Redirigir a la página anterior con datos actualizados
       navigate(-1, { state: { originalData: formData } });
     } catch (error) {
       console.error("Error al editar el customer:", error);
-      alert("Hubo un error al actualizar el customer");
+      Swal.fire({
+              title: "Datos inválidos",
+              showClass: {
+                popup: `
+                          animate__animated
+                          animate__fadeIn
+                        `,
+              },
+              text: "Hubo un error al editar el cliente",
+              confirmButtonText: "Continuar",
+              timer: 1000,
+              allowOutsideClick: false,
+              customClass: {
+                popup:
+                  "bg-sky-50 rounded-lg shadow-xl rounded-lg border-2 border-sky-800",
+                title: "text-4xl font-bold text-sky-950",
+                text: "text-sky-900 font-medium",
+                confirmButton:
+                  "bg-sky-950 focus:bg-sky-900 transition text-white font-bold py-2 px-4 rounded",
+              },
+            });
     }
   };
 

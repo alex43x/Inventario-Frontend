@@ -6,14 +6,13 @@ export default defineConfig({
   plugins: [react()],
   base: './',  // 👈 Asegura rutas relativas
   build: {
-    outDir: '../electron/frontend-dist',
+    outDir: '../frontend-dist',
     emptyOutDir: true,
   },
   server: {
-    port: 3000,
+    port: 5173,
   },
   preview: { // 👈 Esto permite servir la app correctamente en producción
     historyApiFallback: true
   }
 })
-
