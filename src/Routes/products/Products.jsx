@@ -21,7 +21,7 @@ const Productos = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/categories");
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/categories`);
         console.log("Categorías:", response.data);
         setCategorias(response.data);
       } catch (error) {
@@ -36,7 +36,7 @@ const Productos = () => {
   const fetchProducts = useCallback(
     async (reset = false, newPage = 1) => {
       try {
-        const response = await axios.get("http://localhost:3000/products", {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/products`, {
           params: {
             search: searchName, // Envía el término de búsqueda
             category: searchCategory, // Envía la categoría seleccionada
@@ -81,7 +81,7 @@ const Productos = () => {
   useEffect(() => {
     const getMovements = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/movements"); // Cambia la URL por la de tu backend
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/movements`); // Cambia la URL por la de tu backend
         setDatos(response.data); // Guarda los datos en el estado
         // Indica que la carga ha terminado
       } catch (error) {
@@ -96,7 +96,7 @@ const Productos = () => {
     const getAlerts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/products-alerts"
+          `${process.env.REACT_APP_API_URL}/products-alerts`
         ); // Cambia la URL por la de tu backend
         setAlertas(response.data); // Guarda los datos en el estado
         // Indica que la carga ha terminado

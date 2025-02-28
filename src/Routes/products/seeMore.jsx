@@ -23,7 +23,7 @@ const SeeMore = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/products/${originalData.id_prod}`)
+      .get(`${process.env.REACT_APP_API_URL}/products/${originalData.id_prod}`)
       .then((response) => {
         setProducto(response.data);
       })
@@ -35,7 +35,7 @@ const SeeMore = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/inventory/${originalData.id_prod}`)
+      .get(`${process.env.REACT_APP_API_URL}/inventory/${originalData.id_prod}`)
       .then((response) => {
         console.log("Lotes recibidos: ", response.data);
         setBatches(response.data);
@@ -46,7 +46,7 @@ const SeeMore = () => {
   }, []);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/sub-sales-product/${originalData.id_prod}`)
+      .get(`${process.env.REACT_APP_API_URL}/sub-sales-product/${originalData.id_prod}`)
       .then((response) => {
         console.log("Ventas recibidos: ", response.data);
         setSales(response.data);
@@ -103,7 +103,7 @@ const handleDelete = async (originalData, navigate) => {
   // Intentar eliminar el producto
   try {
     console.log(producto)
-    await axios.delete(`http://localhost:3000/products/${producto[0].id_prod}`);
+    await axios.delete(`${process.env.REACT_APP_API_URL}/products/${producto[0].id_prod}`);
     await Swal.fire({
       title: "Producto eliminado",
       text: "El producto fue eliminado con éxito.",
@@ -133,7 +133,7 @@ const handleDelete = async (originalData, navigate) => {
 
   const deleteBatch = async (lote, stock, producto) => {
     try {
-      await axios.put("http://localhost:3000/inventory-cancel", {
+      await axios.put(`${process.env.REACT_APP_API_URL}/inventory-cancel`, {
         lote,
         stock,
         producto,
@@ -199,7 +199,7 @@ const handleDelete = async (originalData, navigate) => {
     if (!originalData?.id_prod) return;
 
     axios
-      .get(`http://localhost:3000/products/${originalData.id_prod}`)
+      .get(`${process.env.REACT_APP_API_URL}/products/${originalData.id_prod}`)
       .then((response) => setProducto(response.data))
       .catch((error) => console.log(error));
   }, [originalData?.id_prod]);
@@ -208,7 +208,7 @@ const handleDelete = async (originalData, navigate) => {
     if (!originalData?.id_prod) return;
 
     axios
-      .get(`http://localhost:3000/inventory/${originalData.id_prod}`)
+      .get(`${process.env.REACT_APP_API_URL}/inventory/${originalData.id_prod}`)
       .then((response) => {
         console.log("Lotes recibidos: ", response.data);
         setBatches(response.data);

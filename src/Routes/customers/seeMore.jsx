@@ -22,7 +22,7 @@ const SeeMoreCustomers = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/customers/${originalData.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/customers/${originalData.id}`)
       .then((response) => {
         setCustomer(response.data);
       })
@@ -35,7 +35,7 @@ const SeeMoreCustomers = () => {
     if (originalData.saldo != 0) {
       axios
         .get(
-          `http://localhost:3000/payments/${customer.id}?saldo=${customer.saldo}`
+          `${process.env.REACT_APP_API_URL}/payments/${customer.id}?saldo=${customer.saldo}`
         )
         .then((response) => {
           console.log("Pagos recibidos: ", response.data);
@@ -129,7 +129,7 @@ const SeeMoreCustomers = () => {
       console.log(payData);
       try {
         const payment = await axios.post(
-          "http://localhost:3000/payments-debt",
+          `${process.env.REACT_APP_API_URL}/payments-debt`,
           payData
         );
 

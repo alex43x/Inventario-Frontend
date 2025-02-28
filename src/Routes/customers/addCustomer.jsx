@@ -17,18 +17,6 @@ export default function AddCustomer() {
 
   const [selectedOption, setSelectedOption] = useState(""); // Estado para guardar la opción seleccionada
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/categories`)
-      .then((response) => {
-        console.log("Categorías recibidos", response.data);
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -37,7 +25,7 @@ export default function AddCustomer() {
     console.log(form);
 
     try {
-      const response = await axios.post("http://localhost:3000/customers", {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/customers`, {
         id: id,
         nombre: nombre,
         saldo: saldo,

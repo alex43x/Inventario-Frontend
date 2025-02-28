@@ -13,7 +13,7 @@ export default function MoreSales() {
 
   const fetchSales = async (search = "", pageNum = 1) => {
     try {
-      const response = await axios.get("http://localhost:3000/sales", {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/sales`, {
         params: { search, page: pageNum, limit },
       });
       setSales(response.data);
@@ -26,7 +26,7 @@ export default function MoreSales() {
   const getSubsales = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/sub-sales-by/${id}`
+        `${process.env.REACT_APP_API_URL}/sub-sales-by/${id}`
       );
       return response.data;
     } catch (error) {
@@ -52,7 +52,7 @@ export default function MoreSales() {
     if (!window.confirm("¿Seguro que deseas anular esta venta?")) return;
     console.log(id);
     try {
-      await axios.post(`http://localhost:3000/sales-cancel`, { saleId: id });
+      await axios.post(`${process.env.REACT_APP_API_URL}/sales-cancel`, { saleId: id });
       Swal.fire({
         title: "La venta ha sido anulada",
         showClass: {

@@ -26,7 +26,7 @@ export default function AddProduct() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/categories`)
+      .get(`${process.env.REACT_APP_API_URL}/categories`)
       .then((response) => {
         console.log("Categorías recibidos", response.data);
         setCategories(response.data);
@@ -48,7 +48,7 @@ export default function AddProduct() {
     console.log(form);
 
     try {
-      const response = await axios.post("http://localhost:3000/products", {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/products`, {
         nombre: nombre,
         descrip: descrip,
         stock: form.stock.value,

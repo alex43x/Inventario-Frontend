@@ -20,7 +20,7 @@ const ProductSearch = ({ getData }) => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:3000/search/products?nombre=${searchTerm}`
+        `${process.env.REACT_APP_API_URL}/search/products?nombre=${searchTerm}`
       );
       setProducts(response.data);
     } catch (error) {
@@ -48,7 +48,7 @@ const ProductSearch = ({ getData }) => {
     setProducts([]); // Ocultar las opciones después de seleccionar
     try {
       axios
-        .get(`http://localhost:3000/inventory/${product.id_prod}`)
+        .get(`${process.env.REACT_APP_API_URL}/inventory/${product.id_prod}`)
         .then((response) => {
           console.log("Lotes recibidos: ", response.data);
           setBatches(response.data);

@@ -19,7 +19,7 @@ const Clientes = () => {
   const fetchCustomers = useCallback(
     async (reset = false, newPage = 1) => {
       try {
-        const response = await axios.get("http://localhost:3000/customers", {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/customers`, {
           params: {
             search: searchName, // Envía el término de búsqueda
             page: newPage, // Envía la página actual

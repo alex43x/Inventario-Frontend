@@ -50,7 +50,7 @@ export default function NewSale() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/customers")
+      .get(`${process.env.REACT_APP_API_URL}/customers`)
       .then((response) => {
         setCustomers(response.data);
       })
@@ -247,7 +247,7 @@ export default function NewSale() {
     try {
       // Crea la cabecera de la venta y espera la respuesta
       const saleResponse = await axios.post(
-        "http://localhost:3000/sales",
+        `${process.env.REACT_APP_API_URL}/sales`,
         saleData
       );
       const newSaleId = saleResponse.data.id; // Obtén el ID de la venta creada
@@ -269,7 +269,7 @@ export default function NewSale() {
           ).toFixed(),
           total: product.precio * product.quantity,
         };
-        return axios.post("http://localhost:3000/sales-products", productData);
+        return axios.post(`${process.env.REACT_APP_API_URL}/sales-products`, productData);
       });
 
       await Promise.all(productPromises);
@@ -284,12 +284,12 @@ export default function NewSale() {
       };
 
       if (actpay != 0 && actpay != null) {
-        await axios.post("http://localhost:3000/payments", payData);
+        await axios.post(`${process.env.REACT_APP_API_URL}/payments`, payData);
       }
 
       const saldo = totalFinal.toFixed() - actpay;
       await axios.put(
-        `http://localhost:3000/customers-sale/${selectedCustomer.id}`,
+        `${process.env.REACT_APP_API_URL}/customers-sale/${selectedCustomer.id}`,
         { saldo }
       );
 

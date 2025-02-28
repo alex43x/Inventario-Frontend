@@ -14,7 +14,7 @@ const EditProductForm = ({ productData, onSubmit, onBack }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/categories`)
+      .get(`${process.env.REACT_APP_API_URL}/categories`)
       .then((response) => {
         console.log("Categorías recibidas", response.data);
         setCategories(response.data);

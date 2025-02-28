@@ -28,7 +28,7 @@ const Reportes = () => {
   const getSales = async () => {
     try {
       setCargando(true); // Iniciar carga antes de hacer la petición
-      const response = await axios.get("http://localhost:3000/reportes");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/reportes`);
       setSales(response.data);
       console.log(response.data);
     } catch (err) {
