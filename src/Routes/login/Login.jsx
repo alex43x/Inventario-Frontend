@@ -22,7 +22,7 @@ function Login() {
       
       if (response.status === 401) {
         // El token expiró, redirigir al login
-        localStorage.removeItem("token");
+        localStorage.removeItem("authToken");
         window.location.href = "/login"; 
       }
       
