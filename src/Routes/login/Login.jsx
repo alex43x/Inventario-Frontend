@@ -15,22 +15,24 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/inventory`, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${authToken}` },
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: credentials.id,
+          password: credentials.password,
+        }),
       });
-      
+
       if (response.status === 401) {
-        // El token expiró, redirigir al login
-        localStorage.removeItem("authToken");
-        window.location.href = "/login"; 
+        localStorage.removeItem("token");  // Eliminar token
+        window.location.href = "/login";   // Redirigir al login
       }
-      
 
       const data = await response.json();
 
       if (response.ok) {
-        login({ id: credentials.id }, data.authToken); // Llama a la función de login del contexto
+        login({ id: credentials.id }, data.token); // Llama a la función de login del contexto
         Swal.fire({
           title: "¡Inicio de sesión exitoso!",
           showClass: {
