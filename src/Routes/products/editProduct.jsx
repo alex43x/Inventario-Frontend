@@ -19,7 +19,7 @@ const EditProductPage = () => {
     try {
       // Realizar la solicitud PUT con axios
       const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/products-edit/${originalData.id_prod}`,
+        `${import.meta.env.VITE_API_URL}/products-edit/${originalData.id_prod}`,
         updatedData
       );
       console.log("Producto actualizado:", response.data);
@@ -73,7 +73,7 @@ const EditProductPage = () => {
   };
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/products/${originalData.id_prod}`)
+      .get(`${import.meta.env.VITE_API_URL}/products/${originalData.id_prod}`)
       .then((response) => {
         console.log("Producto:", response.data);
         setProducto(response.data);

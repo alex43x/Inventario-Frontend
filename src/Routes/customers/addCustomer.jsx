@@ -25,7 +25,7 @@ export default function AddCustomer() {
     console.log(form);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/customers`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/customers`, {
         id: id,
         nombre: nombre,
         saldo: saldo,

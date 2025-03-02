@@ -39,7 +39,7 @@ const AddBatch = () => {
 
     try {
       const response = await axios
-        .post(`${process.env.REACT_APP_API_URL}/inventory`, data)
+        .post(`${import.meta.env.VITE_API_URL}/inventory`, data)
         .then((response) => {
           Swal.fire({
             title: "Lote registrado",
@@ -89,7 +89,7 @@ const AddBatch = () => {
 
     try {
       const update = await axios.post(
-        `${process.env.REACT_APP_API_URL}/products/${data.prod}`,
+        `${import.meta.env.VITE_API_URL}/products/${data.prod}`,
         data
       );
       console.log("Stock del Producto actualizado");

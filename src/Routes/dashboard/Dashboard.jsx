@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   const getSales = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/sales-dashboard`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/sales-dashboard`);
       setSales(response.data);
     } catch (err) {
       console.error("Error al obtener las ventas:", err);
@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   const getGraph = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/sales-graph`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/sales-graph`);
       setGraphData(response.data);
     } catch (err) {
       console.error("Error al obtener las ventas:", err);

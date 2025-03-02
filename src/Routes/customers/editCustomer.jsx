@@ -39,7 +39,7 @@ const EditCustomer = () => {
     try {
       // Realizar la solicitud PUT para actualizar los datos del cliente
       const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/customers/${formData.id}`,
+        `${import.meta.env.VITE_API_URL}/customers/${formData.id}`,
         { nombre: formData.nombre, saldo: formData.saldo }
       );
       console.log("Customer actualizado:", response.data);
