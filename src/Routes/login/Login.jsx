@@ -17,7 +17,7 @@ function Login() {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/inventory`, {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${authToken}` },
       });
       
       if (response.status === 401) {
@@ -30,7 +30,7 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        login({ id: credentials.id }, data.token); // Llama a la función de login del contexto
+        login({ id: credentials.id }, data.authToken); // Llama a la función de login del contexto
         Swal.fire({
           title: "¡Inicio de sesión exitoso!",
           showClass: {
