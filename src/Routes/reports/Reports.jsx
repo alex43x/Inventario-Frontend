@@ -82,7 +82,7 @@ const Reportes = () => {
       {/* Sección izquierda: Bienvenida y opciones (3/5 del ancho) */}
       <div className="w-full lg:w-5/12 min-w-[300px] rounded-xl px-6 h-4/6 flex flex-col justify-start items-start ">
         <section className="text-blue-950 text-left">
-          <h1 className="text-8xl font-bold">Reportes</h1>
+          <h1 className="lg:text-8xl text-5xl font-bold">Reportes</h1>
           <div className="mt-10 ml-1 flex items-center space-x-2">
             <img className="w-6 h-6" src={calendario} alt="Calendario" />
             <p className="text-lg font-medium">{fecha}</p>
