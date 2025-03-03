@@ -1,33 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { AuthContext } from "./authContext";
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "./authContext";
 
-const ProtectedRoute = ({ children }) => {
-  const { user } = useContext(AuthContext); // Obtiene el usuario del contexto
-  const [isLoading, setIsLoading] = useState(true); // Estado para manejar la carga
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken"); // Obtiene el token del localStorage
-    if (user || token) {
-      setIsAuthenticated(true); // Si hay usuario o token, está autenticado
-    } else {
-      setIsAuthenticated(false); // Si no hay usuario ni token, no está autenticado
-    }
-
-    setIsLoading(false); // Finaliza la carga
-  }, [user]); // Se ejecuta si `user` cambia
-
-  if (isLoading) {
-    // Mientras se carga, puedes mostrar un indicador de carga
-    return <div>Cargando...</div>;
-  }
+const ProtectedRoute = () => {
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
+    console.log("Acceso denegado: Redirigiendo a login...");
     return <Navigate to="/login" replace />;
   }
 
-  return children; // Renderiza los hijos si está autenticado
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
