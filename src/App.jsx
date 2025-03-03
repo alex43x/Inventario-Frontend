@@ -24,8 +24,8 @@ import Reportes from "./Routes/reports/Reports";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Routes>
           {/* Página de login, fuera del layout y sin protección */}
           <Route path="/login" element={<Login />} />
@@ -41,7 +41,7 @@ function App() {
           >
             {/* Rutas hijas dentro del layout */}
             <Route path="/" element={<Navigate to="home" />} />
-            <Route path="home" index element={<Dashboard />}  />
+            <Route path="home" index element={<Dashboard />} />
             <Route path="Productos" element={<Productos />} />
             <Route path="Productos/addProduct" element={<AddProduct />} />
             <Route path="Productos/editProduct" element={<EditProduct />} />
@@ -51,18 +51,19 @@ function App() {
             <Route path="Ventas" element={<NewSale />} />
             <Route path="Ventas/VerMas" element={<MoreSales />} />
             <Route path="Clientes" element={<Clientes />} />
-            <Route path="Clientes/seeMore" element={<SeeMoreCustomers/>} />
-            <Route path="Clientes/addcustomer" element={<AddCustomer/>} />
-            <Route path="Clientes/editcustomer" element={<EditCustomer/>} />
-            <Route path="Reportes" element={<Reportes/>} />
+            <Route path="Clientes/seeMore" element={<SeeMoreCustomers />} />
+            <Route path="Clientes/addcustomer" element={<AddCustomer />} />
+            <Route path="Clientes/editcustomer" element={<EditCustomer />} />
+            <Route path="Reportes" element={<Reportes />} />
           </Route>
 
           {/* Ruta 404 */}
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
+
 
 export default App;
