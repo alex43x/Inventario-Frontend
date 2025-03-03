@@ -24,10 +24,6 @@ function Login() {
         }),
       });
 
-      if (response.status === 401) {
-        localStorage.removeItem("token");  // Eliminar token
-        window.location.href = "/login";   // Redirigir al login
-      }
 
       const data = await response.json();
 
