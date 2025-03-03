@@ -7,6 +7,8 @@ const decodeJWT = (token) => {
     // Verificar si el token ha expirado
     if (decoded.exp * 1000 < Date.now()) {
       console.error("El token ha expirado");
+      localStorage.removeItem("token");  // Eliminar token
+      window.location.href = "/login"; 
       return null;
     }
     return decoded;
