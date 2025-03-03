@@ -31,8 +31,8 @@ const ProductTable = ({
             <th>Producto</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
-            <th>IVA</th>
-            <th>Gravada</th>
+            <th className="hidden sm:table-cell">IVA</th>
+            <th className="hidden sm:table-cell">Gravada</th>
             <th>Total</th>
             <th></th>
           </tr>
@@ -71,13 +71,13 @@ const ProductTable = ({
                   }
                 />
               </td>
-              <td>
+              <td className="hidden sm:table-cell">
                 {(
                   (product.precio * product.quantity * product.iva) /
                   (100 + product.iva)
                 ).toFixed()}
               </td>
-              <td>
+              <td className="hidden sm:table-cell">
                 {(
                   (product.precio * product.quantity * 100) /
                   (100 + product.iva)
@@ -103,8 +103,8 @@ const ProductTable = ({
             <th></th>
             <th></th>
             <th></th>
-            <th>₲ {totalIVA.toFixed()}</th>
-            <th>₲ {totalGravada.toFixed()}</th>
+            <th className="hidden sm:table-cell">₲ {totalIVA.toFixed()}</th>
+            <th className="hidden sm:table-cell">₲ {totalGravada.toFixed()}</th>
             <th>₲ {totalFinal.toFixed()}</th>
             <th></th>
           </tr>

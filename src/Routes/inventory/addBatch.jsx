@@ -100,10 +100,10 @@ const AddBatch = () => {
 
   return (
     <div>
-      <h1 className="text-7xl font-bold text-blue-950 m-10 p-5 text-center">
+      <h1 className="text-7xl  font-bold text-blue-950 m-10 p-5 text-center">
         Nuevo Lote
       </h1>
-      <div className="flex flex-wrap justify-center w-3/5 mx-auto mt-10 ">
+      <div className="flex flex-wrap justify-center lg:w-3/5 w-4/5 mx-auto mt-10 ">
         <form
           className="border-2 border-sky-950 rounded-lg p-4 md:w-6/12 w-full mx-auto  content-center grid shadow-2xl shadow-gray-500"
           onSubmit={handleSubmit}
@@ -157,7 +157,7 @@ const AddBatch = () => {
             required
           />
 
-          <div className="flex justify-evenly flex-wrap items-center h-full ml-1 my-6 gap-4">
+          <div className="flex justify-evenly flex-wrap items-center h-full ml-1 my-6 lg:gap-4">
             <button
               className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
               type="submit"
@@ -165,7 +165,6 @@ const AddBatch = () => {
               <p className="flex-1">Añadir Lote</p>
               <img className="w-6 h-6 ml-1 " src={registro} alt="" />
             </button>
-
             <button
               className=" self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-sky-900 trasition duration-500"
               onClick={handleBack}

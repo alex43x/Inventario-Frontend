@@ -110,17 +110,17 @@ const Productos = () => {
 
   return (
     <div>
-      <div className="flex flex-wrap ml-16 mt-10 gap-5">
-        <div className="flex flex-wrap flex-1 gap-6">
+      <div className="flex flex-wrap lg:ml-16 mx-8 mt-10 gap-5">
+        <div className="flex flex-wrap flex-1 lg:gap-6 gap-3">
           <section className="text-blue-950 text-left">
-            <h1 className="lg:text-7xl text-3xl font-bold ">Inventario</h1>
-            <p className="text-xl font-medium my-8">Productos disponibles:</p>
+            <h1 className="lg:text-7xl text-6xl font-bold ">Inventario</h1>
+            <p className="text-xl font-medium lg:my-8 my-2">Productos disponibles:</p>
           </section>
           <div className=" rounded-lg lg:p-5 md:ml-36 ml-auto flex-1 min-w-48">
             <section className=" text-blue-950 m-auto ">
               <h3 className="text-lg font-medium mr-4">Buscar</h3>
               <input
-                className=" w-11/12 rounded-lg border-2 p-1 border-blue-950 text-sky-900 hover:bg-blue-50 focus:bg-blue-100 transition"
+                className=" w-11/12 max-w-72 rounded-lg border-2 p-1 border-blue-950 text-sky-900 hover:bg-blue-50 focus:bg-blue-100 transition"
                 type="text"
                 placeholder="Nombre del Producto"
                 value={searchName}
@@ -128,8 +128,9 @@ const Productos = () => {
               />
             </section>
             <label className="text-blue-950 font-medium">Por categoría</label>
+            <br />
             <select
-              className=" w-11/12 rounded-md p-1 hover:bg-blue-50  transition "
+              className=" w-11/12 rounded-md p-1 hover:bg-blue-50  transition max-w-72"
               value={searchCategory}
               onChange={(e) => setSearchCategory(e.target.value)}
             >
@@ -143,10 +144,10 @@ const Productos = () => {
               ))}
             </select>
           </div>
-          <section className=" ml-auto lg:mr-24 rounded-lg flex flex-wrap p-1 my-auto gap-4">
+          <section className=" lg:ml-auto lg:mr-24 rounded-lg flex flex-wrap p-1 my-auto gap-4">
             <div>
               <Link to="addProduct">
-                <button className="mx-auto self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-blue-900 trasition duration-500">
+                <button className="mx-auto self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-blue-900 trasition duration-500 ">
                   <p className="flex-1">Añadir Producto</p>
                   <img className="w-6 h-6 ml-3 " src={anadir} />
                 </button>
@@ -163,7 +164,7 @@ const Productos = () => {
           </section>
         </div>
       </div>
-      <div className="flex flex-wrap ml-16 mt-10 gap-5">
+      <div className="flex flex-wrap lg:ml-16 mx-8 w-full mt-10 gap-5">
         <section className="text-sky-950 text-center pb-3 lg:w-7/12 w-11/12 lg:border-r-2 border-blue-950">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-1">
             {productos.map((producto) => (

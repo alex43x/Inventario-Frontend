@@ -347,7 +347,7 @@ export default function NewSale() {
 
   return (
     <div>
-      <h1 className="text-7xl font-bold text-blue-950 my-10 md:ml-32  left">
+      <h1 className="lg:text-7xl text-4xl font-bold text-blue-950 my-10 lg:ml-32 md:ml-24 ml-8">
         Nueva Venta
       </h1>
 
@@ -372,7 +372,7 @@ export default function NewSale() {
                 readOnly
               />
             </div>
-            <div className="my-2 ml-4">
+            <div className="lg:my-2 lg:ml-4 mb-1 mt-2">
               <label className="ml-2">Fecha: </label>
               <input
                 value={date}
@@ -394,7 +394,7 @@ export default function NewSale() {
                 </h1>
                 <img className="w-6 h-6" src={carrito} alt="" />
               </div>
-              <div className="overflow-hidden  w-full">
+              <div className="overflow-hidden w-full">
                 <ProductTable
                   products={selectedProducts}
                   onUpdateQuantity={handleUpdateQuantity}

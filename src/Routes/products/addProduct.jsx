@@ -113,7 +113,7 @@ export default function AddProduct() {
       <h1 className="md:text-7xl text-4xl font-bold text-blue-950 text-center mt-10">
         Registrar producto
       </h1>
-      <div className="flex flex-wrap justify-center w-3/5 mx-auto mt-10 ">
+      <div className="flex flex-wrap justify-center lg:w-3/5 w-4/5 mx-auto mt-10 ">
         <form
           className="border-2 border-sky-950 rounded-lg p-4 md:w-6/12 w-full mx-auto  content-center grid shadow-2xl shadow-gray-500"
           onSubmit={handleSubmit}

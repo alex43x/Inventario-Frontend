@@ -78,7 +78,7 @@ const Reportes = () => {
   };
 
   return (
-    <div className="flex flex-wrap ml-16 mt-10 gap-5">
+    <div className="flex flex-wrap lg:ml-16 mx-8 mt-10 gap-5">
       {/* Sección izquierda: Bienvenida y opciones (3/5 del ancho) */}
       <div className="w-full lg:w-5/12 min-w-[300px] rounded-xl px-6 h-4/6 flex flex-col justify-start items-start ">
         <section className="text-blue-950 text-left">
@@ -132,7 +132,7 @@ const Reportes = () => {
       </div>
 
       {/* Sección derecha: Tabla de movimientos  */}
-      <div className=" w-full lg:w-5/12 min-w-[300px] mr-18 rounded-xl px-6 lg:mt-32 mr-20 h-4/6 border-2 border-sky-950 flex-1">
+      <div className=" w-full lg:w-5/12 min-w-[300px] mr-18 rounded-xl px-8 lg:mt-32  h-4/6 border-2 border-sky-950 flex-1">
         <div className=" p-4 rounded-lg ">
           <div className="flex flex-col items-left  border-2  border-blue-950 rounded-lg p-4">
             <h2 className="text-2xl font-bold text-blue-950 ">IVA del Mes</h2>

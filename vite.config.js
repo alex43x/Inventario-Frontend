@@ -4,7 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  base: './',  // 👈 Asegura rutas relativas
+  base: './',  // Asegura rutas relativas
   build: {
     outDir: './dist',
     emptyOutDir: true,
@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     port: 5173,
   },
-  preview: { // 👈 Esto permite servir la app correctamente en producción
+  preview: { // Permite servir la app correctamente en producción
     historyApiFallback: true
   }
 })

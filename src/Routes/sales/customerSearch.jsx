@@ -50,39 +50,44 @@ export default function CustomerSearch({ customers, onSelectCustomer }) {
   }, []);
 
   return (
-    <div className="relative mt-2">
-      <div className="flex items-center w-full">
+    <div>
+      <div className="flex flex-wrap mt-2 ">
         <label className="ml-2">Cliente: </label>
-        <input
-          type="text"
-          placeholder="Nombre del cliente"
-          className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 mx-2"
-          value={searchTerm}
-          onChange={handleInputChange}
-          required
-        />
-        <button
-          type="button"
-          onClick={handleClear} 
-          className="text-gray-300 px-2 rounded backdrop-blur bg-sky-900 transition hover:bg-blue-900 mr-4"
-        >
-          x
-        </button>
+        <div>
+          <input
+            type="text"
+            placeholder="Nombre del cliente"
+            className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 lg:mx-2"
+            value={searchTerm}
+            onChange={handleInputChange}
+            required
+          />
+          <button
+            type="button"
+            onClick={handleClear}
+            className="text-gray-300 px-2 rounded backdrop-blur bg-sky-900 transition hover:bg-blue-900 mr-4"
+          >
+            x
+          </button>
+        </div>
       </div>
-      {/* Lista desplegable */}
-      {filteredCustomers.length > 0 && (
-        <ul className="absolute bg-white border rounded-md shadow-md w-full max-h-40 overflow-y-auto z-10">
-          {filteredCustomers.map((customer, index) => (
-            <li
-              key={index}
-              className="p-2 hover:bg-gray-200 cursor-pointer"
-              onClick={() => handleSelectCustomer(customer)}
-            >
-              {customer.nombre}
-            </li>
-          ))}
-        </ul>
-      )}
+
+      <div className="relative mt-2 ">
+        {/* Lista desplegable */}
+        {filteredCustomers.length > 0 && (
+          <ul className="absolute bg-white border rounded-md shadow-md w-full max-h-40 overflow-y-auto z-10">
+            {filteredCustomers.map((customer, index) => (
+              <li
+                key={index}
+                className="p-2 hover:bg-gray-200 cursor-pointer"
+                onClick={() => handleSelectCustomer(customer)}
+              >
+                {customer.nombre}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

@@ -102,23 +102,23 @@ export default function MoreSales() {
 
   return (
     <div>
-      <h1 className="text-7xl font-bold text-blue-950 text-center m-8">
+      <h1 className="lg:text-7xl text-5xl font-bold text-blue-950 text-center m-8">
         Ventas Registradas
       </h1>
       <div className="flex flex-wrap">
-        <aside className="p-4 rounded border-2 border-blue-950 mx-4 my-6 text-blue-950 h-36">
+        <aside className="p-4 rounded border-2 border-blue-950 mx-8 my-6  text-blue-950 h-36">
           <h2 className="text-xl font-medium mb-4">Buscar Ventas</h2>
           <input
             type="text"
-            placeholder="Buscar por cliente o vendedor..."
+            placeholder="Cliente o Vendedor..."
             value={searchQuery}
             onChange={handleSearch}
             className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100 w-full"
           />
         </aside>
 
-        <div className="flex-1 w-8/12 mt-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-blue-950 mr-6">
+        <div className="lg:flex-1 lg:w-8/12 w-full mt-6 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-blue-950 mx-8">
             {filteredSales.map((sale) => (
               <div
                 key={sale.id}

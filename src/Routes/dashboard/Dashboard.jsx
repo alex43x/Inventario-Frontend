@@ -75,17 +75,17 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="flex flex-wrap ml-16 mt-10 gap-5">
+    <div className="flex flex-wrap lg:ml-16 mx-8 mt-10 gap-5">
       {/* Sección izquierda: Bienvenida y opciones (3/5 del ancho) */}
-      <div className="w-full lg:w-5/12 min-w-[300px] rounded-xl px-6 h-4/6 flex flex-col justify-start items-start">
+      <div className="w-full lg:w-5/12 rounded-xl lg:px-6 h-4/6 flex flex-col justify-start items-start">
         <section className="text-blue-950 text-left">
-          <h1 className="text-8xl font-bold">Hola, {userName}!</h1>
+          <h1 className="lg:text-8xl text-5xl font-bold break-words">Hola, {userName}!</h1>
           <div className="mt-10 ml-1 flex items-center space-x-2">
             <img className="w-6 h-6" src={calendario} alt="Calendario" />
             <p className="text-lg font-medium">{fecha}</p>
           </div>
         </section>
-        <section className="flex flex-wrap justify-start w-full mt-12 gap-3">
+        <section className="flex flex-wrap justify-start w-full lg:mt-12 mt-8 gap-3">
           <Section title="Productos" text="Ver los productos disponibles" />
           <Section title="Ventas" text="Registrar ventas realizadas" />
           <Section title="Clientes" text="Ver deudas de clientes" />
@@ -94,13 +94,13 @@ const Dashboard = () => {
       </div>
 
       {/* Sección derecha: Tabla de movimientos  */}
-      <div className=" w-full lg:w-5/12 min-w-[300px] mr-18 rounded-xl px-6  mr-20 h-4/6 border-2 border-sky-950 flex-1">
+      <div className=" w-full lg:w-5/12  mr-18 rounded-xl px-6 lg:mr-20 mx-auto h-4/6 border-2 border-sky-950 flex-1">
         <h1 className="text-left text-4xl font-bold text-blue-950 my-5">
           Tus ventas
         </h1>
-        <div className="flex gap-6 flex-wrap  border-b-2 border-sky-950 pb-5 ">
+        <div className="flex gap-6 flex-wrap  border-b-2 border-sky-950 pb-5">
           <SalesData
-            className="flex-1"
+            className="flex-1 "
             title="Día"
             text={sales?.[0]?.total || 0}
           />

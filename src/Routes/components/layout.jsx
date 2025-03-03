@@ -12,9 +12,9 @@ const Layout = () => {
   return (
     <div>
       <header>
-        <nav className="lg:mt-5 lg:ml-10 flex flex-wrap">
+        <nav className="lg:mt-5 lg:ml-10 flex flex-wrap mt-2 mx-2">
           {/* Usa Link para la navegación interna */}
-          <Link className="text-lg lg:ml-6 text-sky-950 hover:text-sky-800" to="/home">
+          <Link className="text-lg lg:ml-6 ml-8 text-sky-950 hover:text-sky-800" to="/home">
             Dashboard
           </Link>
           <Link className="text-lg ml-8 text-sky-950 hover:text-sky-800" to="/Productos">
@@ -26,7 +26,10 @@ const Layout = () => {
           <Link className="text-lg ml-8 text-sky-950 hover:text-sky-800" to="/Clientes">
             Clientes
           </Link>
-          <div className="flex-1 mx-5">
+          <Link className="text-lg ml-8 text-sky-950 hover:text-sky-800" to="/Reportes">
+            Reportes
+          </Link>
+          <div className="flex-1 ml-8">
             <button
               className="text-lg text-sky-950 hover:text-sky-800 ml-auto mr-5"
               onClick={handleLogout}

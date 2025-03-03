@@ -61,17 +61,17 @@ const Clientes = () => {
   };
 
   return (
-    <div className="mx-16 mt-10">
-      <div className="flex flex-wrap flex-1 gap-6">
+    <div className="lg:mx-16 mx-8 mt-10">
+      <div className="flex flex-wrap flex-1 lg:gap-6 gap-3">
         <section className="text-blue-950 text-left">
-          <h1 className="lg:text-7xl text-4xl font-bold ">Clientes</h1>
+          <h1 className="lg:text-7xl text-5xl font-bold ">Clientes</h1>
           <p className="text-xl font-medium my-8"></p>
         </section>
         <div className=" rounded-lg lg:p-5 md:ml-36 ml-auto flex-1 min-w-48">
           <section className=" text-blue-950 m-auto ">
             <h3 className="text-lg font-medium mr-4">Buscar</h3>
             <input
-              className=" w-11/12 rounded-lg border-2 p-1 border-blue-950 text-sky-900 hover:bg-blue-50 focus:bg-blue-100 transition"
+              className=" w-11/12 max-w-72 rounded-lg border-2 p-1 border-blue-950 text-sky-900 hover:bg-blue-50 focus:bg-blue-100 transition"
               type="text"
               placeholder="Nombre del Cliente"
               value={searchName}
@@ -79,7 +79,7 @@ const Clientes = () => {
             />
           </section>
         </div>
-        <section className=" ml-auto lg:mr-24 rounded-lg flex flex-wrap p-1 my-auto gap-4">
+        <section className=" lg:ml-auto lg:mr-24 rounded-lg flex flex-wrap p-1  gap-4">
           <div>
             <Link to="addCustomer">
               <button className="mx-auto self-center p-4 rounded-lg flex flex-wrap gap-4 text-gray-100 bg-blue-950 hover:bg-blue-900 trasition duration-500">
@@ -98,7 +98,7 @@ const Clientes = () => {
           </div>
         </section>
       </div>
-      <section className="text-green-800 text-center p-3 flex-1  ">
+      <section className="text-green-800 text-center lg:m-3 my-3 flex-1  ">
         <ul className="flex justify-center flex-wrap ">
           {clientes.map((cliente) => (
             <Customer

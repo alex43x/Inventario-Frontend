@@ -67,12 +67,12 @@ const PaySale = ({ totalAmount, onPay, payed }) => {
           />
         </label>
       </div>
-      <div className="md:w-1/3 p-2 ml-6">
+      <div className="md:w-1/3 p-2 lg:ml-6">
         <p className="">Saldo restante: {totalAmount - actpay}</p>
         <p className="">Modo de Pago: {payMode}</p>
       </div>
       {quote && (
-        <div className="flex-1 bg-sky-100 rounded-md text-blue-950 w-3/12 p-2 h-full border-2 border-blue-950">
+        <div className=" bg-sky-100 rounded-md text-blue-950 lg:w-3/12 p-2 h-full border-2 border-blue-950">
           <div className=" ml-1 flex items-center space-x-2">
             <h1 className="text-left text-2xl font-medium text-blue-950 mb-2">
               Pago a cuotas

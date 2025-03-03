@@ -19,10 +19,8 @@ export const AuthProvider = ({ children }) => {
       const tokenExp = decoded.exp * 1000;
       const now = Date.now();
 
-      console.log("Token expira en:", tokenExp, "Ahora:", now);
 
       if (tokenExp < now) {
-        console.log("Token expirado");
         localStorage.removeItem("authToken");
         setUser(null);
         setIsAuthenticated(false);
@@ -31,7 +29,6 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
       }
     } catch (error) {
-      console.error("Token inválido", error);
       localStorage.removeItem("authToken");
       setUser(null);
       setIsAuthenticated(false);
