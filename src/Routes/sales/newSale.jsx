@@ -118,6 +118,8 @@ export default function NewSale() {
     setSelectedProducts((prev) =>
       prev.filter((product) => product.id_prod !== id_prod)
     );
+    console.log(totalFinal, actpay, totalFinal<actpay)
+    
   }, []);
 
   // Calcular los totales globales
@@ -157,7 +159,7 @@ export default function NewSale() {
                         `,
               },
               confirmButtonText: "Continuar",
-              timer: 1500,
+              timer: 2500,
               allowOutsideClick: false,
               customClass: {
                 popup:

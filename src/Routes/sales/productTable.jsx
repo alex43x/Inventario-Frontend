@@ -27,7 +27,7 @@ const ProductTable = ({
       <table className="w-full drop-shadow-2xl border-collapse" border="1">
         <thead className="bg-blue-950">
           <tr className="text-gray-300">
-            <th className="pl-2 py-2">Cod</th>
+            <th className="pl-2 py-2 hidden sm:table-cell">Cod</th>
             <th>Producto</th>
             <th>Cantidad</th>
             <th>Precio Unitario</th>
@@ -40,7 +40,7 @@ const ProductTable = ({
         <tbody>
           {products.map((product, index) => (
             <tr key={index} className="rounded-lg border-b-2 border-blue-950">
-              <td className="pl-2 py-1">{product.id_prod}</td>
+              <td className="pl-2 py-1 hidden sm:table-cell">{product.id_prod}</td>
               <td>{product.nombre}</td>
               <td>
                 <input
@@ -100,7 +100,7 @@ const ProductTable = ({
         <tfoot className="bg-blue-950 ">
           <tr className="text-gray-300 ">
             <th className="pl-2 py-2">Total</th>
-            <th></th>
+            <th className="hidden sm:table-cell"></th>
             <th></th>
             <th></th>
             <th className="hidden sm:table-cell">₲ {totalIVA.toFixed()}</th>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import alerta from '../../assets/alerta.png'
 import Swal from "sweetalert2";
 const PaySale = ({ totalAmount, onPay, payed }) => {
@@ -37,7 +37,7 @@ const PaySale = ({ totalAmount, onPay, payed }) => {
               },
               text: "El valor no puede superar el total de la compra",
               confirmButtonText: "Continuar",
-              timer: 1000,
+              timer: 2500,
               allowOutsideClick: false,
               customClass: {
                 popup:
@@ -51,6 +51,11 @@ const PaySale = ({ totalAmount, onPay, payed }) => {
     }
   };
 
+  useEffect(()=>{
+    if (totalAmount<actpay){
+      setActpay(totalAmount)
+    }
+  },[totalAmount])
   return (
     <div className="inline-flex flex-wrap mt-4 w-full">
       <div className="p-2 ">
