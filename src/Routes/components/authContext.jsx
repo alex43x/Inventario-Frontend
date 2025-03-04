@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     validateToken();
     const interval = setInterval(validateToken, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [user, isAuthenticated]);
 
   const login = (userData, token) => {
     localStorage.setItem("authToken", token);
