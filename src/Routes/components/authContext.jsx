@@ -5,20 +5,21 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Nuevo estado
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Nuevo estado
 
   const validateToken = () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       setUser(null);
       setIsAuthenticated(false);
+      setIsLoading(false); // Ya terminó la validación
       return;
     }
     try {
       const decoded = jwtDecode(token);
       const tokenExp = decoded.exp * 1000;
       const now = Date.now();
-
 
       if (tokenExp < now) {
         localStorage.removeItem("authToken");
@@ -33,12 +34,11 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setIsAuthenticated(false);
     }
+    setIsLoading(false); // Ya terminó la validación
   };
 
   useEffect(() => {
-    setTimeout(validateToken, 100);
-    const interval = setInterval(validateToken, 60000);
-    return () => clearInterval(interval);
+    validateToken();
   }, []);
 
   const login = (userData, token) => {
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
