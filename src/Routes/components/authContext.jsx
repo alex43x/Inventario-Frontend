@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    validateToken();
+    setTimeout(validateToken, 100);
     const interval = setInterval(validateToken, 60000);
     return () => clearInterval(interval);
   }, []);
