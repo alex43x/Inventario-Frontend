@@ -111,7 +111,7 @@ function Login() {
             className="font-medium text-sky-950 mt-4 mb-1"
             htmlFor="password"
           >
-            Constraseña:{" "}
+            Contraseña:{" "}
           </label>
           <input
             className="rounded-md text-sky-950 pl-2 border-2 border-sky-900 transition duration-200 focus:bg-sky-100"
