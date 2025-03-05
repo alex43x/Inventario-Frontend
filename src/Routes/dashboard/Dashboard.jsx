@@ -18,7 +18,9 @@ const Dashboard = () => {
 
   const getSales = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/sales-dashboard`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/sales-dashboard`
+      );
       setSales(response.data);
     } catch (err) {
       console.error("Error al obtener las ventas:", err);
@@ -28,7 +30,9 @@ const Dashboard = () => {
 
   const getGraph = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/sales-graph`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/sales-graph`
+      );
       setGraphData(response.data);
     } catch (err) {
       console.error("Error al obtener las ventas:", err);
@@ -77,10 +81,12 @@ const Dashboard = () => {
   return (
     <div className="flex flex-wrap lg:ml-16 mx-8 mt-10 gap-5">
       {/* Sección izquierda: Bienvenida y opciones (3/5 del ancho) */}
-      <div className="w-full lg:w-5/12 rounded-xl lg:px-6 h-4/6 flex flex-col justify-start items-start">
-        <section className="text-blue-950 text-left break-words">
-          <h1 className="lg:text-8xl text-5xl font-bold break-words">Hola, {userName}!</h1>
-          <div className="mt-10 ml-1 flex items-center space-x-2">
+      <div className="w-full lg:w-5/12 rounded-xl lg:px-6 h-2/3 flex flex-col justify-start items-start">
+        <section className="text-blue-950 text-left">
+          <div className="lg:text-8xl text-5xl font-bold  break-words">
+            Hola, {userName}!
+          </div>
+          <div className="mt-10 ml-1 flex items-center space-x-2 w-9/12">
             <img className="w-6 h-6" src={calendario} alt="Calendario" />
             <p className="text-lg font-medium">{fecha}</p>
           </div>
@@ -98,7 +104,7 @@ const Dashboard = () => {
         <h1 className="text-left text-4xl font-bold text-blue-950 my-5">
           Tus ventas
         </h1>
-        <div className="flex gap-6 flex-wrap  border-b-2 border-sky-950 pb-5">
+        <div className="flex gap-6 flex-wrap  border-b-2 border-sky-950 pb-5 ">
           <SalesData
             className="flex-1 "
             title="Día"
