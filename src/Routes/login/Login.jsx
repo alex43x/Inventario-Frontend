@@ -87,7 +87,7 @@ function Login() {
         <section className="  text-center mx-auto ">
           <h1 className="text-7xl font-bold text-sky-950">Iniciar Sesión</h1>
           <p className="text-lg mt-4 mb-8 font-medium text-sky-900">
-            Ingresa tus datos para iniciar sesión
+            Ingresa tus datos 
           </p>
         </section>
         <form
@@ -126,7 +126,7 @@ function Login() {
             className=" mx-auto self-center text-center font-medium text-sky-50   rounded-lg border-2 border-sky-900 backdrop-blur  transition duration-200 focus:bg-sky-800 mt-6 w-full h-10 bg-sky-900"
             type="submit"
           >
-            Iniciar sesión
+            Continuar
           </button>
         </form>
       </section>

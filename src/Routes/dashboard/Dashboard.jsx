@@ -78,7 +78,7 @@ const Dashboard = () => {
     <div className="flex flex-wrap lg:ml-16 mx-8 mt-10 gap-5">
       {/* Sección izquierda: Bienvenida y opciones (3/5 del ancho) */}
       <div className="w-full lg:w-5/12 rounded-xl lg:px-6 h-4/6 flex flex-col justify-start items-start">
-        <section className="text-blue-950 text-left">
+        <section className="text-blue-950 text-left break-words">
           <h1 className="lg:text-8xl text-5xl font-bold break-words">Hola, {userName}!</h1>
           <div className="mt-10 ml-1 flex items-center space-x-2">
             <img className="w-6 h-6" src={calendario} alt="Calendario" />
