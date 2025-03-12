@@ -13,9 +13,12 @@ export default function MoreSales() {
 
   const fetchSales = async (search = "", pageNum = 1) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/sales`, {
-        params: { search, page: pageNum, limit },
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/sales`,
+        {
+          params: { search, page: pageNum, limit },
+        }
+      );
       setSales(response.data);
       setFilteredSales(response.data);
     } catch (error) {
@@ -49,10 +52,43 @@ export default function MoreSales() {
   };
 
   const cancelSale = async (id) => {
-    if (!window.confirm("¿Seguro que deseas anular esta venta?")) return;
-    console.log(id);
+    const result = await Swal.fire({
+      title: "Anular Venta",
+      text: "Este proceso no podrá deshacerse",
+
+      showCancelButton: true,
+      confirmButtonText: "Sí, anular",
+      cancelButtonText: "Cancelar",
+      allowOutsideClick: false,
+      customClass: {
+        popup: "bg-sky-50 rounded-lg shadow-xl border-2 border-sky-800",
+        title: "text-4xl font-bold text-sky-950",
+        text: "text-sky-900 font-medium",
+        confirmButton: "bg-blue-950  text-white font-bold py-2 px-4 rounded",
+        cancelButton:
+          "bg-blue-950 transition text-white font-bold py-2 px-4 rounded",
+      },
+    });
+
+    // Si el usuario cancela, detener ejecución
+    if (!result.isConfirmed) {
+      await Swal.fire({
+        title: "Anulación cancelada",
+        icon: "info",
+        timer: 1500,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        customClass: {
+          popup: "bg-sky-50 rounded-lg shadow-xl border-2 border-sky-800",
+          title: "text-4xl font-bold text-sky-950",
+        },
+      });
+      return;
+    }
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/sales-cancel`, { saleId: id });
+      await axios.post(`${import.meta.env.VITE_API_URL}/sales-cancel`, {
+        saleId: id,
+      });
       Swal.fire({
         title: "La venta ha sido anulada",
         showClass: {
@@ -74,7 +110,6 @@ export default function MoreSales() {
         },
       });
       fetchSales(searchQuery, page);
-      window.location.reload();
     } catch (error) {
       console.error("Error al anular la venta:", error);
       Swal.fire({
@@ -128,7 +163,12 @@ export default function MoreSales() {
                   <h1 className="text-lg mr-4">
                     <strong>Cliente:</strong> {sale.cliente}
                   </h1>
-                   <strong >-----{sale.estado.charAt(0).toUpperCase()+sale.estado.slice(1).toLowerCase()}-----</strong>
+                  <strong>
+                    -----
+                    {sale.estado.charAt(0).toUpperCase() +
+                      sale.estado.slice(1).toLowerCase()}
+                    -----
+                  </strong>
                   <p className="ml-auto font-semibold text-lg p-1">
                     +₲ {sale.total.toLocaleString("es-ES")}
                   </p>
@@ -150,15 +190,14 @@ export default function MoreSales() {
                   <p>
                     <strong>Código:</strong> {sale.id}
                   </p>
-                  {!(sale.estado ===
-                    "anulado") &&(
-                      <button
-                        className="mt-2 bg-blue-950 text-white py-1 px-4 rounded"
-                        onClick={() => cancelSale(sale.id)}
-                      >
-                        Anular Venta
-                      </button>
-                    )}
+                  {!(sale.estado === "anulado") && (
+                    <button
+                      className="mt-2 bg-blue-950 text-white py-1 px-4 rounded"
+                      onClick={() => cancelSale(sale.id)}
+                    >
+                      Anular Venta
+                    </button>
+                  )}
                 </div>
                 {hiddenStates[sale.id] && (
                   <div className="mt-2">
